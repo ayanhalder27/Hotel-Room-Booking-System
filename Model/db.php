@@ -73,6 +73,19 @@
 
             return false;
         }
+
+        public static function FetchValue($query){
+            self::connect();
+
+            $result = mysqli_query(self::$con, $query);
+            
+            if($result !== false){
+                $data = mysqli_fetch_row($result);
+                return $data[0];
+            }
+
+            return false;
+        }
     }
 
 
