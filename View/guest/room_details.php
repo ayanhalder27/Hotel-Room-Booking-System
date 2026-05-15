@@ -1,107 +1,88 @@
-<div class="container-fluid">
-
-    <!-- Page Title -->
-    <div class="dashboard-card mb-4">
-        <h3>Room Details</h3>
-        <p>View detailed information about this room type.</p>
+<div class="row g-4 animate-slide-up">
+    <div class="col-12">
+        <div class="row g-2 gallery-layout">
+            <div class="col-md-8">
+                <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=1200" alt="Main Suite Angle" class="w-100 h-100 object-fit-cover rounded-3 min-h-400">
+            </div>
+            <div class="col-md-4 d-flex flex-column gap-2">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&q=80&w=600" alt="Bathroom View" class="w-100 h-50 object-fit-cover rounded-3">
+                <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=600" alt="Balcony Terrace" class="w-100 h-50 object-fit-cover rounded-3">
+            </div>
+        </div>
     </div>
 
-    <div class="row">
-
-        <!-- Images -->
-        <div class="col-lg-7 mb-4">
-
-            <div class="dashboard-card">
-
-                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461"
-                     class="img-fluid rounded mb-3"
-                     alt="Room">
-
-                <div class="row">
-
-                    <div class="col-4">
-                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
-                             class="img-fluid rounded"
-                             alt="">
-                    </div>
-
-                    <div class="col-4">
-                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd"
-                             class="img-fluid rounded"
-                             alt="">
-                    </div>
-
-                    <div class="col-4">
-                        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85"
-                             class="img-fluid rounded"
-                             alt="">
-                    </div>
-
+    <div class="col-lg-8">
+        <div class="luxury-card p-4 border-0 shadow-sm mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="brand-serif text-navy mb-0">Horizon Executive Suite</h2>
+                <div class="d-flex align-items-center gap-2">
+                    <span class="text-gold"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></span>
+                    <span class="text-sm fw-semibold text-navy">(94 Verifications)</span>
                 </div>
+            </div>
+            <p class="text-muted leading-relaxed mb-4">
+                The pinnacle of sophisticated urban residency. Spanning an extensive 110 square meters, our premium Horizon Executive Suite provides curated luxury with sweeping uninterrupted views of both oceanic shores and metropolitan skylines. Outfitted with bespoke Italian furnishings and smart environmental orchestration systems.
+            </p>
 
+            <h5 class="brand-serif text-navy mb-3">Signature Amenities Provided</h5>
+            <div class="row g-3 mb-4">
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-water text-gold"></i> Premium Deep Soak Tub
+                </div>
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-wind text-gold"></i> Climate Automated System
+                </div>
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-cup-hot text-gold"></i> Private Coffee Bar
+                </div>
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-tv text-gold"></i> 65" Bang & Olufsen Set
+                </div>
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-safe text-gold"></i> Advanced Biometric Safe
+                </div>
+                <div class="col-sm-6 col-md-4 d-flex align-items-center gap-2 text-sm text-navy">
+                    <i class="bi bi-brightness-high text-gold"></i> Private Infinity Balcony
+                </div>
             </div>
 
+            <h5 class="brand-serif text-navy mb-3">Property Policies</h5>
+            <ul class="text-sm text-muted ps-3 d-flex flex-column gap-2 mb-0">
+                <li>Check-In Window: 3:00 PM – Midnight local hotel zone time.</li>
+                <li>Complimentary cancellation bounds remain effective up to 48 hours prior to arrival dates.</li>
+                <li>All properties retain strict smoke-free air protection guarantees.</li>
+            </ul>
         </div>
-
-        <!-- Details -->
-        <div class="col-lg-5">
-
-            <div class="dashboard-card">
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-
-                    <h3>Executive Suite</h3>
-
-                    <span class="badge bg-success">
-                        Available
-                    </span>
-
-                </div>
-
-                <p class="mb-3">
-                    Spacious luxury suite designed for comfort and premium experience.
-                </p>
-
-                <hr>
-
-                <p>
-                    <strong>Capacity:</strong> 4 Guests
-                </p>
-
-                <p>
-                    <strong>Price:</strong> ৳9500 / night
-                </p>
-
-                <p>
-                    <strong>Cleanliness Rating:</strong> 4.8 / 5
-                </p>
-
-                <p>
-                    <strong>Service Rating:</strong> 4.7 / 5
-                </p>
-
-                <hr>
-
-                <h5 class="mb-3">Amenities</h5>
-
-                <div class="mb-4">
-
-                    <span class="badge bg-light text-dark p-2 mb-2">Free WiFi</span>
-                    <span class="badge bg-light text-dark p-2 mb-2">Air Conditioning</span>
-                    <span class="badge bg-light text-dark p-2 mb-2">Breakfast</span>
-                    <span class="badge bg-light text-dark p-2 mb-2">Swimming Pool</span>
-                    <span class="badge bg-light text-dark p-2 mb-2">Smart TV</span>
-
-                </div>
-
-                <button class="btn btn-primary-custom w-100">
-                    Book This Room
-                </button>
-
-            </div>
-
-        </div>
-
     </div>
 
+    <div class="col-lg-4">
+        <div class="luxury-card p-4 border-0 shadow-sm position-sticky top-20">
+            <h5 class="brand-serif text-navy mb-3">Pricing Details</h5>
+            <div class="d-flex align-items-baseline gap-2 mb-3">
+                <span class="fs-2 fw-bold text-navy">$620</span>
+                <span class="text-muted text-sm">/ Night</span>
+            </div>
+            <hr class="my-3">
+            <div class="d-flex flex-column gap-2 mb-4 text-sm">
+                <div class="d-flex justify-content-between text-muted">
+                    <span>$620 × 6 Nights</span>
+                    <span>$3,720</span>
+                </div>
+                <div class="d-flex justify-content-between text-muted">
+                    <span>Resort Surcharges</span>
+                    <span>$120</span>
+                </div>
+                <div class="d-flex justify-content-between text-muted">
+                    <span>Tax Duties & Fees</span>
+                    <span>$310</span>
+                </div>
+                <hr class="my-2">
+                <div class="d-flex justify-content-between fw-bold text-navy text-base">
+                    <span>Estimated Total</span>
+                    <span>$4,150</span>
+                </div>
+            </div>
+            <button class="btn btn-luxury-primary w-100 py-3 text-uppercase font-sans tracking-wider text-xs fw-semibold load-view-btn" data-view="book_room">Proceed to Reservation</button>
+        </div>
+    </div>
 </div>

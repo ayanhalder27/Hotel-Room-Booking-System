@@ -1,168 +1,146 @@
-
-<div class="container-fluid">
-
-    <!-- Page Title -->
-    <div class="dashboard-card mb-4">
-        <h3>Search Rooms</h3>
-        <p>Find available rooms based on your stay dates and guest count.</p>
-    </div>
-
-    <!-- Search Form -->
-    <div class="dashboard-card mb-4">
-
-        <form>
-
-            <div class="row g-3">
-
-                <div class="col-md-3">
-                    <label class="form-label">Check In</label>
-                    <input type="date" class="form-control">
+<div class="animate-slide-up">
+    <div class="luxury-card p-4 border-0 shadow-sm mb-4">
+        <form id="roomSearchForm" class="row g-3 align-items-end" onsubmit="event.preventDefault();">
+            <div class="col-xl-3 col-md-6">
+                <label class="form-label text-xs tracking-wider uppercase text-muted fw-semibold">Check-In Date</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-gold"><i class="bi bi-calendar-range"></i></span>
+                    <input type="date" class="form-control border-start-0" value="2026-06-01">
                 </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Check Out</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="col-md-3">
-                    <label class="form-label">Guests</label>
-
-                    <select class="form-select">
-                        <option>1 Guest</option>
-                        <option>2 Guests</option>
-                        <option>3 Guests</option>
-                        <option>4 Guests</option>
-                    </select>
-                </div>
-
-                <div class="col-md-3 d-flex align-items-end">
-                    <button class="btn btn-primary-custom w-100">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        Search Rooms
-                    </button>
-                </div>
-
             </div>
-
+            <div class="col-xl-3 col-md-6">
+                <label class="form-label text-xs tracking-wider uppercase text-muted fw-semibold">Check-Out Date</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-end-0 text-gold"><i class="bi bi-calendar-range"></i></span>
+                    <input type="date" class="form-control border-start-0" value="2026-06-07">
+                </div>
+            </div>
+            <div class="col-xl-2 col-md-6">
+                <label class="form-label text-xs tracking-wider uppercase text-muted fw-semibold">Guests Allocation</label>
+                <select class="form-select">
+                    <option value="1">1 Adult</option>
+                    <option value="2" selected>2 Adults</option>
+                    <option value="4">2 Adults, 2 Children</option>
+                    <option value="6">VIP Group Party</option>
+                </select>
+            </div>
+            <div class="col-xl-2 col-md-6">
+                <label class="form-label text-xs tracking-wider uppercase text-muted fw-semibold">Tier Category</label>
+                <select class="form-select">
+                    <option value="">All Tiers</option>
+                    <option value="deluxe">Deluxe Collection</option>
+                    <option value="executive">Executive Space</option>
+                    <option value="presidential">Presidential Reserve</option>
+                </select>
+            </div>
+            <div class="col-xl-2 col-12">
+                <button type="button" class="btn btn-luxury-primary w-100 py-2-5" onclick="app.showToast('Filtering premium inventory live...')"><i class="bi bi-sliders me-2"></i> Find Suite</button>
+            </div>
         </form>
-
     </div>
 
-    <!-- Seasonal Notice -->
-    <div class="alert alert-warning mb-4">
-        <strong>Seasonal Pricing Notice:</strong>
-        Holiday pricing may apply during selected dates.
+    <div class="alert alert-gold border-0 rounded-3 p-3 mb-4 d-flex align-items-center gap-3">
+        <i class="bi bi-info-circle-fill fs-5"></i>
+        <div class="text-sm">
+            <strong>Summer Solstice Privilege Active:</strong> Comp complimentary airport transfers with all Presidential Reserve bookings during June.
+        </div>
     </div>
 
-    <!-- Search Results -->
-    <div class="row">
-
-        <!-- Room Card -->
-        <div class="col-lg-4 mb-4">
-
-            <div class="dashboard-card h-100">
-
-                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
-                     class="img-fluid rounded mb-3"
-                     alt="Room">
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5>Deluxe Room</h5>
-
-                    <span class="badge bg-success">
-                        Available
-                    </span>
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="row g-4" id="roomResultsContainer">
+                
+                <div class="col-md-6 col-xl-4">
+                    <div class="room-product-card shadow-sm h-100 overflow-hidden d-flex flex-column">
+                        <div class="position-relative overflow-hidden group-hover-zoom">
+                            <span class="badge position-absolute top-0 end-0 m-3 z-index-2 badge-gold-solid">Only 2 Left</span>
+                            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&q=80&w=600" alt="Room Space Showcase" class="w-100 object-fit-cover height-240">
+                        </div>
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="brand-serif text-navy mb-0">Deluxe Sanctuary King</h5>
+                                    <div class="text-gold text-sm"><i class="bi bi-star-fill"></i> 4.9</div>
+                                </div>
+                                <p class="text-xs text-muted mb-3">65 m² • Panoramic City View • Signature Marble Bath</p>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <span class="badge badge-gray-pill">Free Wifi</span>
+                                    <span class="badge badge-gray-pill">Nespresso Machine</span>
+                                    <span class="badge badge-gray-pill">24/7 Butler</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto">
+                                <div>
+                                    <span class="text-muted text-xs d-block">Price / Night</span>
+                                    <span class="fs-4 fw-bold text-navy">$350 <small class="text-xs text-muted fw-normal">USD</small></span>
+                                </div>
+                                <button class="btn btn-luxury-primary px-3 py-2 text-sm load-view-btn" data-view="room_details">View Details</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <p class="mb-2">
-                    Spacious deluxe room with modern facilities and city view.
-                </p>
-
-                <p class="mb-2">
-                    <strong>Capacity:</strong> 2 Guests
-                </p>
-
-                <p class="mb-3">
-                    <strong>Price:</strong> ৳5500 / night
-                </p>
-
-                <div class="mb-3">
-
-                    <span class="badge bg-light text-dark">WiFi</span>
-                    <span class="badge bg-light text-dark">AC</span>
-                    <span class="badge bg-light text-dark">Breakfast</span>
-
+                <div class="col-md-6 col-xl-4">
+                    <div class="room-product-card shadow-sm h-100 overflow-hidden d-flex flex-column">
+                        <div class="position-relative overflow-hidden group-hover-zoom">
+                            <span class="badge position-absolute top-0 end-0 m-3 z-index-2 bg-success text-white px-2 py-1 rounded-1 text-uppercase text-xs fw-medium tracking-wider">Best Seller</span>
+                            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=600" alt="Room Space Showcase" class="w-100 object-fit-cover height-240">
+                        </div>
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="brand-serif text-navy mb-0">Horizon Executive Suite</h5>
+                                    <div class="text-gold text-sm"><i class="bi bi-star-fill"></i> 5.0</div>
+                                </div>
+                                <p class="text-xs text-muted mb-3">110 m² • Oceanfront Skyline Horizon • Living Room Lounge</p>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <span class="badge badge-gray-pill">Executive Lounge</span>
+                                    <span class="badge badge-gray-pill">Airport Chauffeur</span>
+                                    <span class="badge badge-gray-pill">Wine Vault</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto">
+                                <div>
+                                    <span class="text-muted text-xs d-block">Price / Night</span>
+                                    <span class="fs-4 fw-bold text-navy">$620 <small class="text-xs text-muted fw-normal">USD</small></span>
+                                </div>
+                                <button class="btn btn-luxury-primary px-3 py-2 text-sm load-view-btn" data-view="room_details">View Details</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="d-flex gap-2">
-
-                    <button class="btn btn-outline-primary w-50">
-                        View Details
-                    </button>
-
-                    <button class="btn btn-primary-custom w-50">
-                        Book Now
-                    </button>
-
+                <div class="col-md-6 col-xl-4">
+                    <div class="room-product-card shadow-sm h-100 overflow-hidden d-flex flex-column">
+                        <div class="position-relative overflow-hidden group-hover-zoom">
+                            <span class="badge position-absolute top-0 end-0 m-3 z-index-2 badge-gold-solid">Presidential Class</span>
+                            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&q=80&w=600" alt="Room Space Showcase" class="w-100 object-fit-cover height-240">
+                        </div>
+                        <div class="p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h5 class="brand-serif text-navy mb-0">The Horizon Villa Reserve</h5>
+                                    <div class="text-gold text-sm"><i class="bi bi-star-fill"></i> 5.0</div>
+                                </div>
+                                <p class="text-xs text-muted mb-3">280 m² • Private Helipad Access • Infinity Plunge Pool</p>
+                                <div class="d-flex flex-wrap gap-2 mb-4">
+                                    <span class="badge badge-gray-pill">Private Pool</span>
+                                    <span class="badge badge-gray-pill">Chef on Demand</span>
+                                    <span class="badge badge-gray-pill">Helipad</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top mt-auto">
+                                <div>
+                                    <span class="text-muted text-xs d-block">Price / Night</span>
+                                    <span class="fs-4 fw-bold text-navy">$1,850 <small class="text-xs text-muted fw-normal">USD</small></span>
+                                </div>
+                                <button class="btn btn-luxury-primary px-3 py-2 text-sm load-view-btn" data-view="room_details">View Details</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-
         </div>
-
-        <!-- Room Card -->
-        <div class="col-lg-4 mb-4">
-
-            <div class="dashboard-card h-100">
-
-                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd"
-                     class="img-fluid rounded mb-3"
-                     alt="Room">
-
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h5>Executive Suite</h5>
-
-                    <span class="badge bg-success">
-                        Available
-                    </span>
-                </div>
-
-                <p class="mb-2">
-                    Premium suite with luxury interior and balcony.
-                </p>
-
-                <p class="mb-2">
-                    <strong>Capacity:</strong> 4 Guests
-                </p>
-
-                <p class="mb-3">
-                    <strong>Price:</strong> ৳9500 / night
-                </p>
-
-                <div class="mb-3">
-
-                    <span class="badge bg-light text-dark">WiFi</span>
-                    <span class="badge bg-light text-dark">Pool</span>
-                    <span class="badge bg-light text-dark">Breakfast</span>
-
-                </div>
-
-                <div class="d-flex gap-2">
-
-                    <button class="btn btn-outline-primary w-50">
-                        View Details
-                    </button>
-
-                    <button class="btn btn-primary-custom w-50">
-                        Book Now
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
     </div>
-
 </div>
