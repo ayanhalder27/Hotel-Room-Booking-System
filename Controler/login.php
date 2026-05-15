@@ -27,7 +27,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("Location: ../View/admin.html");
             }
             else if($role == "guest"){
-                header("Location: ../View/guest/dashboard.php");
+                header("Location: ../View/guest/dashboard.html");
             }
             else if($role == "housekeeping"){
                 header("Location: ../View/housekeeping.html");
