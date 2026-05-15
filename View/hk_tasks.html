@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay — Tasks</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="housekeeping.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"></path>
+                <path d="M5 21V7l8-4v18"></path>
+                <path d="M19 21V11l-6-3"></path>
+                <path d="M9 9v.01"></path>
+                <path d="M9 13v.01"></path>
+                <path d="M9 17v.01"></path>
+            </svg>
+        </div>
+
+        <div class="brand-text">
+            <span class="brand-name">LuxeStay</span>
+            <span class="brand-role">Housekeeping</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="hk_dashboard.html" class="nav-item">
+            Dashboard
+        </a>
+
+        <a href="hk_rooms.html" class="nav-item">
+            Room Status Board
+        </a>
+
+        <a href="hk_tasks.html" class="nav-item active">
+            Tasks
+        </a>
+
+        <a href="hk_maintenance.html" class="nav-item">
+            Maintenance
+        </a>
+
+        <a href="hk_schedule.html" class="nav-item">
+            Schedule
+        </a>
+
+        <a href="hk_report.html" class="nav-item">
+            Daily Report
+        </a>
+
+        <a href="hk_history.html" class="nav-item">
+            History
+        </a>
+
+        <a href="hk_profile.html" class="nav-item">
+            Profile
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar" id="sidebarAvatar">S</div>
+            <div>
+                <div class="user-name" id="sidebarName">Supervisor</div>
+                <div class="user-email" id="sidebarEmail">housekeeping@luxestay.com</div>
+            </div>
+        </div>
+
+        <a href="../Controler/logout.php" class="logout-btn" title="Logout">
+            Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Top Bar -->
+<div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <div class="topbar-title">Tasks</div>
+
+    <div class="topbar-actions">
+        <div class="live-badge">
+            <span class="live-dot"></span>
+            Live
+        </div>
+        <div class="topbar-date" id="topbarDate"></div>
+    </div>
+</div>
+
+<main class="main-content">
+    <section class="section active">
+
+        <div class="section-header">
+            <h2>Housekeeping Tasks</h2>
+            <p>Assign, track, and complete cleaning and inspection tasks</p>
+        </div>
+
+        <!-- Create Task -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Create New Task</h3>
+            </div>
+
+            <form id="createTaskForm" class="form-grid">
+                <div class="form-group">
+                    <label>Room Number</label>
+                    <select name="room_id" id="taskRoomSelect" required>
+                        <option value="">Select room...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Task Type</label>
+                    <select name="task_type" required>
+                        <option value="cleaning">Cleaning</option>
+                        <option value="inspection">Inspection</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Priority</label>
+                    <select name="priority" required>
+                        <option value="normal">Normal</option>
+                        <option value="urgent">Urgent</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Scheduled Date</label>
+                    <input type="date" name="scheduled_date" id="scheduledDate" required>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Notes</label>
+                    <textarea name="notes" rows="2" placeholder="Any special instructions..."></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit" name="create_task" class="btn-primary">
+                        Assign Task
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Today Tasks -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Today's Tasks</h3>
+
+                <div class="filter-pills">
+                    <button type="button" class="pill active" data-filter="all">All</button>
+                    <button type="button" class="pill" data-filter="pending">Pending</button>
+                    <button type="button" class="pill" data-filter="in_progress">In Progress</button>
+                    <button type="button" class="pill" data-filter="done">Done</button>
+                    <button type="button" class="pill pill-urgent" data-filter="urgent">Urgent</button>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Room</th>
+                            <th>Type</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tasksTable">
+                        <tr>
+                            <td colspan="6" class="empty-row">Loading tasks...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- Task Update Modal -->
+<div class="modal-overlay" id="taskModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Update Task</h3>
+            <button type="button" class="modal-close" onclick="closeModal('taskModal')">×</button>
+        </div>
+
+        <form id="updateTaskForm">
+            <input type="hidden" name="task_id" id="modalTaskId">
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" id="modalTaskStatus">
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Completion Notes</label>
+                <textarea name="notes" id="modalTaskNotes" rows="3" placeholder="Add notes..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Mark Room As</label>
+                <select name="room_status" id="modalRoomStatus">
+                    <option value="">No change</option>
+                    <option value="available">Clean / Available</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+
+            <button type="submit" name="update_task" class="btn-primary" style="width:100%;margin-top:0.5rem">
+                Update Task
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="toast-container" id="toastBox"></div>
+
+<script src="hk-shared.js"></script>
+<script src="hk_tasks.js"></script>
+
+</body>
+</html>

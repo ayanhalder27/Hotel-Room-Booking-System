@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay — Daily Report</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="housekeeping.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"></path>
+                <path d="M5 21V7l8-4v18"></path>
+                <path d="M19 21V11l-6-3"></path>
+                <path d="M9 9v.01"></path>
+                <path d="M9 13v.01"></path>
+                <path d="M9 17v.01"></path>
+            </svg>
+        </div>
+
+        <div class="brand-text">
+            <span class="brand-name">LuxeStay</span>
+            <span class="brand-role">Housekeeping</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="hk_dashboard.html" class="nav-item">
+            Dashboard
+        </a>
+
+        <a href="hk_rooms.html" class="nav-item">
+            Room Status Board
+        </a>
+
+        <a href="hk_tasks.html" class="nav-item">
+            Tasks
+        </a>
+
+        <a href="hk_maintenance.html" class="nav-item">
+            Maintenance
+        </a>
+
+        <a href="hk_schedule.html" class="nav-item">
+            Schedule
+        </a>
+
+        <a href="hk_report.html" class="nav-item active">
+            Daily Report
+        </a>
+
+        <a href="hk_history.html" class="nav-item">
+            History
+        </a>
+
+        <a href="hk_profile.html" class="nav-item">
+            Profile
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar" id="sidebarAvatar">S</div>
+            <div>
+                <div class="user-name" id="sidebarName">Supervisor</div>
+                <div class="user-email" id="sidebarEmail">housekeeping@luxestay.com</div>
+            </div>
+        </div>
+
+        <a href="../Controler/logout.php" class="logout-btn" title="Logout">
+            Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Top Bar -->
+<div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <div class="topbar-title">Daily Report</div>
+
+    <div class="topbar-actions">
+        <div class="live-badge">
+            <span class="live-dot"></span>
+            Live
+        </div>
+        <div class="topbar-date" id="topbarDate"></div>
+    </div>
+</div>
+
+<main class="main-content">
+    <section class="section active">
+        <div class="section-header">
+            <h2>Daily Housekeeping Report</h2>
+            <p>Summary of today's housekeeping operations</p>
+        </div>
+
+        <div class="card report-card">
+            <div class="report-header">
+                <div class="report-brand">
+                    <div class="brand-icon small">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21h18"></path>
+                            <path d="M5 21V7l8-4v18"></path>
+                            <path d="M19 21V11l-6-3"></path>
+                        </svg>
+                    </div>
+                    LuxeStay — Housekeeping Report
+                </div>
+
+                <div class="report-date" id="reportDate"></div>
+            </div>
+
+            <div class="report-stats">
+                <div class="report-stat">
+                    <div class="rs-value" id="rTotalTasks">0</div>
+                    <div class="rs-label">Tasks Assigned</div>
+                </div>
+
+                <div class="report-stat">
+                    <div class="rs-value gold" id="rCompleted">0</div>
+                    <div class="rs-label">Completed</div>
+                </div>
+
+                <div class="report-stat">
+                    <div class="rs-value orange" id="rPending">0</div>
+                    <div class="rs-label">Pending</div>
+                </div>
+
+                <div class="report-stat">
+                    <div class="rs-value green" id="rReadyRooms">0</div>
+                    <div class="rs-label">Rooms Ready</div>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Room</th>
+                            <th>Task Type</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Completed At</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="reportTable">
+                        <tr>
+                            <td colspan="6" class="empty-row">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="report-actions">
+                <button type="button" class="btn-primary" onclick="window.print()">
+                    Print Report
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div class="toast-container" id="toastBox"></div>
+
+<script src="hk-shared.js"></script>
+<script src="hk_report.js"></script>
+
+</body>
+</html>

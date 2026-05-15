@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuxeStay — Maintenance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="housekeeping.css">
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <div class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 21h18"></path>
+                <path d="M5 21V7l8-4v18"></path>
+                <path d="M19 21V11l-6-3"></path>
+                <path d="M9 9v.01"></path>
+                <path d="M9 13v.01"></path>
+                <path d="M9 17v.01"></path>
+            </svg>
+        </div>
+
+        <div class="brand-text">
+            <span class="brand-name">LuxeStay</span>
+            <span class="brand-role">Housekeeping</span>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="hk_dashboard.html" class="nav-item">
+            Dashboard
+        </a>
+
+        <a href="hk_rooms.html" class="nav-item">
+            Room Status Board
+        </a>
+
+        <a href="hk_tasks.html" class="nav-item">
+            Tasks
+        </a>
+
+        <a href="hk_maintenance.html" class="nav-item active">
+            Maintenance
+        </a>
+
+        <a href="hk_schedule.html" class="nav-item">
+            Schedule
+        </a>
+
+        <a href="hk_report.html" class="nav-item">
+            Daily Report
+        </a>
+
+        <a href="hk_history.html" class="nav-item">
+            History
+        </a>
+
+        <a href="hk_profile.html" class="nav-item">
+            Profile
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <div class="user-avatar" id="sidebarAvatar">S</div>
+            <div>
+                <div class="user-name" id="sidebarName">Supervisor</div>
+                <div class="user-email" id="sidebarEmail">housekeeping@luxestay.com</div>
+            </div>
+        </div>
+
+        <a href="../Controler/logout.php" class="logout-btn" title="Logout">
+            Logout
+        </a>
+    </div>
+</aside>
+
+<!-- Top Bar -->
+<div class="topbar">
+    <button class="menu-toggle" onclick="toggleSidebar()">
+        ☰
+    </button>
+
+    <div class="topbar-title">Maintenance</div>
+
+    <div class="topbar-actions">
+        <div class="live-badge">
+            <span class="live-dot"></span>
+            Live
+        </div>
+        <div class="topbar-date" id="topbarDate"></div>
+    </div>
+</div>
+
+<main class="main-content">
+
+    <section class="section active">
+        <div class="section-header">
+            <h2>Maintenance Reports</h2>
+            <p>Log and track room maintenance issues</p>
+        </div>
+
+        <!-- Log Maintenance Issue -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Log New Issue</h3>
+            </div>
+
+            <form id="maintenanceForm" class="form-grid">
+                <div class="form-group">
+                    <label>Room Number</label>
+                    <select name="room_id" id="maintRoomSelect" required>
+                        <option value="">Select room...</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Severity</label>
+                    <select name="severity" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" placeholder="Describe the issue in detail..." required></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit" name="log_maintenance" class="btn-danger">
+                        Report Issue
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Maintenance Reports -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Open Maintenance Reports</h3>
+                <span class="badge badge-danger" id="openMaintCount">0</span>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Room</th>
+                            <th>Description</th>
+                            <th>Severity</th>
+                            <th>Status</th>
+                            <th>Reported</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="maintenanceTable">
+                        <tr>
+                            <td colspan="6" class="empty-row">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<!-- Maintenance Update Modal -->
+<div class="modal-overlay" id="maintModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Update Maintenance Report</h3>
+            <button type="button" class="modal-close" onclick="closeModal('maintModal')">×</button>
+        </div>
+
+        <form id="updateMaintForm">
+            <input type="hidden" name="report_id" id="maintReportId">
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" id="maintStatus">
+                    <option value="open">Open</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+
+            <button type="submit" name="update_maintenance" class="btn-primary" style="width:100%;margin-top:0.5rem">
+                Update Report
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="toast-container" id="toastBox"></div>
+
+<script src="hk-shared.js"></script>
+<script src="hk_maintenance.js"></script>
+
+</body>
+</html>
