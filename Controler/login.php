@@ -6,16 +6,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $password = $_POST["password"] ?? "";
 
     $data = db::Fetch("select id, password_hash, role from users where email=? or phone=? or username=?", $username, $username, $username);
-    if($data != Null){
-        if($password == $data["password_hash"]){
-            if(isset($_POST["rememberMe"])){
+    if($data != Null)
+    {
+        if($password == $data["password_hash"])
+        {
+            if(isset($_POST["rememberMe"]))
+            {
                 setcookie("id", $data["id"], time() + (86400 * 30), "/");
                 setcookie("nextPage", "../View/" . $data["role"] . ".html", time() + (86400 * 30), "/");
             }
             header("Location: ../View/" . $data["role"] . ".html");
             exit();
         }
-        else{
+        else
+        {
             header("Location: ../View/login.html?error=incorrect_password");
             exit();
         }
