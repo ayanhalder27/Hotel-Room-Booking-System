@@ -1,50 +1,168 @@
-<section class="section-heading">
-    <div><p class="eyebrow">Find your stay</p><h2>Search luxury rooms</h2></div>
-    <span class="season-alert"><i class="bi bi-lightning-charge"></i> Summer rates updated today</span>
-</section>
 
-<section class="search-layout">
-    <aside class="filter-panel panel">
-        <h3>Refine stay</h3>
-        <label>Check-in<input class="form-control" type="date" value="2026-05-24"></label>
-        <label>Check-out<input class="form-control" type="date" value="2026-05-28"></label>
-        <label>Guests<select class="form-select"><option>2 adults</option><option>1 adult</option><option>Family of 4</option></select></label>
-        <label>Room type<select class="form-select"><option>All rooms</option><option>Suites</option><option>Deluxe</option><option>Executive</option></select></label>
-        <div class="filter-checks">
-            <label><input type="checkbox" checked> Ocean view</label>
-            <label><input type="checkbox"> Breakfast included</label>
-            <label><input type="checkbox" checked> Free cancellation</label>
-        </div>
-        <button class="btn btn-navy w-100" data-toast="Room results refreshed.">Update Results</button>
-    </aside>
+<div class="container-fluid">
 
-    <div class="room-results" id="room-results">
-        <article class="room-card">
-            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80" alt="Ocean Premier Suite">
-            <div class="room-body">
-                <div class="room-title-row"><h3>Ocean Premier Suite</h3><span class="status success">Available</span></div>
-                <p>Panoramic sea view, private balcony, king bed, marble bath, evening lounge access.</p>
-                <div class="amenity-pills"><span>72 sqm</span><span>Breakfast</span><span>Balcony</span><span>Spa access</span></div>
-                <div class="room-footer"><strong>$460 <small>/ night</small></strong><button class="btn btn-gold" data-nav-target="room_details">View Details</button></div>
-            </div>
-        </article>
-        <article class="room-card">
-            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80" alt="Executive King Room">
-            <div class="room-body">
-                <div class="room-title-row"><h3>Executive King</h3><span class="status gold">Few left</span></div>
-                <p>Quiet upper-floor room with executive workspace, rainfall shower, and city skyline view.</p>
-                <div class="amenity-pills"><span>44 sqm</span><span>Workspace</span><span>City view</span><span>Lounge</span></div>
-                <div class="room-footer"><strong>$285 <small>/ night</small></strong><button class="btn btn-gold" data-nav-target="room_details">View Details</button></div>
-            </div>
-        </article>
-        <article class="room-card">
-            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=900&q=80" alt="Garden Deluxe Room">
-            <div class="room-body">
-                <div class="room-title-row"><h3>Garden Deluxe</h3><span class="status success">Available</span></div>
-                <p>Warm contemporary room overlooking the courtyard gardens with generous living space.</p>
-                <div class="amenity-pills"><span>38 sqm</span><span>Garden view</span><span>Queen bed</span><span>Mini bar</span></div>
-                <div class="room-footer"><strong>$220 <small>/ night</small></strong><button class="btn btn-gold" data-nav-target="room_details">View Details</button></div>
-            </div>
-        </article>
+    <!-- Page Title -->
+    <div class="dashboard-card mb-4">
+        <h3>Search Rooms</h3>
+        <p>Find available rooms based on your stay dates and guest count.</p>
     </div>
-</section>
+
+    <!-- Search Form -->
+    <div class="dashboard-card mb-4">
+
+        <form>
+
+            <div class="row g-3">
+
+                <div class="col-md-3">
+                    <label class="form-label">Check In</label>
+                    <input type="date" class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Check Out</label>
+                    <input type="date" class="form-control">
+                </div>
+
+                <div class="col-md-3">
+                    <label class="form-label">Guests</label>
+
+                    <select class="form-select">
+                        <option>1 Guest</option>
+                        <option>2 Guests</option>
+                        <option>3 Guests</option>
+                        <option>4 Guests</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 d-flex align-items-end">
+                    <button class="btn btn-primary-custom w-100">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        Search Rooms
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Seasonal Notice -->
+    <div class="alert alert-warning mb-4">
+        <strong>Seasonal Pricing Notice:</strong>
+        Holiday pricing may apply during selected dates.
+    </div>
+
+    <!-- Search Results -->
+    <div class="row">
+
+        <!-- Room Card -->
+        <div class="col-lg-4 mb-4">
+
+            <div class="dashboard-card h-100">
+
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+                     class="img-fluid rounded mb-3"
+                     alt="Room">
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5>Deluxe Room</h5>
+
+                    <span class="badge bg-success">
+                        Available
+                    </span>
+                </div>
+
+                <p class="mb-2">
+                    Spacious deluxe room with modern facilities and city view.
+                </p>
+
+                <p class="mb-2">
+                    <strong>Capacity:</strong> 2 Guests
+                </p>
+
+                <p class="mb-3">
+                    <strong>Price:</strong> ৳5500 / night
+                </p>
+
+                <div class="mb-3">
+
+                    <span class="badge bg-light text-dark">WiFi</span>
+                    <span class="badge bg-light text-dark">AC</span>
+                    <span class="badge bg-light text-dark">Breakfast</span>
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button class="btn btn-outline-primary w-50">
+                        View Details
+                    </button>
+
+                    <button class="btn btn-primary-custom w-50">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Room Card -->
+        <div class="col-lg-4 mb-4">
+
+            <div class="dashboard-card h-100">
+
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd"
+                     class="img-fluid rounded mb-3"
+                     alt="Room">
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h5>Executive Suite</h5>
+
+                    <span class="badge bg-success">
+                        Available
+                    </span>
+                </div>
+
+                <p class="mb-2">
+                    Premium suite with luxury interior and balcony.
+                </p>
+
+                <p class="mb-2">
+                    <strong>Capacity:</strong> 4 Guests
+                </p>
+
+                <p class="mb-3">
+                    <strong>Price:</strong> ৳9500 / night
+                </p>
+
+                <div class="mb-3">
+
+                    <span class="badge bg-light text-dark">WiFi</span>
+                    <span class="badge bg-light text-dark">Pool</span>
+                    <span class="badge bg-light text-dark">Breakfast</span>
+
+                </div>
+
+                <div class="d-flex gap-2">
+
+                    <button class="btn btn-outline-primary w-50">
+                        View Details
+                    </button>
+
+                    <button class="btn btn-primary-custom w-50">
+                        Book Now
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

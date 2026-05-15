@@ -1,9 +1,34 @@
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guest Dashboard | Royal Crest Hotel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link href="guest.css" rel="stylesheet">
+<div class="top-header">
+
+    <div class="header-left">
+
+        <button class="btn btn-dark d-md-none" id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <h4 class="d-inline-block ms-2">
+            Guest Dashboard
+        </h4>
+
+    </div>
+
+    <div class="header-right">
+
+        <i class="fa-regular fa-bell"></i>
+
+        <div class="profile-box">
+
+            <img src="https://i.pravatar.cc/100" alt="Profile">
+
+            <div>
+                <strong>Niloy</strong>
+                <br>
+                <small>Guest</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

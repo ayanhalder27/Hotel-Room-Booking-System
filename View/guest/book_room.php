@@ -1,25 +1,119 @@
-<section class="section-heading"><div><p class="eyebrow">Checkout</p><h2>Complete your reservation</h2></div></section>
-<section class="checkout-grid">
-    <form class="panel luxury-form">
-        <h3>Guest and stay details</h3>
-        <div class="form-grid">
-            <label>Full name<input class="form-control" value="Ariana Rahman"></label>
-            <label>Email<input class="form-control" value="ariana@example.com"></label>
-            <label>Check-in<input class="form-control" type="date" value="2026-05-24"></label>
-            <label>Check-out<input class="form-control" type="date" value="2026-05-28"></label>
-            <label>Guests<select class="form-select"><option>2 adults</option><option>1 adult</option><option>Family of 4</option></select></label>
-            <label>Arrival time<select class="form-select"><option>After 6:00 PM</option><option>2:00 PM - 4:00 PM</option><option>Before noon</option></select></label>
+<div class="container-fluid">
+
+    <!-- Page Title -->
+    <div class="dashboard-card mb-4">
+        <h3>Book Room</h3>
+        <p>Confirm your booking details and complete reservation.</p>
+    </div>
+
+    <div class="row">
+
+        <!-- Booking Form -->
+        <div class="col-lg-8 mb-4">
+
+            <div class="dashboard-card">
+
+                <form>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Check In Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Check Out Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Number of Guests</label>
+
+                            <select class="form-select">
+                                <option>1 Guest</option>
+                                <option>2 Guests</option>
+                                <option>3 Guests</option>
+                                <option>4 Guests</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Payment Method</label>
+
+                            <select class="form-select">
+                                <option>Cash</option>
+                                <option>Card</option>
+                                <option>bKash</option>
+                                <option>Nagad</option>
+                            </select>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">Special Requests</label>
+
+                            <textarea class="form-control"
+                                      rows="4"
+                                      placeholder="Write your special requests..."></textarea>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
-        <label>Special requests<textarea class="form-control" rows="4" placeholder="Airport transfer, pillow preference, dietary needs..."></textarea></label>
-        <button type="button" class="btn btn-navy" data-nav-target="booking_confirmation">Confirm Reservation</button>
-    </form>
-    <aside class="panel summary-card">
-        <h3>Booking summary</h3>
-        <div class="summary-line"><span>Ocean Premier Suite</span><strong>$1,840</strong></div>
-        <div class="summary-line"><span>Taxes and fees</span><strong>$221</strong></div>
-        <div class="summary-line gold-row"><span>Loyalty discount</span><strong>-$120</strong></div>
-        <div class="coupon-box"><i class="bi bi-ticket-perforated"></i><input placeholder="Coupon code"><button>Apply</button></div>
-        <div class="summary-total"><span>Total</span><strong>$1,941</strong></div>
-        <p class="fine-print">Free cancellation until May 22, 2026. Pay securely at confirmation or during check-in.</p>
-    </aside>
-</section>
+
+        <!-- Booking Summary -->
+        <div class="col-lg-4">
+
+            <div class="dashboard-card">
+
+                <h4 class="mb-4">Booking Summary</h4>
+
+                <div class="mb-3">
+
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+                         class="img-fluid rounded"
+                         alt="Room">
+
+                </div>
+
+                <h5>Executive Suite</h5>
+
+                <hr>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Price Per Night</span>
+                    <strong>৳9500</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Total Nights</span>
+                    <strong>3</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Loyalty Discount</span>
+                    <strong>- ৳500</strong>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between mb-4">
+                    <h5>Total Amount</h5>
+                    <h5>৳28000</h5>
+                </div>
+
+                <button class="btn btn-primary-custom w-100">
+                    Confirm Booking
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
