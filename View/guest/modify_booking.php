@@ -1,12 +1,79 @@
-<section class="section-heading"><div><p class="eyebrow">Request changes</p><h2>Modify booking</h2></div><span class="status warning">Requires approval</span></section>
-<form class="panel luxury-form narrow-form">
-    <h3>Modification request</h3>
-    <label>Booking<select class="form-select"><option>RC-2026-58291 · Ocean Premier Suite</option></select></label>
-    <div class="form-grid">
-        <label>New check-in<input class="form-control" type="date" value="2026-05-25"></label>
-        <label>New check-out<input class="form-control" type="date" value="2026-05-29"></label>
+<div class="container-fluid">
+
+    <div class="dashboard-card mb-4">
+        <h3>Modify Booking Request</h3>
+        <p>Request changes to your booking dates. Receptionist approval is required.</p>
     </div>
-    <label>Reason<textarea class="form-control" rows="5" placeholder="Tell our reservation team what changed."></textarea></label>
-    <div class="notice-box"><i class="bi bi-info-circle"></i> A receptionist will review pricing and availability before confirming this change.</div>
-    <button class="btn btn-navy" type="button" data-toast="Modification request drafted for backend submission.">Submit Request</button>
-</form>
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="dashboard-card">
+
+                <form>
+
+                    <div class="mb-3">
+                        <label class="form-label">Select Booking</label>
+
+                        <select class="form-select">
+                            <option>#BK1021 - Executive Suite</option>
+                            <option>#BK1025 - Deluxe Room</option>
+                        </select>
+                    </div>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Current Check In</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="18 May 2026"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Current Check Out</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="21 May 2026"
+                                   readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">New Check In</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">New Check Out</label>
+                            <input type="date" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4 mb-4">
+
+                        <label class="form-label">
+                            Reason For Modification
+                        </label>
+
+                        <textarea class="form-control"
+                                  rows="5"
+                                  placeholder="Write your reason..."></textarea>
+
+                    </div>
+
+                    <button class="btn btn-primary-custom">
+                        Submit Modification Request
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,9 +1,100 @@
-<section class="loyalty-hero panel">
-    <div><p class="eyebrow">Royal Rewards</p><h2>18,420 points</h2><p>Gold Elite · 1,580 points from Platinum</p></div>
-    <div class="tier-ring"><span>84%</span></div>
-</section>
-<section class="content-grid two-col">
-    <article class="panel"><h3>Tier progress</h3><div class="progress luxury-progress"><div class="progress-bar" style="width:84%"></div></div><div class="reward-row"><span>Current tier</span><strong>Gold Elite</strong></div><div class="reward-row"><span>Next tier</span><strong>Platinum</strong></div></article>
-    <article class="panel"><h3>Redeem points</h3><div class="redeem-grid"><button class="action-card"><i class="bi bi-cup-hot"></i><span>Breakfast</span></button><button class="action-card"><i class="bi bi-stars"></i><span>Spa credit</span></button><button class="action-card"><i class="bi bi-door-open"></i><span>Upgrade</span></button></div></article>
-</section>
-<section class="panel"><h3>Rewards history</h3><div class="table-responsive"><table class="table luxury-table"><tbody><tr><td>Suite booking bonus</td><td>May 2026</td><td>+2,200</td></tr><tr><td>Spa credit redemption</td><td>Apr 2026</td><td>-4,000</td></tr><tr><td>Executive King stay</td><td>Apr 2026</td><td>+920</td></tr></tbody></table></div></section>
+<div class="container-fluid">
+
+    <div class="dashboard-card mb-4">
+        <h3>Loyalty Points</h3>
+        <p>View earned points, redemption history and available balance.</p>
+    </div>
+
+    <!-- Balance Cards -->
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+
+            <div class="summary-card text-center">
+
+                <i class="fa-solid fa-gift"></i>
+
+                <h3>450</h3>
+
+                <p>Current Balance</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="summary-card text-center">
+
+                <i class="fa-solid fa-arrow-trend-up"></i>
+
+                <h3>700</h3>
+
+                <p>Total Earned</p>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="summary-card text-center">
+
+                <i class="fa-solid fa-ticket"></i>
+
+                <h3>250</h3>
+
+                <p>Total Redeemed</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Loyalty History -->
+    <div class="dashboard-card">
+
+        <h5 class="mb-4">Points History</h5>
+
+        <div class="table-responsive custom-table">
+
+            <table class="table align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Booking</th>
+                        <th>Earned</th>
+                        <th>Used</th>
+                        <th>Balance</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>#BK1001</td>
+                        <td>+200</td>
+                        <td>0</td>
+                        <td>200</td>
+                        <td>10 Apr 2026</td>
+                    </tr>
+
+                    <tr>
+                        <td>#BK1021</td>
+                        <td>+250</td>
+                        <td>0</td>
+                        <td>450</td>
+                        <td>14 May 2026</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>

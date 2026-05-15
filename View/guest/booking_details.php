@@ -1,12 +1,133 @@
-<section class="section-heading"><div><p class="eyebrow">Reservation</p><h2>Booking RC-2026-58291</h2></div><span class="status success">Confirmed</span></section>
-<section class="content-grid two-col">
-    <article class="panel"><h3>Stay details</h3><div class="detail-stack"><span>Room: Ocean Premier Suite</span><span>Dates: May 24 - May 28, 2026</span><span>Guests: 2 adults</span><span>Arrival: After 6:00 PM</span></div></article>
-    <article class="panel"><h3>Payment summary</h3><div class="summary-line"><span>Subtotal</span><strong>$1,840</strong></div><div class="summary-line"><span>Taxes</span><strong>$221</strong></div><div class="summary-line gold-row"><span>Rewards</span><strong>-$120</strong></div><div class="summary-total"><span>Paid</span><strong>$1,941</strong></div></article>
-</section>
-<section class="timeline panel">
-    <h3>Booking timeline</h3>
-    <div class="timeline-item done"><span></span><div><strong>Confirmed</strong><p>Reservation secured on May 15, 2026.</p></div></div>
-    <div class="timeline-item"><span></span><div><strong>Pre-arrival concierge</strong><p>Preferences will be reviewed 48 hours before check-in.</p></div></div>
-    <div class="timeline-item"><span></span><div><strong>Check-in</strong><p>Digital check-in opens May 23, 2026.</p></div></div>
-</section>
-<section class="panel policy-card"><h3>Cancellation policy</h3><p>Cancel free of charge before May 22, 2026. Later cancellations may be charged the first night plus applicable taxes.</p></section>
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="dashboard-card mb-4">
+        <h3>Booking Details</h3>
+        <p>Complete information about your hotel reservation.</p>
+    </div>
+
+    <div class="row">
+
+        <!-- Booking Info -->
+        <div class="col-lg-8 mb-4">
+
+            <div class="dashboard-card">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+
+                    <h4>Booking #BK1021</h4>
+
+                    <span class="badge bg-success">
+                        Confirmed
+                    </span>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Room Type:</strong>
+                        <p>Executive Suite</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Total Guests:</strong>
+                        <p>2 Guests</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Check In:</strong>
+                        <p>18 May 2026</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Check Out:</strong>
+                        <p>21 May 2026</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Payment Method:</strong>
+                        <p>bKash</p>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Booking Date:</strong>
+                        <p>12 May 2026</p>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h5 class="mb-3">Special Requests</h5>
+
+                <p>
+                    Please arrange early check-in if possible.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Booking Summary -->
+        <div class="col-lg-4">
+
+            <div class="dashboard-card mb-4">
+
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
+                     class="img-fluid rounded mb-3"
+                     alt="Room">
+
+                <h5>Executive Suite</h5>
+
+                <p class="text-muted mb-3">
+                    Luxury suite with balcony and premium facilities.
+                </p>
+
+                <hr>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Total Nights</span>
+                    <strong>3</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Room Charge</span>
+                    <strong>৳28,500</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Discount</span>
+                    <strong>- ৳500</strong>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between">
+                    <h5>Total Paid</h5>
+                    <h5>৳28,000</h5>
+                </div>
+
+            </div>
+
+            <!-- Cancellation Policy -->
+            <div class="dashboard-card">
+
+                <h5 class="mb-3">Cancellation Policy</h5>
+
+                <p class="mb-3">
+                    Free cancellation is available up to 2 days before check-in.
+                </p>
+
+                <button class="btn btn-outline-danger w-100">
+                    Cancel Booking
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

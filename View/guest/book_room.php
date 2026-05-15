@@ -1,6 +1,4 @@
 <div class="container-fluid">
-
-    <!-- Page Title -->
     <div class="dashboard-card mb-4">
         <h3>Book Room</h3>
         <p>Confirm your booking details and complete reservation.</p>

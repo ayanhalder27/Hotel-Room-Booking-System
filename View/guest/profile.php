@@ -1,18 +1,134 @@
-<section class="section-heading"><div><p class="eyebrow">Account</p><h2>Guest profile</h2></div></section>
-<section class="profile-grid">
-    <article class="panel profile-card">
-        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&q=80" alt="Guest">
-        <h3>Ariana Rahman</h3><p>Gold Elite Member</p>
-        <button class="btn btn-soft w-100">Upload Photo</button>
-    </article>
-    <form class="panel luxury-form">
-        <h3>Personal information</h3>
-        <div class="form-grid"><label>First name<input class="form-control" value="Ariana"></label><label>Last name<input class="form-control" value="Rahman"></label><label>Phone<input class="form-control" value="+880 1712 345678"></label><label>Country<input class="form-control" value="Bangladesh"></label></div>
-        <button class="btn btn-navy" type="button" data-toast="Profile changes ready for backend save.">Save Changes</button>
-    </form>
-</section>
-<section class="panel luxury-form">
-    <h3>Security</h3>
-    <div class="form-grid"><label>Current password<input class="form-control" type="password"></label><label>New password<input class="form-control" type="password"></label></div>
-    <div class="notice-box"><i class="bi bi-shield-check"></i> Two-factor verification and trusted device controls can be connected to your RBAC layer later.</div>
-</section>
+<div class="container-fluid">
+
+    <div class="dashboard-card mb-4">
+        <h3>My Profile</h3>
+        <p>Manage your personal information and account settings.</p>
+    </div>
+
+    <div class="row">
+
+        <!-- Profile Card -->
+        <div class="col-lg-4 mb-4">
+
+            <div class="dashboard-card text-center">
+
+                <img src="https://i.pravatar.cc/150"
+                     class="rounded-circle mb-3"
+                     width="120"
+                     height="120"
+                     alt="Profile">
+
+                <h4>Niloy Ahmed</h4>
+
+                <p class="text-muted">
+                    Guest Account
+                </p>
+
+                <button class="btn btn-outline-primary">
+                    Upload Photo
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Profile Form -->
+        <div class="col-lg-8">
+
+            <div class="dashboard-card">
+
+                <h5 class="mb-4">Update Information</h5>
+
+                <form>
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="Niloy Ahmed">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Username</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="niloy123">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                   class="form-control"
+                                   value="niloy@gmail.com">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="01700000000">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Nationality</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="Bangladeshi">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">National ID</label>
+                            <input type="text"
+                                   class="form-control"
+                                   value="1234567890">
+                        </div>
+
+                        <div class="col-12">
+                            <button class="btn btn-primary-custom">
+                                Update Profile
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- Password -->
+            <div class="dashboard-card mt-4">
+
+                <h5 class="mb-4">Change Password</h5>
+
+                <form>
+
+                    <div class="mb-3">
+                        <label class="form-label">Current Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control">
+                    </div>
+
+                    <button class="btn btn-primary-custom">
+                        Change Password
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

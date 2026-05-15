@@ -1,14 +1,116 @@
-<section class="section-heading"><div><p class="eyebrow">Guest voice</p><h2>Reviews</h2></div></section>
-<section class="content-grid two-col">
-    <form class="panel luxury-form">
-        <h3>Write a review</h3>
-        <div class="stars-input"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i></div>
-        <label>Stay<select class="form-select"><option>Executive King · Apr 2026</option><option>Garden Deluxe · Mar 2026</option></select></label>
-        <label>Your review<textarea class="form-control" rows="5" placeholder="Share the details that made your stay memorable."></textarea></label>
-        <button class="btn btn-navy" type="button" data-toast="Review saved as draft.">Publish Review</button>
-    </form>
-    <div class="review-stack">
-        <article class="panel review-card"><div class="stars">★★★★★</div><h3>Exceptional service</h3><p>The executive lounge team anticipated every detail. Beautifully quiet room and seamless check-in.</p><div><button class="text-btn">Edit</button><button class="text-btn danger">Delete</button></div></article>
-        <article class="panel review-card"><div class="stars">★★★★☆</div><h3>Lovely garden view</h3><p>Comfortable stay and excellent breakfast. Would love more evening dining options.</p><div><button class="text-btn">Edit</button><button class="text-btn danger">Delete</button></div></article>
+<div class="container-fluid">
+
+    <div class="dashboard-card mb-4">
+        <h3>Reviews & Ratings</h3>
+        <p>Share your hotel experience and manage your reviews.</p>
     </div>
-</section>
+
+    <!-- Review Form -->
+    <div class="dashboard-card mb-4">
+
+        <h5 class="mb-4">Write Review</h5>
+
+        <form>
+
+            <div class="row g-3">
+
+                <div class="col-md-6">
+                    <label class="form-label">Booking</label>
+
+                    <select class="form-select">
+                        <option>#BK1001 - Executive Suite</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Overall Rating</label>
+
+                    <select class="form-select">
+                        <option>5 Star</option>
+                        <option>4 Star</option>
+                        <option>3 Star</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Cleanliness Rating</label>
+
+                    <select class="form-select">
+                        <option>5 Star</option>
+                        <option>4 Star</option>
+                        <option>3 Star</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label">Service Rating</label>
+
+                    <select class="form-select">
+                        <option>5 Star</option>
+                        <option>4 Star</option>
+                        <option>3 Star</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="form-label">Review</label>
+
+                    <textarea class="form-control"
+                              rows="5"
+                              placeholder="Write your review..."></textarea>
+                </div>
+
+                <div class="col-12">
+                    <button class="btn btn-primary-custom">
+                        Submit Review
+                    </button>
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- Review History -->
+    <div class="dashboard-card">
+
+        <h5 class="mb-4">My Reviews</h5>
+
+        <div class="mb-4 border-bottom pb-4">
+
+            <div class="d-flex justify-content-between mb-2">
+
+                <h5>Executive Suite</h5>
+
+                <span class="badge bg-success">
+                    5 Star
+                </span>
+
+            </div>
+
+            <p class="text-muted">
+                Stayed on 10 Apr 2026
+            </p>
+
+            <p>
+                Excellent room quality and very professional hotel service.
+            </p>
+
+            <div class="d-flex gap-2">
+
+                <button class="btn btn-sm btn-outline-primary">
+                    Edit
+                </button>
+
+                <button class="btn btn-sm btn-outline-danger">
+                    Delete
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,20 +1,73 @@
-<section class="section-heading"><div><p class="eyebrow">Finance</p><h2>Billing history</h2></div></section>
-<section class="metric-grid">
-    <article class="metric-card"><i class="bi bi-receipt"></i><span>Invoices</span><strong>12</strong><small>2026</small></article>
-    <article class="metric-card"><i class="bi bi-credit-card"></i><span>Paid</span><strong>$4,890</strong><small>Year to date</small></article>
-    <article class="metric-card"><i class="bi bi-gift"></i><span>Rewards saved</span><strong>$420</strong><small>Gold Elite</small></article>
-    <article class="metric-card"><i class="bi bi-shield-check"></i><span>Payment status</span><strong>Clear</strong><small>No balance due</small></article>
-</section>
-<section class="panel">
-    <div class="panel-header"><div><p class="eyebrow">Receipts</p><h3>Invoice history</h3></div></div>
-    <div class="table-responsive">
-        <table class="table luxury-table align-middle">
-            <thead><tr><th>Invoice</th><th>Stay</th><th>Date</th><th>Amount</th><th></th></tr></thead>
-            <tbody>
-                <tr><td>INV-58291</td><td>Ocean Premier Suite</td><td>May 15, 2026</td><td>$1,941</td><td><button class="btn btn-soft btn-sm">Receipt</button></td></tr>
-                <tr><td>INV-44102</td><td>Executive King</td><td>Apr 14, 2026</td><td>$920</td><td><button class="btn btn-soft btn-sm">Receipt</button></td></tr>
-                <tr><td>INV-39214</td><td>Garden Deluxe</td><td>Mar 06, 2026</td><td>$610</td><td><button class="btn btn-soft btn-sm">Receipt</button></td></tr>
-            </tbody>
-        </table>
+<div class="container-fluid">
+
+    <div class="dashboard-card mb-4">
+        <h3>Billing History</h3>
+        <p>View all invoices, payment history and downloadable receipts.</p>
     </div>
-</section>
+
+    <div class="dashboard-card">
+
+        <div class="table-responsive custom-table">
+
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                    <tr>
+                        <th>Invoice ID</th>
+                        <th>Booking</th>
+                        <th>Total Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>#INV201</td>
+                        <td>#BK1021</td>
+                        <td>৳28,000</td>
+                        <td>bKash</td>
+
+                        <td>
+                            <span class="badge bg-success">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-primary">
+                                Download
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>#INV202</td>
+                        <td>#BK1025</td>
+                        <td>৳18,000</td>
+                        <td>Cash</td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                Pending
+                            </span>
+                        </td>
+
+                        <td>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                View
+                            </button>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
