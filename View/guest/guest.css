@@ -1,0 +1,350 @@
+/* Custom Premium Variable Declarations Rules Master File */
+:root {
+  --luxury-navy: #0f1e36;
+  --luxury-gold: #c5a880;
+  --luxury-gold-dark: #a48960;
+  --luxury-gold-light: #f7f4ef;
+  --slate-dark: #1e293b;
+  --canvas-bg: #f8fafc;
+  --sidebar-width: 280px;
+  --top-navbar-height: 80px;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--canvas-bg) !important;
+  color: var(--slate-dark);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.luxury-title {
+  font-family: "Inter", sans-serif;
+  color: var(--luxury-navy);
+}
+
+/* Master Grid Structure Layout Matrix */
+.dashboard-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.sidebar-wrapper {
+  width: var(--sidebar-width);
+  background-color: var(--luxury-navy);
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-column: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-body-content {
+  flex-grow: 1;
+  margin-left: var(--sidebar-width);
+  padding: 32px;
+  padding-top: calc(var(--top-navbar-height) + 32px);
+  width: calc(100% - var(--sidebar-width));
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Luxury Branding Container Header Elements */
+.sidebar-brand {
+  height: var(--top-navbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 14px;
+}
+
+.brand-logo {
+  font-size: 24px;
+}
+
+.brand-text h5 {
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.brand-text span {
+  color: var(--luxury-gold);
+  font-size: 10px;
+  letter-spacing: 2px;
+  display: block;
+}
+
+/* Sidebar Navigation Items Properties rules */
+.sidebar-nav {
+  padding: 24px 16px;
+  flex-grow: 1;
+}
+
+.sidebar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.65);
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+}
+
+.sidebar-nav .nav-link i {
+  font-size: 16px;
+  width: 20px;
+}
+
+.sidebar-nav .nav-link:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-nav .nav-link.active {
+  color: #0f1e36 !important;
+  background-color: var(--luxury-gold) !important;
+  font-weight: 600;
+}
+
+/* Modern Fixed Top Navbar Component Rules */
+.top-navbar {
+  height: var(--top-navbar-height);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(15, 30, 54, 0.06);
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: calc(100% - var(--sidebar-width));
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-actions-panel {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.announcement-pill {
+  background-color: var(--luxury-gold-light);
+  border: 1px solid rgba(197, 168, 128, 0.3);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 13px;
+  color: var(--luxury-navy);
+  cursor: pointer;
+}
+
+.notification-bell-btn {
+  font-size: 20px;
+  color: var(--luxury-navy);
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.vertical-divider {
+  width: 1px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.user-profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.avatar-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--luxury-gold);
+}
+
+/* Luxury UI Component Designs Rules Block */
+.bg-gradient-navy {
+  background: linear-gradient(135deg, #0f1e36 0%, #1e3a60 100%);
+}
+
+.text-navy {
+  color: var(--luxury-navy);
+}
+.text-gold {
+  color: var(--luxury-gold);
+}
+.bg-navy {
+  background-color: var(--luxury-navy);
+}
+.bg-gold {
+  background-color: var(--luxury-gold);
+}
+
+.bg-navy-subtle {
+  background-color: rgba(15, 30, 54, 0.06);
+}
+.bg-gold-subtle {
+  background-color: rgba(197, 168, 128, 0.12);
+}
+
+.badge-tier-gold {
+  color: var(--luxury-gold-dark);
+  font-weight: 700;
+}
+
+/* Premium Typography Controls */
+.text-xs {
+  font-size: 11px !important;
+}
+.text-xxs {
+  font-size: 9.5px !important;
+}
+.text-sm {
+  font-size: 13.5px !important;
+}
+.text-md {
+  font-size: 15px !important;
+}
+.tracking-wider {
+  letter-spacing: 0.8px;
+}
+.tracking-widest {
+  letter-spacing: 1.5px;
+}
+
+/* Custom Luxury Input Component Elements Elements Blueprint */
+.form-input {
+  width: 100%;
+  padding: 10px 16px;
+  font-size: 14px;
+  border: 1px solid rgba(15, 30, 54, 0.15);
+  background-color: #fff;
+  border-radius: 6px;
+  color: var(--slate-dark);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus {
+  border-color: var(--luxury-gold-dark);
+  box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.2);
+}
+
+/* Component Level Custom Stylings Cards Elements */
+.kpi-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+.kpi-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.luxury-hero-banner {
+  background-image:
+    linear-gradient(rgba(15, 30, 54, 0.4), rgba(15, 30, 54, 0.7)),
+    url("https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+  padding: 48px;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-overlay-card {
+  max-width: 600px;
+}
+
+/* Room Cards Listings Horizontal Styling rule */
+.card-room-horizontal {
+  border-radius: 14px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+.card-room-horizontal:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 30, 54, 0.08) !important;
+}
+
+/* Custom Luxury Pills Nav Components design rules */
+.custom-luxury-pills .nav-link {
+  color: var(--luxury-navy);
+  background: transparent;
+  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 13.5px;
+}
+.custom-luxury-pills .nav-link.active {
+  background-color: var(--luxury-navy) !important;
+  color: #fff !important;
+}
+
+/* Structural Engine Animations View Stages Rules rules */
+.content-stage-fade {
+  animation: stageShiftAnimate 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes stageShiftAnimate {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Structural Breakpoints Core Framework System */
+@media (max-width: 991.98px) {
+  .sidebar-wrapper {
+    left: calc(-1 * var(--sidebar-width));
+  }
+  .sidebar-wrapper.mobile-revealed {
+    left: 0;
+  }
+  .main-body-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+    padding-top: calc(var(--top-navbar-height) + 20px);
+  }
+  .top-navbar {
+    width: 100%;
+    padding: 0 20px;
+  }
+}

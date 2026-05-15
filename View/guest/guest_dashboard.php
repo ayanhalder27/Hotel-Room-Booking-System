@@ -1,5 +1,5 @@
-<?php include '../layout/header.php'; ?>
-<?php include '../layout/sidebar_guest.php'; ?>
+<?php include '../guest/layout/header.php'; ?>
+<?php include '../guest/layout/sidebar_guest.php'; ?>
 
 <main class="main-body-content">
     <header class="top-navbar">
@@ -51,4 +51,4 @@
         </div>
 </main>
 
-<?php include '../layout/footer.php'; ?>
+<?php include '../guest/layout/footer.php'; ?>
