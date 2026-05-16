@@ -1,116 +1,88 @@
-<div class="container-fluid">
-    <div class="dashboard-card mb-4">
-        <h3>Book Room</h3>
-        <p>Confirm your booking details and complete reservation.</p>
-    </div>
+<div id="booking-section">
 
-    <div class="row">
+    <div class="dashboard-card">
 
-        <!-- Booking Form -->
-        <div class="col-lg-8 mb-4">
+        <h3 class="mb-4">Book Room</h3>
 
-            <div class="dashboard-card">
+        <div id="booking-message"></div>
 
-                <form>
+        <form id="booking-form">
 
-                    <div class="row g-3">
+            <input type="hidden"
+                   name="room_type_id"
+                   id="booking_room_type_id">
 
-                        <div class="col-md-6">
-                            <label class="form-label">Check In Date</label>
-                            <input type="date" class="form-control">
-                        </div>
+            <div class="mb-4">
 
-                        <div class="col-md-6">
-                            <label class="form-label">Check Out Date</label>
-                            <input type="date" class="form-control">
-                        </div>
+                <h5 id="selected-room-name">
+                    No Room Selected
+                </h5>
 
-                        <div class="col-md-6">
-                            <label class="form-label">Number of Guests</label>
-
-                            <select class="form-select">
-                                <option>1 Guest</option>
-                                <option>2 Guests</option>
-                                <option>3 Guests</option>
-                                <option>4 Guests</option>
-                            </select>
-                        </div>
-
-                        <div class="col-md-6">
-                            <label class="form-label">Payment Method</label>
-
-                            <select class="form-select">
-                                <option>Cash</option>
-                                <option>Card</option>
-                                <option>bKash</option>
-                                <option>Nagad</option>
-                            </select>
-                        </div>
-
-                        <div class="col-12">
-                            <label class="form-label">Special Requests</label>
-
-                            <textarea class="form-control"
-                                      rows="4"
-                                      placeholder="Write your special requests..."></textarea>
-                        </div>
-
-                    </div>
-
-                </form>
+                <p>
+                    Price Per Night:
+                    ৳<span id="selected-room-price">0</span>
+                </p>
 
             </div>
 
-        </div>
+            <div class="row g-3">
 
-        <!-- Booking Summary -->
-        <div class="col-lg-4">
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Check In Date
+                    </label>
 
-            <div class="dashboard-card">
-
-                <h4 class="mb-4">Booking Summary</h4>
-
-                <div class="mb-3">
-
-                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945"
-                         class="img-fluid rounded"
-                         alt="Room">
-
+                    <input type="date"
+                           class="form-control"
+                           name="checkin_date"
+                           required>
                 </div>
 
-                <h5>Executive Suite</h5>
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Check Out Date
+                    </label>
 
-                <hr>
-
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Price Per Night</span>
-                    <strong>৳9500</strong>
+                    <input type="date"
+                           class="form-control"
+                           name="checkout_date"
+                           required>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Total Nights</span>
-                    <strong>3</strong>
+                <div class="col-md-6">
+                    <label class="form-label">
+                        Number of Guests
+                    </label>
+
+                    <input type="number"
+                           class="form-control"
+                           name="num_guests"
+                           min="1"
+                           required>
                 </div>
 
-                <div class="d-flex justify-content-between mb-2">
-                    <span>Loyalty Discount</span>
-                    <strong>- ৳500</strong>
+                <div class="col-12">
+
+                    <label class="form-label">
+                        Special Requests
+                    </label>
+
+                    <textarea class="form-control"
+                              rows="4"
+                              name="special_requests"></textarea>
+
                 </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-between mb-4">
-                    <h5>Total Amount</h5>
-                    <h5>৳28000</h5>
-                </div>
-
-                <button class="btn btn-primary-custom w-100">
-                    Confirm Booking
-                </button>
 
             </div>
 
-        </div>
+            <button type="submit"
+                    class="btn btn-primary-custom mt-4">
+
+                Confirm Booking
+
+            </button>
+
+        </form>
 
     </div>
 

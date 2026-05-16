@@ -33,7 +33,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 header("Location: ../View/housekeeping.html");
             }
             else if($role == "receptionist"){
-                header("Location: ../View/receptionist.html");
+                header("Location: ../View/Receptionist/dashboard.php");
             }
             else{
                 header("Location: ../View/login.html?error=invalid_role");

@@ -21,4 +21,4 @@ if ($action === 'load_dashboard') {
     $announcements = db::FetchAll("SELECT title, content, created_at FROM announcements WHERE expires_at > NOW() OR expires_at IS NULL ORDER BY created_at DESC LIMIT 5");
 
     echo json_encode(['success' => true, 'stats' => $stats, 'announcements' => $announcements ?: []]);
-} 
+}
