@@ -1,4 +1,7 @@
-// LOAD PAGE
+// ==========================================
+// LOAD DYNAMIC PAGE
+// ==========================================
+
 function loadPage(page) {
   let xhr = new XMLHttpRequest();
 
@@ -8,12 +11,10 @@ function loadPage(page) {
     if (this.status == 200) {
       document.getElementById("content-area").innerHTML = this.responseText;
 
-      // AFTER PAGE LOAD
-      if (page == "bookings.php") {
+      // LOAD PAGE DATA
+      if (page === "bookings.php") {
         loadBookings();
-      }
-
-      if (page == "rooms.php") {
+      } else if (page === "rooms.php") {
         loadRooms();
       }
     }
@@ -22,7 +23,10 @@ function loadPage(page) {
   xhr.send();
 }
 
+// ==========================================
 // LOAD BOOKINGS
+// ==========================================
+
 function loadBookings() {
   let xhr = new XMLHttpRequest();
 
@@ -36,60 +40,92 @@ function loadBookings() {
     if (this.status == 200) {
       let bookings = JSON.parse(this.responseText);
 
-      let output = "";
+      renderBookingTable(bookings);
 
-      bookings.forEach(function (booking) {
-        output += `
-                    <tr>
-
-                        <td>${booking.id}</td>
-
-                        <td>${booking.name}</td>
-
-                        <td>${booking.room_number}</td>
-
-                        <td>${booking.checkin_date}</td>
-
-                        <td>${booking.checkout_date}</td>
-
-                        <td>${booking.status}</td>
-
-                        <td>
-
-                            <button
-                                class="btn btn-success btn-sm"
-                                onclick="checkIn(${booking.id})"
-                            >
-                                Check In
-                            </button>
-
-                            <button
-                                class="btn btn-danger btn-sm"
-                                onclick="checkOut(${booking.id})"
-                            >
-                                Check Out
-                            </button>
-
-                        </td>
-
-                    </tr>
-                `;
-      });
-
-      document.getElementById("bookingTableBody").innerHTML = output;
-
-      liveSearch();
+      initializeLiveSearch();
     }
   };
 
   xhr.send();
 }
 
+// ==========================================
+// RENDER BOOKING TABLE
+// ==========================================
+
+function renderBookingTable(bookings) {
+  let tableBody = document.getElementById("bookingTableBody");
+
+  if (!tableBody) {
+    return;
+  }
+
+  let output = "";
+
+  if (bookings.length === 0) {
+    output = `
+            <tr>
+                <td colspan="7" class="text-center">
+                    No booking found
+                </td>
+            </tr>
+        `;
+  } else {
+    bookings.forEach(function (booking) {
+      output += `
+                <tr>
+
+                    <td>${booking.id}</td>
+
+                    <td>${booking.name}</td>
+
+                    <td>${booking.room_number}</td>
+
+                    <td>${booking.checkin_date}</td>
+
+                    <td>${booking.checkout_date}</td>
+
+                    <td>${booking.status}</td>
+
+                    <td>
+
+                        <button
+                            class="btn btn-success btn-sm me-1"
+                            onclick="checkIn(${booking.id})"
+                        >
+                            Check In
+                        </button>
+
+
+                        <button
+                            class="btn btn-danger btn-sm"
+                            onclick="checkOut(${booking.id})"
+                        >
+                            Check Out
+                        </button>
+
+                    </td>
+
+                </tr>
+            `;
+    });
+  }
+
+  tableBody.innerHTML = output;
+}
+
+// ==========================================
 // LIVE SEARCH
-function liveSearch() {
+// ==========================================
+
+function initializeLiveSearch() {
   let searchInput = document.getElementById("bookingSearch");
 
-  searchInput.addEventListener("keyup", function () {
+  if (!searchInput) {
+    return;
+  }
+
+  searchInput.onkeyup = function () {
     let search = this.value;
 
     let xhr = new XMLHttpRequest();
@@ -97,7 +133,7 @@ function liveSearch() {
     xhr.open(
       "GET",
       "../../Controller/ReceptionistController/SearchBooking.php?search=" +
-        search,
+        encodeURIComponent(search),
       true,
     );
 
@@ -105,55 +141,18 @@ function liveSearch() {
       if (this.status == 200) {
         let bookings = JSON.parse(this.responseText);
 
-        let output = "";
-
-        bookings.forEach(function (booking) {
-          output += `
-                        <tr>
-
-                            <td>${booking.id}</td>
-
-                            <td>${booking.name}</td>
-
-                            <td>${booking.room_number}</td>
-
-                            <td>${booking.checkin_date}</td>
-
-                            <td>${booking.checkout_date}</td>
-
-                            <td>${booking.status}</td>
-
-                            <td>
-
-                                <button
-                                    class="btn btn-success btn-sm"
-                                    onclick="checkIn(${booking.id})"
-                                >
-                                    Check In
-                                </button>
-
-                                <button
-                                    class="btn btn-danger btn-sm"
-                                    onclick="checkOut(${booking.id})"
-                                >
-                                    Check Out
-                                </button>
-
-                            </td>
-
-                        </tr>
-                    `;
-        });
-
-        document.getElementById("bookingTableBody").innerHTML = output;
+        renderBookingTable(bookings);
       }
     };
 
     xhr.send();
-  });
+  };
 }
 
+// ==========================================
 // CHECK IN
+// ==========================================
+
 function checkIn(bookingId) {
   let formData = new FormData();
 
@@ -170,13 +169,18 @@ function checkIn(bookingId) {
       alert(response.message);
 
       loadBookings();
+
+      loadRooms();
     }
   };
 
   xhr.send(formData);
 }
 
+// ==========================================
 // CHECK OUT
+// ==========================================
+
 function checkOut(bookingId) {
   let formData = new FormData();
 
@@ -205,7 +209,10 @@ function checkOut(bookingId) {
   xhr.send(formData);
 }
 
-// LOAD ROOMS
+// ==========================================
+// LOAD ROOM STATUS
+// ==========================================
+
 function loadRooms() {
   let xhr = new XMLHttpRequest();
 
@@ -215,58 +222,81 @@ function loadRooms() {
     true,
   );
 
-  // CREATE WALK-IN BOOKING
-  function createWalkinBooking() {
-    let form = document.getElementById("walkinForm");
-
-    let formData = new FormData(form);
-
-    let xhr = new XMLHttpRequest();
-
-    xhr.open(
-      "POST",
-      "../../Controller/ReceptionistController/WalkinBooking.php",
-      true,
-    );
-
-    xhr.onload = function () {
-      if (this.status == 200) {
-        let response = JSON.parse(this.responseText);
-
-        alert(response.message);
-
-        form.reset();
-      }
-    };
-
-    xhr.send(formData);
-  }
-
   xhr.onload = function () {
     if (this.status == 200) {
       let rooms = JSON.parse(this.responseText);
 
+      let tableBody = document.getElementById("roomTableBody");
+
+      if (!tableBody) {
+        return;
+      }
+
       let output = "";
 
-      rooms.forEach(function (room) {
-        output += `
+      if (rooms.length === 0) {
+        output = `
                     <tr>
-
-                        <td>${room.room_number}</td>
-
-                        <td>${room.room_type}</td>
-
-                        <td>${room.floor}</td>
-
-                        <td>${room.status}</td>
-
+                        <td colspan="4" class="text-center">
+                            No room data found
+                        </td>
                     </tr>
                 `;
-      });
+      } else {
+        rooms.forEach(function (room) {
+          output += `
+                        <tr>
 
-      document.getElementById("roomTableBody").innerHTML = output;
+                            <td>${room.room_number}</td>
+
+                            <td>${room.room_type}</td>
+
+                            <td>${room.floor}</td>
+
+                            <td class="${room.status}">
+                                ${room.status}
+                            </td>
+
+                        </tr>
+                    `;
+        });
+      }
+
+      tableBody.innerHTML = output;
     }
   };
 
   xhr.send();
+}
+
+// ==========================================
+// WALK-IN BOOKING
+// ==========================================
+
+function createWalkinBooking() {
+  let form = document.getElementById("walkinForm");
+
+  let formData = new FormData(form);
+
+  let xhr = new XMLHttpRequest();
+
+  xhr.open(
+    "POST",
+    "../../Controller/ReceptionistController/WalkinBooking.php",
+    true,
+  );
+
+  xhr.onload = function () {
+    if (this.status == 200) {
+      let response = JSON.parse(this.responseText);
+
+      alert(response.message);
+
+      if (response.status === "success") {
+        form.reset();
+      }
+    }
+  };
+
+  xhr.send(formData);
 }

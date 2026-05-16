@@ -19,6 +19,23 @@ class Service extends db{
         return self::FetchAll($query);
     }
 
+    public static function updateServiceStatus(
+    $serviceId,
+    $status
+){
+
+    $query = "UPDATE service_requests
+              SET status=?
+              WHERE id=?";
+
+    return self::Execute(
+        $query,
+        $status,
+        $serviceId
+    );
+
+}
+
 }
 
 ?>

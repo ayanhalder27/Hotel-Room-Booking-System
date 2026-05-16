@@ -5,29 +5,102 @@
     </div>
 
 
-    <table class="table table-bordered table-hover">
+    <div class="table-section">
 
-        <thead class="table-dark">
-            <tr>
-                <th>Request ID</th>
-                <th>Guest</th>
-                <th>Room</th>
-                <th>Service Type</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+        <table class="table table-bordered table-hover">
 
-        <tbody id="serviceTableBody">
+            <thead class="table-dark">
 
-            <tr>
-                <td colspan="6" class="text-center">
-                    Service request data will load here.
-                </td>
-            </tr>
+                <tr>
 
-        </tbody>
+                    <th>ID</th>
 
-    </table>
+                    <th>Guest ID</th>
+
+                    <th>Room ID</th>
+
+                    <th>Service Type</th>
+
+                    <th>Description</th>
+
+                    <th>Status</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                <tr>
+
+                    <td>5001</td>
+
+                    <td>1002</td>
+
+                    <td>3002</td>
+
+                    <td>Laundry</td>
+
+                    <td>Urgent laundry needed</td>
+
+                    <td>
+                        <span class="badge bg-warning">
+                            Pending
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn btn-success btn-sm"
+                        >
+                            Complete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+
+
+                <tr>
+
+                    <td>5002</td>
+
+                    <td>1003</td>
+
+                    <td>3003</td>
+
+                    <td>Room Service</td>
+
+                    <td>Dinner order requested</td>
+
+                    <td>
+                        <span class="badge bg-success">
+                            Completed
+                        </span>
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn btn-secondary btn-sm"
+                            disabled
+                        >
+                            Done
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
