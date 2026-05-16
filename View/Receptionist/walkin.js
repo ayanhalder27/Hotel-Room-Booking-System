@@ -1,84 +1,97 @@
-const WALKIN_Controler = "../../Controler/walkin_Controler.php";
-const GUEST_Controler = "../../Controler/guest_register_Controler.php";
-async function loadWalkinRoomTypes() {
+// Load room types and then available rooms
+async function loadTypes() {
   try {
-    const res = await getJson(`${WALKIN_Controler}?action=room_types`);
-    if (roomTypeSelect)
-      roomTypeSelect.innerHTML = (res.data || [])
-        .map(
-          (r) =>
-            `<option value="${r.id}">${r.name} - ${r.price_per_night}</option>`,
-        )
-        .join("");
-    loadAvailableWalkinRooms();
-  } catch (e) {
-    showAlert("walkinAlert", "Room type loading failed.", "error");
+    const response = await api("walkin_controller.php", {
+      action: "room_types",
+    });
+
+    qs("#roomTypeSelect").innerHTML = (response.data || [])
+      .map(
+        (type) => `
+                <option value="${type.id}">
+                    ${esc(type.name)} - ${money(type.price_per_night)}
+                </option>
+            `,
+      )
+      .join("");
+
+    await loadRooms();
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-async function loadAvailableWalkinRooms() {
-  if (!roomTypeSelect) return;
+
+// Load available rooms based on form inputs
+async function loadRooms() {
   try {
-    const res = await getJson(
-      `${WALKIN_Controler}?action=available_rooms&room_type_id=${roomTypeSelect.value}`,
-    );
-    walkinRoomSelect.innerHTML =
-      (res.data || [])
+    const form = qs("#walkinForm");
+
+    const response = await api("walkin_controller.php", {
+      action: "available_rooms",
+      room_type_id: form.room_type_id.value,
+      checkin_date: form.checkin_date.value,
+      checkout_date: form.checkout_date.value,
+    });
+
+    qs("#roomSelect").innerHTML =
+      (response.data || [])
         .map(
-          (r) =>
-            `<option value="${r.id}">${r.room_number} - Floor ${r.floor}</option>`,
+          (room) => `
+                <option value="${room.id}">
+                    ${esc(room.room_number)} - Floor ${room.floor}
+                </option>
+            `,
         )
         .join("") || '<option value="">No room available</option>';
-  } catch (e) {
-    showAlert("walkinAlert", "Available room loading failed.", "error");
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-async function submitWalkinBooking(e) {
-  e.preventDefault();
-  const data = new FormData(walkinForm);
-  data.append("action", "create_walkin");
-  try {
-    const res = await postForm(WALKIN_Controler, data);
-    showAlert("walkinAlert", res.message, res.success ? "success" : "error");
-    if (res.success) walkinForm.reset();
-  } catch (e) {
-    showAlert("walkinAlert", "Walk-in booking failed.", "error");
+
+// Handle form changes that affect room availability
+qs("#walkinForm")?.addEventListener("change", (e) => {
+  if (
+    ["room_type_id", "checkin_date", "checkout_date"].includes(e.target.name)
+  ) {
+    loadRooms();
   }
-}
-async function submitGuestRegister(e) {
-  e.preventDefault();
-  const data = new FormData(guestRegisterForm);
-  data.append("action", "create_guest");
-  try {
-    const res = await postForm(GUEST_Controler, data);
-    showAlert("guestAlert", res.message, res.success ? "success" : "error");
-    if (res.success) {
-      guestRegisterForm.reset();
-      loadGuests();
-    }
-  } catch (e) {
-    showAlert("guestAlert", "Guest registration failed.", "error");
-  }
-}
-async function loadGuests() {
-  if (!document.getElementById("guestTable")) return;
-  const q = guestSearch.value || "";
-  try {
-    const res = await getJson(
-      `${GUEST_Controler}?action=list&q=${encodeURIComponent(q)}`,
-    );
-    guestTable.innerHTML =
-      (res.data || [])
-        .map(
-          (r) =>
-            `<tr><td>${r.id}</td><td>${r.name}</td><td>${r.email}</td><td>${r.phone}</td><td>${r.id_number}</td><td>${badge(r.is_active == 1 ? "active" : "inactive")}</td></tr>`,
-        )
-        .join("") ||
-      '<tr><td colspan="6" class="empty">No guest found.</td></tr>';
-  } catch (e) {
-    showAlert("guestAlert", "Guest loading failed.", "error");
-  }
-}
-document.addEventListener("DOMContentLoaded", () => {
-  if (document.getElementById("walkinForm")) loadWalkinRoomTypes();
-  if (document.getElementById("guestTable")) loadGuests();
 });
+
+// Handle form submission for walk-in booking
+qs("#walkinForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const data = Object.fromEntries(new FormData(e.target));
+  data.action = "create";
+
+  try {
+    const response = await api("walkin_controller.php", data);
+    showAlert(response.message, response.success);
+
+    if (response.success) {
+      e.target.reset();
+    }
+  } catch (error) {
+    showAlert(error.message, false);
+  }
+});
+
+// Initialize form with default dates and load types
+(function initWalkinForm() {
+  const today = new Date().toISOString().slice(0, 10);
+
+  const checkinInput = qs('[name="checkin_date"]');
+  const checkoutInput = qs('[name="checkout_date"]');
+
+  if (checkinInput && !checkinInput.value) {
+    checkinInput.value = today;
+  }
+
+  if (checkoutInput && !checkoutInput.value) {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    checkoutInput.value = tomorrow.toISOString().slice(0, 10);
+  }
+
+  loadTypes();
+})();

@@ -1,8 +1,49 @@
-<h2 class="page-title">Guest Service Requests</h2>
-<p class="page-subtitle">Manage pending and active requests from occupied rooms.</p>
-<div id="serviceAlert" class="alert"></div>
-<section class="card">
-<div class="toolbar"><div class="filter-box"><input class="input" id="serviceSearch" placeholder="Search room, guest, service" onkeyup="loadServiceRequests()"><select class="select" id="serviceStatus" onchange="loadServiceRequests()"><option value="">All Status</option><option value="pending">Pending</option><option value="in_progress">In Progress</option><option value="completed">Completed</option></select></div><button class="btn btn-primary" onclick="loadServiceRequests()">Refresh</button></div>
-<div class="table-wrap"><table><thead><tr><th>ID</th><th>Guest</th><th>Room</th><th>Service</th><th>Description</th><th>Status</th><th>Requested</th><th>Action</th></tr></thead><tbody id="serviceTable"><tr><td colspan="8" class="empty">Loading...</td></tr></tbody></table></div>
+<section 
+    data-page-title="Service Requests" 
+    data-page-script="service_request.js"
+>
+    <h2 class="page-title">Service Requests</h2>
+    <p class="page-subtitle">
+        Live manage pending, in-progress, and completed guest service requests.
+    </p>
+
+    <!-- Alert box -->
+    <div id="alertBox" class="alert"></div>
+
+    <!-- Service requests card -->
+    <div class="card">
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <input 
+                class="input" 
+                id="searchInput" 
+                placeholder="Search guest, room, type"
+            >
+            <select class="select" id="statusFilter">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="in_progress">In Progress</option>
+                <option value="completed">Completed</option>
+            </select>
+            <button class="btn btn-primary" id="refreshBtn">Refresh</button>
+        </div>
+
+        <!-- Table -->
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Guest</th>
+                        <th>Room</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTable"></tbody>
+            </table>
+        </div>
+    </div>
 </section>
-<script src="service_request.js"></script>

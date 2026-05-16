@@ -1,65 +1,100 @@
-const CHECKIN_Controler = "../../Controler/checkin_Controler.php";
-async function searchCheckinBooking() {
-  const q = checkinSearch.value.trim();
-  if (!q)
-    return showAlert(
-      "checkinAlert",
-      "Enter booking ID or guest name.",
-      "error",
-    );
+// Load confirmed bookings and render them in the table
+async function loadBookings() {
   try {
-    const res = await getJson(
-      `${CHECKIN_Controler}?action=search&q=${encodeURIComponent(q)}`,
+    const searchQuery = qs("#searchInput").value;
+
+    const response = await api(
+      "checkin_controller.php",
+      {
+        action: "search",
+        q: searchQuery,
+      },
     );
-    if (!res.success) return showAlert("checkinAlert", res.message, "error");
-    checkinBookingTable.innerHTML =
-      (res.data || [])
-        .map(
-          (r) =>
-            `<tr><td>${r.id}</td><td>${r.guest_name}</td><td>${r.id_number}</td><td>${r.room_type}</td><td>${r.checkin_date} to ${r.checkout_date}</td><td>${badge(r.status)}</td><td><button class="btn btn-success" onclick="prepareCheckin(${r.id}, ${r.room_type_id})">Assign Room</button></td></tr>`,
-        )
-        .join("") ||
-      '<tr><td colspan="7" class="empty">No confirmed booking found.</td></tr>';
-  } catch (e) {
-    showAlert("checkinAlert", "Search failed.", "error");
+
+    if (!response.success) {
+      return showAlert(response.message, false);
+    }
+
+    const bookings = response.data;
+
+    const tableHTML = bookings.length
+      ? bookings.map(renderBookingRow).join("")
+      : '<tr><td colspan="7" class="empty">No confirmed bookings found</td></tr>';
+
+    qs("#bookingTable").innerHTML = tableHTML;
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-async function prepareCheckin(bookingIdValue, roomTypeId) {
-  bookingId.value = bookingIdValue;
-  assignRoomCard.style.display = "block";
-  const res = await getJson(
-    `${CHECKIN_Controler}?action=available_rooms&room_type_id=${roomTypeId}`,
-  );
-  availableRoomSelect.innerHTML = (res.data || [])
+
+// Render a single booking row
+function renderBookingRow(booking) {
+  const roomOptions = (booking.available_rooms || [])
     .map(
-      (r) =>
-        `<option value="${r.id}">${r.room_number} - Floor ${r.floor}</option>`,
+      (room) => `
+            <option value="${room.id}">
+                ${esc(room.room_number)} - Floor ${room.floor}
+            </option>
+        `,
     )
     .join("");
+
+  return `
+        <tr>
+            <td>#${booking.id}</td>
+            <td>${esc(booking.guest_name)}</td>
+            <td>${esc(booking.national_id)}</td>
+            <td>${esc(booking.room_type)}</td>
+            <td>${booking.checkin_date} → ${booking.checkout_date}</td>
+            <td>
+                <select class="select" id="room_${booking.id}">
+                    ${roomOptions}
+                </select>
+            </td>
+            <td>
+                <button 
+                    class="btn btn-success" 
+                    onclick="checkIn(${booking.id})"
+                    ${booking.available_rooms.length ? "" : "disabled"}
+                >
+                    Check In
+                </button>
+            </td>
+        </tr>
+    `;
 }
-async function submitCheckin(e) {
-  e.preventDefault();
-  const data = new FormData(checkinForm);
-  data.append("action", "checkin");
+
+// Perform check-in for a booking
+async function checkIn(bookingId) {
+  const roomId = qs("#room_" + bookingId)?.value;
+
+  if (!roomId) {
+    return showAlert("No available room selected", false);
+  }
+
   try {
-    const res = await postForm(CHECKIN_Controler, data);
-    showAlert("checkinAlert", res.message, res.success ? "success" : "error");
-    if (res.success) {
-      resetCheckinForm();
-      searchCheckinBooking();
+    const response = await api(
+      "checkin_controller.php",
+      {
+        action: "checkin",
+        booking_id: bookingId,
+        room_id: roomId,
+      },
+    );
+
+    showAlert(response.message, response.success);
+
+    if (response.success) {
+      loadBookings();
     }
-  } catch (e) {
-    showAlert("checkinAlert", "Check-in failed.", "error");
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-function resetCheckinForm() {
-  checkinForm.reset();
-  assignRoomCard.style.display = "none";
-}
-document.addEventListener("DOMContentLoaded", () => {
-  const p = new URLSearchParams(location.search);
-  if (p.get("booking_id")) {
-    checkinSearch.value = p.get("booking_id");
-    searchCheckinBooking();
-  }
-});
+
+// Event listeners
+qs("#searchInput")?.addEventListener("input", loadBookings);
+qs("#searchBtn")?.addEventListener("click", loadBookings);
+
+// Initial load
+loadBookings();

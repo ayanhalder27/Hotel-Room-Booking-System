@@ -1,1 +1,7 @@
-<?php $pageTitle='Daily Operations Report'; $contentFile=__DIR__.'/partials_daily_report.php'; include 'receptionist_layout.php'; ?>
+<?php
+$pageTitle = 'Daily Report';
+$contentFile = __DIR__ . '/partials_daily_report.php';
+$pageScript = 'report.js';
+if (isset($_GET['partial'])) { include $contentFile; exit(); }
+include 'receptionist_layout.php';
+?>

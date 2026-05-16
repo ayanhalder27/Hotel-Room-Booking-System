@@ -1,24 +1,45 @@
-const REPORT_Controler = "../../Controler/report_Controler.php";
-async function loadDailyReport() {
-  const date = reportDate.value || new Date().toISOString().slice(0, 10);
-  reportDate.value = date;
+// Load daily report data
+async function loadReport() {
   try {
-    const res = await getJson(
-      `${REPORT_Controler}?action=daily_report&date=${encodeURIComponent(date)}`,
-    );
-    if (!res.success) return showAlert("reportAlert", res.message, "error");
-    const d = res.data;
-    reportArrivals.textContent = d.arrivals ?? 0;
-    reportDepartures.textContent = d.departures ?? 0;
-    reportWalkins.textContent = d.walkins ?? 0;
-    reportRevenue.textContent = d.revenue ?? 0;
-    reportTable.innerHTML = Object.entries(d)
-      .map(
-        ([k, v]) => `<tr><td>${k.replaceAll("_", " ")}</td><td>${v}</td></tr>`,
-      )
-      .join("");
-  } catch (e) {
-    showAlert("reportAlert", "Report generation failed.", "error");
+    const response = await api("report_controller.php", { action: "daily" });
+
+    if (!response.success) {
+      return showAlert(response.message, false);
+    }
+
+    const data = response.data;
+
+    // Define report rows
+    const rows = [
+      ["Arrivals", data.arrivals],
+      ["Departures", data.departures],
+      ["Walk-ins", data.walkins],
+      ["Revenue", money(data.revenue)],
+      ["Occupied Rooms", data.occupied],
+      ["Available Rooms", data.available],
+      ["Dirty Rooms", data.dirty],
+      ["Pending Requests", data.pending_requests],
+    ];
+
+    // Render stats
+    qs("#reportStats").innerHTML = rows.map(renderStatCard).join("");
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-document.addEventListener("DOMContentLoaded", loadDailyReport);
+
+// Render a single stat card
+function renderStatCard([title, value]) {
+  return `
+        <div class="card stat-card">
+            <h3>${title}</h3>
+            <div class="num">${value}</div>
+        </div>
+    `;
+}
+
+// Event listeners
+qs("#refreshBtn")?.addEventListener("click", loadReport);
+
+// Initial load
+loadReport();

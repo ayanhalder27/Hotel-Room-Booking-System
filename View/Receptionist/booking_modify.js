@@ -1,54 +1,78 @@
-const MODIFY_Controler = "../../Controler/booking_modify_Controler.php";
-async function searchBookingForModify() {
-  const q = modifySearch.value.trim();
-  if (!q)
-    return showAlert("modifyAlert", "Enter booking ID or guest name.", "error");
-  try {
-    const res = await getJson(
-      `${MODIFY_Controler}?action=search&q=${encodeURIComponent(q)}`,
-    );
-    if (!res.success) return showAlert("modifyAlert", res.message, "error");
-    modifyTable.innerHTML =
-      (res.data || [])
-        .map(
-          (r) =>
-            `<tr><td>${r.id}</td><td>${r.guest_name}</td><td>${r.room_type}</td><td>${r.checkin_date}</td><td>${r.checkout_date}</td><td>${r.num_guests}</td><td>${badge(r.status)}</td><td><button class="btn btn-warning" onclick="prepareModify(${r.id}, '${r.checkin_date}', '${r.checkout_date}', ${r.num_guests})">Modify</button></td></tr>`,
-        )
-        .join("") ||
-      '<tr><td colspan="8" class="empty">No booking found.</td></tr>';
-  } catch (e) {
-    showAlert("modifyAlert", "Booking search failed.", "error");
+// Load all bookings and render them in the table
+async function loadBookings() {
+  const searchQuery = qs("#searchInput").value;
+
+  const response = await api("booking_modify_controller.php", {
+    action: "list",
+    q: searchQuery,
+  });
+
+  if (!response.success) {
+    return showAlert(response.message, false);
   }
+
+  const bookings = response.data;
+
+  const tableHTML = bookings.length
+    ? bookings.map(renderBookingRow).join("")
+    : '<tr><td colspan="6" class="empty">No bookings found</td></tr>';
+
+  qs("#bookingTable").innerHTML = tableHTML;
 }
-function prepareModify(id, checkin, checkout, guests) {
-  modifyBookingId.value = id;
-  newCheckinDate.value = checkin;
-  newCheckoutDate.value = checkout;
-  newNumGuests.value = guests;
-  modifyCard.style.display = "block";
+
+// Render a single booking row
+function renderBookingRow(booking) {
+  return `
+        <tr>
+            <td>#${booking.id}</td>
+            <td>${esc(booking.guest_name)}</td>
+            <td>${esc(booking.room_type)}</td>
+            <td>${booking.checkin_date} → ${booking.checkout_date}</td>
+            <td>${badge(booking.status)}</td>
+            <td>
+                <input 
+                    class="input" 
+                    id="ci_${booking.id}" 
+                    type="date" 
+                    value="${booking.checkin_date}"
+                >
+                <input 
+                    class="input" 
+                    id="co_${booking.id}" 
+                    type="date" 
+                    value="${booking.checkout_date}" 
+                    style="margin:6px 0"
+                >
+                <button 
+                    class="btn btn-primary" 
+                    onclick="modify(${booking.id})"
+                >
+                    Save
+                </button>
+            </td>
+        </tr>
+    `;
 }
-async function checkModifyAvailability() {
-  const data = new FormData(modifyForm);
-  data.append("action", "check_availability");
-  try {
-    const res = await postForm(MODIFY_Controler, data);
-    showAlert("modifyAlert", res.message, res.success ? "success" : "error");
-  } catch (e) {
-    showAlert("modifyAlert", "Availability check failed.", "error");
-  }
+
+// Update booking dates
+async function modify(id) {
+  const checkinDate = qs("#ci_" + id).value;
+  const checkoutDate = qs("#co_" + id).value;
+
+  const response = await api("booking_modify_controller.php", {
+    action: "update_dates",
+    booking_id: id,
+    checkin_date: checkinDate,
+    checkout_date: checkoutDate,
+  });
+
+  showAlert(response.message, response.success);
+  loadBookings();
 }
-async function submitBookingModify(e) {
-  e.preventDefault();
-  const data = new FormData(modifyForm);
-  data.append("action", "update_booking");
-  try {
-    const res = await postForm(MODIFY_Controler, data);
-    showAlert("modifyAlert", res.message, res.success ? "success" : "error");
-    if (res.success) {
-      modifyCard.style.display = "none";
-      searchBookingForModify();
-    }
-  } catch (e) {
-    showAlert("modifyAlert", "Booking update failed.", "error");
-  }
-}
+
+// Event listeners
+qs("#searchInput")?.addEventListener("input", loadBookings);
+qs("#refreshBtn")?.addEventListener("click", loadBookings);
+
+// Initial load
+loadBookings();

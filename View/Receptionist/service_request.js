@@ -1,35 +1,79 @@
-const SERVICE_Controler = "../../Controler/service_request_Controler.php";
-async function loadServiceRequests() {
-  const q = serviceSearch.value || "";
-  const status = serviceStatus.value || "";
+// Load service requests and render table
+async function loadRequests() {
   try {
-    const res = await getJson(
-      `${SERVICE_Controler}?action=list&q=${encodeURIComponent(q)}&status=${encodeURIComponent(status)}`,
-    );
-    if (!res.success) return showAlert("serviceAlert", res.message, "error");
-    serviceTable.innerHTML =
-      (res.data || [])
-        .map(
-          (r) =>
-            `<tr><td>${r.id}</td><td>${r.guest_name}</td><td>${r.room_number}</td><td>${r.service_type}</td><td>${r.description}</td><td>${badge(r.status)}</td><td>${r.requested_at}</td><td><div class="action-row"><button class="btn btn-warning" onclick="updateServiceStatus(${r.id}, 'in_progress')">In Progress</button><button class="btn btn-success" onclick="updateServiceStatus(${r.id}, 'completed')">Completed</button></div></td></tr>`,
-        )
-        .join("") ||
-      '<tr><td colspan="8" class="empty">No service request found.</td></tr>';
-  } catch (e) {
-    showAlert("serviceAlert", "Service request loading failed.", "error");
+    const response = await api("service_request_controller.php", {
+      action: "list",
+      q: qs("#searchInput").value,
+      status: qs("#statusFilter").value,
+    });
+
+    if (!response.success) {
+      return showAlert(response.message, false);
+    }
+
+    const requests = response.data;
+
+    const tableHTML = requests.length
+      ? requests.map(renderRequestRow).join("")
+      : '<tr><td colspan="7" class="empty">No requests found</td></tr>';
+
+    qs("#requestTable").innerHTML = tableHTML;
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-async function updateServiceStatus(id, status) {
-  const data = new FormData();
-  data.append("action", "update_status");
-  data.append("id", id);
-  data.append("status", status);
+
+// Render a single request row
+function renderRequestRow(request) {
+  return `
+        <tr>
+            <td>${request.id}</td>
+            <td>${esc(request.guest_name)}</td>
+            <td>${esc(request.room_number || "N/A")}</td>
+            <td>${esc(request.service_type)}</td>
+            <td>${esc(request.description)}</td>
+            <td>${badge(request.status)}</td>
+            <td>
+                <button 
+                    class="btn btn-warning" 
+                    onclick="setStatus(${request.id}, 'in_progress')"
+                >
+                    In Progress
+                </button>
+                <button 
+                    class="btn btn-success" 
+                    onclick="setStatus(${request.id}, 'completed')"
+                >
+                    Complete
+                </button>
+            </td>
+        </tr>
+    `;
+}
+
+// Update request status
+async function setStatus(id, status) {
   try {
-    const res = await postForm(SERVICE_Controler, data);
-    showAlert("serviceAlert", res.message, res.success ? "success" : "error");
-    if (res.success) loadServiceRequests();
-  } catch (e) {
-    showAlert("serviceAlert", "Status update failed.", "error");
+    const response = await api("service_request_controller.php", {
+      action: "update_status",
+      id,
+      status,
+    });
+
+    showAlert(response.message, response.success);
+
+    if (response.success) {
+      loadRequests();
+    }
+  } catch (error) {
+    showAlert(error.message, false);
   }
 }
-document.addEventListener("DOMContentLoaded", loadServiceRequests);
+
+// Event listeners
+qs("#searchInput")?.addEventListener("input", loadRequests);
+qs("#statusFilter")?.addEventListener("change", loadRequests);
+qs("#refreshBtn")?.addEventListener("click", loadRequests);
+
+// Initial load
+loadRequests();
