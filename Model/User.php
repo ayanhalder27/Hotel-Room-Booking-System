@@ -1,106 +1,35 @@
 <?php
+require_once __DIR__ . 'dbRec.php';
 
-require_once 'db.php';
+class User extends db {
 
-class User extends db{
+    public static function createGuest($name, $email, $phone) {
+        // Validation Guard: Determine if matching unique identities exist inside the schema boundaries
+        $checkQuery = "SELECT id FROM users WHERE email = ? OR phone = ? LIMIT 1";
+        $existingProfile = self::Fetch($checkQuery, $email, $phone);
+        
+        if ($existingProfile) {
+            // Reassign to current operation transaction to prevent duplicate record key violations
+            return $existingProfile['id'];
+        }
 
-
-    // ==========================================
-    // CREATE WALK-IN GUEST
-    // ==========================================
-
-    public static function createGuest(
-        $name,
-        $email,
-        $phone
-    ){
-
-        // GENERATE USERNAME
-        $username =
-            strtolower(
-                str_replace(' ', '', $name)
-            )
-            . rand(100,999);
-
-
-
-        // DEFAULT PASSWORD
-        $password =
-            password_hash(
-                '123456',
-                PASSWORD_DEFAULT
-            );
-
-
-
-        // DEFAULT VALUES
+        // Structural Parameter Formatting Layout Definition Matching SQL Assertions
+        $username = strtolower(str_replace(' ', '', $name)) . rand(100, 999);
+        $password = password_hash('123456', PASSWORD_DEFAULT);
         $nationality = 'Bangladeshi';
+        $nationalId = 'NID' . rand(100000, 999999);
 
-        $nationalId =
-            'NID' . rand(100000,999999);
+        $query = "INSERT INTO users 
+                  (name, email, username, password_hash, phone, nationality, national_id, role, is_active) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, 'guest', 1)";
 
+        self::Execute($query, $name, $email, $username, $password, $phone, $nationality, $nationalId);
 
+        // Fetch back identity mapping pointer sequence
+        $validationQuery = "SELECT id FROM users WHERE email = ? ORDER BY id DESC LIMIT 1";
+        $userProfile = self::Fetch($validationQuery, $email);
 
-        // INSERT USER
-        $query = "INSERT INTO users
-        (
-            name,
-            email,
-            username,
-            password_hash,
-            phone,
-            nationality,
-            national_id,
-            role,
-            is_active
-        )
-
-        VALUES
-        (
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            ?,
-            'guest',
-            1
-        )";
-
-
-
-        self::Execute(
-            $query,
-            $name,
-            $email,
-            $username,
-            $password,
-            $phone,
-            $nationality,
-            $nationalId
-        );
-
-
-
-        // GET USER ID
-        $query2 = "SELECT id
-                   FROM users
-                   WHERE email=?";
-
-
-
-        $user = self::Fetch(
-            $query2,
-            $email
-        );
-
-
-
-        return $user['id'];
-
+        return $userProfile ? $userProfile['id'] : null;
     }
-
 }
-
 ?>

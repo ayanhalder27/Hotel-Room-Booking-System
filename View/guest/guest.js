@@ -1,138 +1,110 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // =====================================================
+  // DYNAMIC PAGE LOADING
+  // =====================================================
 
-    // =====================================================
-    // DYNAMIC PAGE LOADING
-    // =====================================================
+  const contentArea = document.getElementById("dynamic-content");
 
-    const contentArea = document.getElementById("dynamic-content");
+  document.querySelectorAll(".sidebar-link").forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
 
-    document.querySelectorAll(".sidebar-link").forEach(link => {
+      const page = this.getAttribute("data-page");
 
-        link.addEventListener("click", function (e) {
-
-            e.preventDefault();
-
-            const page = this.getAttribute("data-page");
-
-            loadPage(page);
-
-        });
-
+      loadPage(page);
     });
+  });
 
+  function loadPage(page) {
+    fetch(page)
+      .then((response) => response.text())
 
-    function loadPage(page) {
+      .then((data) => {
+        contentArea.innerHTML = data;
 
-        fetch(page)
+        initializePageFeatures();
+      })
 
-            .then(response => response.text())
+      .catch((error) => {
+        console.error(error);
 
-            .then(data => {
-
-                contentArea.innerHTML = data;
-
-                initializePageFeatures();
-
-            })
-
-            .catch(error => {
-
-                console.error(error);
-
-                contentArea.innerHTML = `
+        contentArea.innerHTML = `
                     <div class="alert alert-danger">
                         Failed to load page.
                     </div>
                 `;
-            });
-    }
+      });
+  }
 
+  // =====================================================
+  // INITIALIZE PAGE FEATURES
+  // =====================================================
 
-    // =====================================================
-    // INITIALIZE PAGE FEATURES
-    // =====================================================
+  function initializePageFeatures() {
+    initializeRoomSearch();
 
-    function initializePageFeatures() {
+    initializeBookingForm();
+  }
 
-        initializeRoomSearch();
+  // =====================================================
+  // ROOM SEARCH AJAX
+  // =====================================================
 
-        initializeBookingForm();
+  function initializeRoomSearch() {
+    const searchForm = document.getElementById("room-search-form");
 
-    }
+    if (!searchForm) return;
 
+    searchForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    // =====================================================
-    // ROOM SEARCH AJAX
-    // =====================================================
+      const checkinDate = document.getElementById("checkin_date").value;
+      const checkoutDate = document.getElementById("checkout_date").value;
+      const guests = document.getElementById("guests").value;
 
-    function initializeRoomSearch() {
+      const resultsContainer = document.getElementById("room-results");
 
-        const searchForm = document.getElementById("room-search-form");
-
-        if (!searchForm) return;
-
-
-        searchForm.addEventListener("submit", function (e) {
-
-            e.preventDefault();
-
-            const checkinDate = document.getElementById("checkin_date").value;
-            const checkoutDate = document.getElementById("checkout_date").value;
-            const guests = document.getElementById("guests").value;
-
-            const resultsContainer = document.getElementById("room-results");
-
-            resultsContainer.innerHTML = `
+      resultsContainer.innerHTML = `
                 <div class="text-center py-5">
                     <div class="spinner-border text-primary"></div>
                 </div>
             `;
 
+      fetch("../../Controlers/GuestControler/GuestRoomControler.php", {
+        method: "POST",
 
-            fetch("../../controllers/GuestController/GuestRoomController.php", {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
 
-                method: "POST",
+        body: new URLSearchParams({
+          action: "search_rooms",
+          checkin_date: checkinDate,
+          checkout_date: checkoutDate,
+          guests: guests,
+        }),
+      })
+        .then((response) => response.json())
 
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-
-                body: new URLSearchParams({
-
-                    action: "search_rooms",
-                    checkin_date: checkinDate,
-                    checkout_date: checkoutDate,
-                    guests: guests
-
-                })
-
-            })
-
-            .then(response => response.json())
-
-            .then(data => {
-
-                if (!data.success) {
-
-                    resultsContainer.innerHTML = `
+        .then((data) => {
+          if (!data.success) {
+            resultsContainer.innerHTML = `
                         <div class="alert alert-warning">
                             ${data.message}
                         </div>
                     `;
 
-                    return;
-                }
+            return;
+          }
 
+          let html = "";
 
-                let html = '';
-
-                data.rooms.forEach(room => {
-
-                    html += `
+          data.rooms.forEach((room) => {
+            html += `
                     
                     <div class="room-card">
 
-                        <img src="${room.thumbnail_path || 'https://via.placeholder.com/400x220'}"
+                        <img src="${room.thumbnail_path || "https://via.placeholder.com/400x220"}"
                              class="room-image">
 
                         <div class="room-body">
@@ -163,15 +135,13 @@ document.addEventListener("DOMContentLoaded", function () {
                             </p>
 
                             ${
-                                room.seasonal_label
-                                ?
-                                `
+                              room.seasonal_label
+                                ? `
                                 <div class="seasonal-notice mb-3">
                                     ${room.seasonal_label} pricing applied.
                                 </div>
                                 `
-                                :
-                                ''
+                                : ""
                             }
 
                             <div class="d-flex gap-2">
@@ -197,139 +167,108 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
 
                     `;
-                });
+          });
 
-                resultsContainer.innerHTML = html;
+          resultsContainer.innerHTML = html;
 
-                initializeBookButtons();
+          initializeBookButtons();
+        })
 
-            })
+        .catch((error) => {
+          console.error(error);
 
-            .catch(error => {
-
-                console.error(error);
-
-                resultsContainer.innerHTML = `
+          resultsContainer.innerHTML = `
                     <div class="alert alert-danger">
                         Something went wrong.
                     </div>
                 `;
-            });
-
         });
+    });
+  }
 
-    }
+  // =====================================================
+  // BOOK ROOM BUTTON
+  // =====================================================
 
+  function initializeBookButtons() {
+    document.querySelectorAll(".book-room-btn").forEach((button) => {
+      button.addEventListener("click", function () {
+        const roomTypeId = this.dataset.roomId;
+        const roomName = this.dataset.roomName;
+        const price = this.dataset.price;
 
+        document.getElementById("booking_room_type_id").value = roomTypeId;
 
-    // =====================================================
-    // BOOK ROOM BUTTON
-    // =====================================================
+        document.getElementById("selected-room-name").innerText = roomName;
 
-    function initializeBookButtons() {
+        document.getElementById("selected-room-price").innerText = price;
 
-        document.querySelectorAll(".book-room-btn").forEach(button => {
-
-            button.addEventListener("click", function () {
-
-                const roomTypeId = this.dataset.roomId;
-                const roomName = this.dataset.roomName;
-                const price = this.dataset.price;
-
-                document.getElementById("booking_room_type_id").value = roomTypeId;
-
-                document.getElementById("selected-room-name").innerText = roomName;
-
-                document.getElementById("selected-room-price").innerText = price;
-
-                document.getElementById("booking-section").scrollIntoView({
-                    behavior: "smooth"
-                });
-
-            });
-
+        document.getElementById("booking-section").scrollIntoView({
+          behavior: "smooth",
         });
+      });
+    });
+  }
 
-    }
+  // =====================================================
+  // CREATE BOOKING AJAX
+  // =====================================================
 
+  function initializeBookingForm() {
+    const bookingForm = document.getElementById("booking-form");
 
+    if (!bookingForm) return;
 
-    // =====================================================
-    // CREATE BOOKING AJAX
-    // =====================================================
+    bookingForm.addEventListener("submit", function (e) {
+      e.preventDefault();
 
-    function initializeBookingForm() {
+      const formData = new FormData(bookingForm);
 
-        const bookingForm = document.getElementById("booking-form");
+      formData.append("action", "create_booking");
 
-        if (!bookingForm) return;
+      fetch("../../Controlers/GuestControler/GuestBookingControler.php", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
 
+        .then((data) => {
+          const bookingMessage = document.getElementById("booking-message");
 
-        bookingForm.addEventListener("submit", function (e) {
-
-            e.preventDefault();
-
-            const formData = new FormData(bookingForm);
-
-            formData.append("action", "create_booking");
-
-
-            fetch("../../controllers/GuestController/GuestBookingController.php", {
-
-                method: "POST",
-                body: formData
-
-            })
-
-            .then(response => response.json())
-
-            .then(data => {
-
-                const bookingMessage = document.getElementById("booking-message");
-
-                if (!data.success) {
-
-                    bookingMessage.innerHTML = `
+          if (!data.success) {
+            bookingMessage.innerHTML = `
                         <div class="alert alert-danger">
                             ${data.message}
                         </div>
                     `;
 
-                    return;
-                }
+            return;
+          }
 
-
-                bookingMessage.innerHTML = `
+          bookingMessage.innerHTML = `
                     <div class="alert alert-success">
                         Booking successful. Booking ID: #${data.booking_id}
                     </div>
                 `;
 
-                bookingForm.reset();
+          bookingForm.reset();
+        })
 
-            })
+        .catch((error) => {
+          console.error(error);
 
-            .catch(error => {
-
-                console.error(error);
-
-                document.getElementById("booking-message").innerHTML = `
+          document.getElementById("booking-message").innerHTML = `
                     <div class="alert alert-danger">
                         Server error occurred.
                     </div>
                 `;
-            });
-
         });
+    });
+  }
 
-    }
+  // =====================================================
+  // LOAD DEFAULT PAGE
+  // =====================================================
 
-
-
-    // =====================================================
-    // LOAD DEFAULT PAGE
-    // =====================================================
-
-    loadPage("partials/search_rooms.php");
-
+  loadPage("partials/search_rooms.php");
 });
