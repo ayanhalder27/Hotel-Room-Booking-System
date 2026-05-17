@@ -153,6 +153,37 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
             <p>Plan cleaning priority based on departures and arrivals</p>
         </div>
 
+        <div class="card">
+            <div class="card-header">
+                <h3>Cleaning Priority Queue</h3>
+            </div>
+
+            <div class="schedule-search">
+                <input type="search" id="prioritySearch" placeholder="Search by room, guest, or day">
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Priority</th>
+                            <th>Room</th>
+                            <th>Guest</th>
+                            <th>Check-out</th>
+                            <th>Day</th>
+                            <th>Clean Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cleaningPriorityTable">
+                        <tr>
+                            <td colspan="6" class="empty-row">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="two-col">
             <div class="card">
                 <div class="card-header">
