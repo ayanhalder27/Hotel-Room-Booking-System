@@ -1,0 +1,55 @@
+<section data-page-title="Book Room" data-page-script="book_room.js">
+  <div class="page-intro">
+    <span class="eyebrow">Confirm Booking</span>
+    <h2>Review and confirm your reservation</h2>
+    <p>Your total price will be calculated based on room type, dates, and seasonal pricing.</p>
+  </div>
+
+  <div id="alertBox" class="alert" role="alert"></div>
+
+  <div class="card">
+    <form id="bookingForm" class="form-grid">
+      <input type="hidden" name="room_type_id" 
+             value="<?= htmlspecialchars($_GET['room_type_id'] ?? '') ?>">
+
+      <div class="form-group">
+        <label for="checkinDate">Check-in Date</label>
+        <input class="input" id="checkinDate" type="date" name="checkin_date" 
+               value="<?= htmlspecialchars($_GET['checkin_date'] ?? '') ?>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="checkoutDate">Check-out Date</label>
+        <input class="input" id="checkoutDate" type="date" name="checkout_date" 
+               value="<?= htmlspecialchars($_GET['checkout_date'] ?? '') ?>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="numGuests">Guests</label>
+        <input class="input" id="numGuests" type="number" name="num_guests" min="1" 
+               value="<?= htmlspecialchars($_GET['num_guests'] ?? '1') ?>" required>
+      </div>
+
+      <div class="form-group">
+        <label for="estimatedTotal">Estimated Total</label>
+        <input class="input readonly" id="estimatedTotal" readonly 
+               placeholder="Auto calculated">
+      </div>
+
+      <div class="form-group full">
+        <label for="specialRequest">Special Request</label>
+        <textarea class="input" id="specialRequest" name="special_request" rows="4" 
+                  placeholder="Any request for your stay?"></textarea>
+      </div>
+
+      <div class="form-group full action-row">
+        <button class="btn btn-gradient" type="submit">Confirm Booking</button>
+        <a class="btn btn-light" href="room_search.php">Back to Search</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="card mt-20" id="bookingSummary">
+    <div class="empty">Booking summary will appear here.</div>
+  </div>
+</section>
