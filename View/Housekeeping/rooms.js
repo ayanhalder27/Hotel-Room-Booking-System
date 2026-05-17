@@ -93,6 +93,10 @@ function getRoomStatusClass(status){
         return "room-dirty";
     }
 
+    if(status == "in_progress"){
+        return "room-in-progress";
+    }
+
     if(status == "maintenance"){
         return "room-maintenance";
     }

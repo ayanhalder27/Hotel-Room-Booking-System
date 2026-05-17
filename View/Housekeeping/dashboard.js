@@ -92,7 +92,7 @@ function loadUrgentTasks(){
 
                 // 6th column: Action
                 output += "<td>";
-                output += "<a href='hk_tasks.php' class='table-action'>Update</a>";
+                output += "<a href='tasks.php' class='table-action'>Update</a>";
                 output += "</td>";
 
                 output += "</tr>";

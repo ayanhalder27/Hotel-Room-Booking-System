@@ -5,7 +5,7 @@ include("../Model/db.php");
 
 function getRolePage($role){
     if($role == "housekeeping"){
-        return "../View/Housekeeping/hk_dashboard.php";
+        return "../View/Housekeeping/dashboard.php";
     }
 
     return "../View/" . $role . ".html";

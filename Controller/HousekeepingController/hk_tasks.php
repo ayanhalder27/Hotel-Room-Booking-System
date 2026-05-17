@@ -91,9 +91,13 @@ if($action == "update_task"){
         $task_id
     );
 
+    if($ok && $room_status == "" && $status == "in_progress"){
+        $room_status = "in_progress";
+    }
+
     if($ok && $room_status != ""){
 
-        $valid_room_status = ["available", "maintenance"];
+        $valid_room_status = ["available", "dirty", "in_progress", "maintenance", "occupied", "blocked"];
 
         if(in_array($room_status, $valid_room_status)){
 

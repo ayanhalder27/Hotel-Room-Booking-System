@@ -16,7 +16,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxeStay — Maintenance</title>
+    <title>LuxeStay — Daily Report</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 
   
     <link rel="stylesheet" href="hk-common.css">
-    <link rel="stylesheet" href="hk_maintenance.css">
+    <link rel="stylesheet" href="report.css">
 </head>
 <body>
 
@@ -48,8 +48,8 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         </div>
     </div>
 
- <nav class="sidebar-nav">
-    <a href="hk_dashboard.php" class="nav-item">
+<nav class="sidebar-nav">
+    <a href="dashboard.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="7" height="7"></rect>
             <rect x="14" y="3" width="7" height="7"></rect>
@@ -59,7 +59,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Dashboard
     </a>
 
-    <a href="hk_rooms.php" class="nav-item">
+    <a href="rooms.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -67,7 +67,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Room Status Board
     </a>
 
-    <a href="hk_tasks.php" class="nav-item">
+    <a href="tasks.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
@@ -75,14 +75,14 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Tasks
     </a>
 
-    <a href="hk_maintenance.php" class="nav-item">
+    <a href="maintenance.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
         </svg>
         Maintenance
     </a>
 
-    <a href="hk_schedule.php" class="nav-item">
+    <a href="schedule.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -92,7 +92,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Schedule
     </a>
 
-    <a href="hk_report.php" class="nav-item">
+    <a href="report.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="20" x2="18" y2="10"></line>
             <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -101,7 +101,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Daily Report
     </a>
 
-    <a href="hk_history.php" class="nav-item">
+    <a href="history.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
@@ -109,7 +109,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         History
     </a>
 
-    <a href="hk_profile.php" class="nav-item">
+    <a href="profile.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -139,7 +139,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         ☰
     </button>
 
-    <div class="topbar-title">Maintenance</div>
+    <div class="topbar-title">Daily Report</div>
 
     <div class="topbar-actions">
         <div class="topbar-date" id="topbarDate"></div>
@@ -147,54 +147,48 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 </div>
 
 <main class="main-content">
-
     <section class="section active">
         <div class="section-header">
-            <h2>Maintenance Reports</h2>
-            <p>Log and track room maintenance issues</p>
+            <h2>Daily Housekeeping Report</h2>
+            <p>Summary of today's housekeeping operations</p>
         </div>
 
-        <!-- Log Maintenance Issue -->
-        <div class="card">
-            <div class="card-header">
-                <h3>Log New Issue</h3>
+        <div class="card report-card">
+            <div class="report-header">
+                <div class="report-brand">
+                    <div class="brand-icon small">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 21h18"></path>
+                            <path d="M5 21V7l8-4v18"></path>
+                            <path d="M19 21V11l-6-3"></path>
+                        </svg>
+                    </div>
+                    LuxeStay — Housekeeping Report
+                </div>
+
+                <div class="report-date" id="reportDate"></div>
             </div>
 
-            <form id="maintenanceForm" class="form-grid">
-                <div class="form-group">
-                    <label>Room Number</label>
-                    <select name="room_id" id="maintRoomSelect" required>
-                        <option value="">Select room...</option>
-                    </select>
+            <div class="report-stats">
+                <div class="report-stat">
+                    <div class="rs-value" id="rTotalTasks">0</div>
+                    <div class="rs-label">Tasks Assigned</div>
                 </div>
 
-                <div class="form-group">
-                    <label>Severity</label>
-                    <select name="severity" required>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
-                    </select>
+                <div class="report-stat">
+                    <div class="rs-value gold" id="rCompleted">0</div>
+                    <div class="rs-label">Completed</div>
                 </div>
 
-                <div class="form-group full-width">
-                    <label>Description</label>
-                    <textarea name="description" rows="3" placeholder="Describe the issue in detail..." required></textarea>
+                <div class="report-stat">
+                    <div class="rs-value orange" id="rPending">0</div>
+                    <div class="rs-label">Pending</div>
                 </div>
 
-                <div class="form-group full-width">
-                    <button type="submit" name="log_maintenance" class="btn-danger">
-                        Report Issue
-                    </button>
+                <div class="report-stat">
+                    <div class="rs-value green" id="rReadyRooms">0</div>
+                    <div class="rs-label">Rooms Ready</div>
                 </div>
-            </form>
-        </div>
-
-        <!-- Maintenance Reports -->
-        <div class="card">
-            <div class="card-header">
-                <h3>Open Maintenance Reports</h3>
-                <span class="badge badge-danger" id="openMaintCount">0</span>
             </div>
 
             <div class="table-wrap">
@@ -202,58 +196,35 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                     <thead>
                         <tr>
                             <th>Room</th>
-                            <th>Description</th>
-                            <th>Severity</th>
+                            <th>Task Type</th>
+                            <th>Priority</th>
                             <th>Status</th>
-                            <th>Reported</th>
-                            <th>Actions</th>
+                            <th>Completed At</th>
+                            <th>Notes</th>
                         </tr>
                     </thead>
 
-                    <tbody id="maintenanceTable">
+                    <tbody id="reportTable">
                         <tr>
                             <td colspan="6" class="empty-row">Loading...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
 
-    </section>
-
-</main>
-
-<!-- Maintenance Update Modal -->
-<div class="modal-overlay" id="maintModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h3>Update Maintenance Report</h3>
-            <button type="button" class="modal-close" onclick="closeModal('maintModal')">×</button>
-        </div>
-
-        <form id="updateMaintForm">
-            <input type="hidden" name="report_id" id="maintReportId">
-
-            <div class="form-group">
-                <label>Status</label>
-                <select name="status" id="maintStatus">
-                    <option value="open">Open</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="resolved">Resolved</option>
-                </select>
+            <div class="report-actions">
+                <button type="button" class="btn-primary" onclick="window.print()">
+                    Print Report
+                </button>
             </div>
-
-            <button type="submit" name="update_maintenance" class="btn-primary" style="width:100%;margin-top:0.5rem">
-                Update Report
-            </button>
-        </form>
-    </div>
-</div>
+        </div>
+    </section>
+</main>
 
 <div class="toast-container" id="toastBox"></div>
 
 <script src="hk-shared.js"></script>
-<script src="hk_maintenance.js"></script>
+<script src="report.js"></script>
 
 </body>
 </html>

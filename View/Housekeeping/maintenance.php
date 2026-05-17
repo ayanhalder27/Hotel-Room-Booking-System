@@ -16,15 +16,15 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LuxeStay — Tasks</title>
+    <title>LuxeStay — Maintenance</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-
+  
     <link rel="stylesheet" href="hk-common.css">
-    <link rel="stylesheet" href="hk_tasks.css">
+    <link rel="stylesheet" href="maintenance.css">
 </head>
 <body>
 
@@ -48,8 +48,8 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         </div>
     </div>
 
-<nav class="sidebar-nav">
-    <a href="hk_dashboard.php" class="nav-item">
+ <nav class="sidebar-nav">
+    <a href="dashboard.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="7" height="7"></rect>
             <rect x="14" y="3" width="7" height="7"></rect>
@@ -59,7 +59,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Dashboard
     </a>
 
-    <a href="hk_rooms.php" class="nav-item">
+    <a href="rooms.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
             <polyline points="9 22 9 12 15 12 15 22"></polyline>
@@ -67,7 +67,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Room Status Board
     </a>
 
-    <a href="hk_tasks.php" class="nav-item">
+    <a href="tasks.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M9 11l3 3L22 4"></path>
             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
@@ -75,14 +75,14 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Tasks
     </a>
 
-    <a href="hk_maintenance.php" class="nav-item">
+    <a href="maintenance.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
         </svg>
         Maintenance
     </a>
 
-    <a href="hk_schedule.php" class="nav-item">
+    <a href="schedule.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
             <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -92,7 +92,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Schedule
     </a>
 
-    <a href="hk_report.php" class="nav-item">
+    <a href="report.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="20" x2="18" y2="10"></line>
             <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -101,7 +101,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         Daily Report
     </a>
 
-    <a href="hk_history.php" class="nav-item">
+    <a href="history.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <polyline points="12 6 12 12 16 14"></polyline>
@@ -109,7 +109,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         History
     </a>
 
-    <a href="hk_profile.php" class="nav-item">
+    <a href="profile.php" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
@@ -139,7 +139,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         ☰
     </button>
 
-    <div class="topbar-title">Tasks</div>
+    <div class="topbar-title">Maintenance</div>
 
     <div class="topbar-actions">
         <div class="topbar-date" id="topbarDate"></div>
@@ -147,74 +147,54 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 </div>
 
 <main class="main-content">
-    <section class="section active">
 
+    <section class="section active">
         <div class="section-header">
-            <h2>Housekeeping Tasks</h2>
-            <p>Assign, track, and complete cleaning and inspection tasks</p>
+            <h2>Maintenance Reports</h2>
+            <p>Log and track room maintenance issues</p>
         </div>
 
-        <!-- Create Task -->
+        <!-- Log Maintenance Issue -->
         <div class="card">
             <div class="card-header">
-                <h3>Create New Task</h3>
+                <h3>Log New Issue</h3>
             </div>
 
-            <form id="createTaskForm" class="form-grid">
+            <form id="maintenanceForm" class="form-grid">
                 <div class="form-group">
                     <label>Room Number</label>
-                    <select name="room_id" id="taskRoomSelect" required>
+                    <select name="room_id" id="maintRoomSelect" required>
                         <option value="">Select room...</option>
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label>Task Type</label>
-                    <select name="task_type" required>
-                        <option value="cleaning">Cleaning</option>
-                        <option value="inspection">Inspection</option>
-                        <option value="maintenance">Maintenance</option>
+                    <label>Severity</label>
+                    <select name="severity" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label>Priority</label>
-                    <select name="priority" required>
-                        <option value="normal">Normal</option>
-                        <option value="urgent">Urgent</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Scheduled Date</label>
-                    <input type="date" name="scheduled_date" id="scheduledDate" required>
+                <div class="form-group full-width">
+                    <label>Description</label>
+                    <textarea name="description" rows="3" placeholder="Describe the issue in detail..." required></textarea>
                 </div>
 
                 <div class="form-group full-width">
-                    <label>Notes</label>
-                    <textarea name="notes" rows="2" placeholder="Any special instructions..."></textarea>
-                </div>
-
-                <div class="form-group full-width">
-                    <button type="submit" name="create_task" class="btn-primary">
-                        Assign Task
+                    <button type="submit" name="log_maintenance" class="btn-danger">
+                        Report Issue
                     </button>
                 </div>
             </form>
         </div>
 
-        <!-- Today Tasks -->
+        <!-- Maintenance Reports -->
         <div class="card">
             <div class="card-header">
-                <h3>Today's Tasks</h3>
-
-                <div class="filter-pills">
-                    <button type="button" class="pill active" data-filter="all">All</button>
-                    <button type="button" class="pill" data-filter="pending">Pending</button>
-                    <button type="button" class="pill" data-filter="in_progress">In Progress</button>
-                    <button type="button" class="pill" data-filter="done">Done</button>
-                    <button type="button" class="pill pill-urgent" data-filter="urgent">Urgent</button>
-                </div>
+                <h3>Open Maintenance Reports</h3>
+                <span class="badge badge-danger" id="openMaintCount">0</span>
             </div>
 
             <div class="table-wrap">
@@ -222,17 +202,17 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                     <thead>
                         <tr>
                             <th>Room</th>
-                            <th>Type</th>
-                            <th>Priority</th>
+                            <th>Description</th>
+                            <th>Severity</th>
                             <th>Status</th>
-                            <th>Notes</th>
+                            <th>Reported</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
 
-                    <tbody id="tasksTable">
+                    <tbody id="maintenanceTable">
                         <tr>
-                            <td colspan="6" class="empty-row">Loading tasks...</td>
+                            <td colspan="6" class="empty-row">Loading...</td>
                         </tr>
                     </tbody>
                 </table>
@@ -240,44 +220,31 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         </div>
 
     </section>
+
 </main>
 
-<!-- Task Update Modal -->
-<div class="modal-overlay" id="taskModal">
+<!-- Maintenance Update Modal -->
+<div class="modal-overlay" id="maintModal">
     <div class="modal">
         <div class="modal-header">
-            <h3>Update Task</h3>
-            <button type="button" class="modal-close" onclick="closeModal('taskModal')">×</button>
+            <h3>Update Maintenance Report</h3>
+            <button type="button" class="modal-close" onclick="closeModal('maintModal')">×</button>
         </div>
 
-        <form id="updateTaskForm">
-            <input type="hidden" name="task_id" id="modalTaskId">
+        <form id="updateMaintForm">
+            <input type="hidden" name="report_id" id="maintReportId">
 
             <div class="form-group">
                 <label>Status</label>
-                <select name="status" id="modalTaskStatus">
-                    <option value="pending">Pending</option>
+                <select name="status" id="maintStatus">
+                    <option value="open">Open</option>
                     <option value="in_progress">In Progress</option>
-                    <option value="done">Done</option>
+                    <option value="resolved">Resolved</option>
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>Completion Notes</label>
-                <textarea name="notes" id="modalTaskNotes" rows="3" placeholder="Add notes..."></textarea>
-            </div>
-
-            <div class="form-group">
-                <label>Mark Room As</label>
-                <select name="room_status" id="modalRoomStatus">
-                    <option value="">No change</option>
-                    <option value="available">Clean / Available</option>
-                    <option value="maintenance">Maintenance</option>
-                </select>
-            </div>
-
-            <button type="submit" name="update_task" class="btn-primary" style="width:100%;margin-top:0.5rem">
-                Update Task
+            <button type="submit" name="update_maintenance" class="btn-primary" style="width:100%;margin-top:0.5rem">
+                Update Report
             </button>
         </form>
     </div>
@@ -286,7 +253,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 <div class="toast-container" id="toastBox"></div>
 
 <script src="hk-shared.js"></script>
-<script src="hk_tasks.js"></script>
+<script src="maintenance.js"></script>
 
 </body>
 </html>
