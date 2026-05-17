@@ -63,6 +63,40 @@ if($action == "tasks_today"){
     exit();
 }
 
+if($action == "assigned_tasks"){
+
+    $rows = db::FetchAll(
+        "SELECT ht.id, ht.task_type, ht.priority, ht.status, ht.notes, ht.scheduled_date, ht.room_id, r.room_number
+         FROM housekeeping_tasks ht
+         JOIN rooms r ON r.id = ht.room_id
+         WHERE ht.status != 'done'
+         ORDER BY ht.scheduled_date ASC"
+    );
+
+    echo json_encode(["success" => true, "rows" => $rows ?: []]);
+    exit();
+}
+
+if($action == "task_detail"){
+    $task_id = intval($_GET["task_id"] ?? 0);
+
+    if(!$task_id){
+        echo json_encode(["success" => false, "message" => "Task not found"]);
+        exit();
+    }
+
+    $task = db::Fetch(
+        "SELECT ht.id, ht.task_type, ht.priority, ht.status, ht.notes, ht.scheduled_date, ht.room_id, r.room_number
+         FROM housekeeping_tasks ht
+         JOIN rooms r ON r.id = ht.room_id
+         WHERE ht.id = ?",
+        $task_id
+    );
+
+    echo json_encode(["success" => true, "task" => $task ?: null]);
+    exit();
+}
+
 if($action == "update_task"){
 
     $task_id = intval($_POST["task_id"] ?? 0);

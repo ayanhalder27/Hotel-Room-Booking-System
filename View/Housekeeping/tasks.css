@@ -37,3 +37,40 @@
 #tasksTable td:nth-child(4){
     font-weight:700;
 }
+
+.task-card-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+}
+
+.task-card-header .header-left,
+.task-card-header .header-right{
+    display:flex;
+    align-items:center;
+}
+
+.task-card-header .task-title{
+    flex:1;
+    text-align:center;
+    margin:0;
+    font-size:1.2rem;
+}
+
+.task-card-header .header-right{
+    justify-content:flex-end;
+}
+
+.task-card-header .header-right .filter-pills{
+    margin-left:0;
+}
+
+.task-card-header .header-left .pill{
+    white-space:nowrap;
+}
+
+
+.card-header .filter-pills{
+    margin-left:auto;
+}

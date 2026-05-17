@@ -4,8 +4,8 @@ let currentTaskFilter = "all";
 window.onload = function(){
     setTodayDate();
     loadRoomSelect();
-    loadTodayTasks();
     setupTaskFilters();
+    loadTodayTasks();
 
     let createTaskForm = document.getElementById("createTaskForm");
     let updateTaskForm = document.getElementById("updateTaskForm");
@@ -68,6 +68,16 @@ function setupTaskFilters(){
             this.classList.add("active");
             currentTaskFilter = this.getAttribute("data-filter");
 
+            if(currentTaskFilter === "assigned"){
+                loadAssignedTasks();
+                return;
+            }
+
+            if(currentTaskFilter === "all"){
+                loadTodayTasks();
+                return;
+            }
+
             showTasks();
         });
     }
@@ -96,9 +106,49 @@ function loadTodayTasks(){
         if(data.success){
             allTasks = data.rows;
             showTasks();
+            checkTaskQueryParam();
         }
         else{
             showMessage(data.message);
+        }
+    });
+}
+
+function loadAssignedTasks(){
+    getData("../../Controler/HousekeepingController/hk_tasks.php?action=assigned_tasks", function(data){
+        if(data.success){
+            allTasks = data.rows;
+            showTasks();
+            checkTaskQueryParam();
+        }
+        else{
+            showMessage(data.message);
+        }
+    });
+}
+
+function getQueryParam(name){
+    let params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+function checkTaskQueryParam(){
+    let taskId = getQueryParam("task_id");
+
+    if(!taskId){
+        return;
+    }
+
+    let task = allTasks.find(t => String(t.id) === String(taskId));
+
+    if(task){
+        openTaskModal(task.id, task.status, task.notes ?? "");
+        return;
+    }
+
+    getData("../../Controler/HousekeepingController/hk_tasks.php?action=task_detail&task_id=" + encodeURIComponent(taskId), function(data){
+        if(data.success && data.task){
+            openTaskModal(data.task.id, data.task.status, data.task.notes ?? "");
         }
     });
 }
@@ -110,12 +160,13 @@ function showTasks(){
         for(let i = 0; i < allTasks.length; i++){
             let task = allTasks[i];
 
-            if(currentTaskFilter != "all"){
-                if((currentTaskFilter == "urgent" || currentTaskFilter == "normal") && task.priority != currentTaskFilter){
-                    continue;
+            if(currentTaskFilter != "all" && currentTaskFilter != "assigned" && currentTaskFilter != "today"){
+                if(currentTaskFilter == "urgent" || currentTaskFilter == "normal"){
+                    if(task.priority != currentTaskFilter){
+                        continue;
+                    }
                 }
-
-                if(currentTaskFilter != "urgent" && currentTaskFilter != "normal" && task.status != currentTaskFilter){
+                else if(task.status != currentTaskFilter){
                     continue;
                 }
             }

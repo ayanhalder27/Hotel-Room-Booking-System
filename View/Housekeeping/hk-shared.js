@@ -1,6 +1,9 @@
 function getData(url, callback){
     let xhr = new XMLHttpRequest();
 
+    let cacheBuster = "_=" + Date.now();
+    url += (url.indexOf("?") === -1 ? "?" : "&") + cacheBuster;
+
     xhr.open("GET", url, true);
 
     xhr.onload = function(){
