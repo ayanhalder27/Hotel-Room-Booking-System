@@ -15,17 +15,22 @@ async function fetchRooms() {
     }
 }
 
-function renderRooms(rooms) {
+function renderRooms(rooms, searchTerm = '') {
     const tbody = document.querySelector('tbody');
     tbody.innerHTML = '';
-    
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
+
     rooms.forEach(room => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td class="room-number">${room.room_number}</td>
-                        <td class="room-type">${room.room_type}</td>
-                        <td class="floor">${room.floor}</td>
+        row.innerHTML = `<td class="room-number">${highlight(room.room_number)}</td>
+                        <td class="room-type">${highlight(room.room_type)}</td>
+                        <td class="floor">${highlight(room.floor)}</td>
                         <td class="status"><span class="badge ${room.status.toLowerCase()}">${room.status}</span></td>
-                        <td class="notes" style="color: var(--text-secondary); font-size: 0.85rem;">${room.notes || ''}</td>
+                        <td class="notes" style="color: var(--text-secondary); font-size: 0.85rem;">${highlight(room.notes)}</td>
                         <td>
                             <div class="action-btns">
                                 <button class="btn-icon" title="Edit" data-id="${room.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></button>
@@ -120,11 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value.toLowerCase();
         
         const filtered = allRooms.filter(r => {
-            const matchSearch = r.room_number.toLowerCase().includes(term);
+            const searchableText = `${r.room_number} ${r.room_type} ${r.floor} ${r.notes || ''}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             const matchStatus = status === 'all' || r.status.toLowerCase() === status;
             return matchSearch && matchStatus;
         });
-        renderRooms(filtered);
+        renderRooms(filtered, term);
     }
 
     searchInput.addEventListener('input', filterRooms);
