@@ -154,10 +154,12 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
         </div>
 
         <div class="card" style="max-width:600px">
-            <form class="form-grid" id="profileForm">
+            <form class="form-grid" id="profileForm" enctype="multipart/form-data">
                 <div class="form-group full-width center">
                     <div class="avatar-upload">
                         <div class="avatar-preview" id="avatarPreview">S</div>
+                        <label class="avatar-btn" for="profilePicInput">Change picture</label>
+                        <input type="file" name="profile_pic" id="profilePicInput" accept="image/jpeg,image/png,image/webp">
                     </div>
                 </div>
 
