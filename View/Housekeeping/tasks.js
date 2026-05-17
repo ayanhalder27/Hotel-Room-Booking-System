@@ -111,11 +111,11 @@ function showTasks(){
             let task = allTasks[i];
 
             if(currentTaskFilter != "all"){
-                if(currentTaskFilter == "urgent" && task.priority != "urgent"){
+                if((currentTaskFilter == "urgent" || currentTaskFilter == "normal") && task.priority != currentTaskFilter){
                     continue;
                 }
 
-                if(currentTaskFilter != "urgent" && task.status != currentTaskFilter){
+                if(currentTaskFilter != "urgent" && currentTaskFilter != "normal" && task.status != currentTaskFilter){
                     continue;
                 }
             }

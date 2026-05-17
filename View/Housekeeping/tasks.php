@@ -213,6 +213,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                     <button type="button" class="pill" data-filter="pending">Pending</button>
                     <button type="button" class="pill" data-filter="in_progress">In Progress</button>
                     <button type="button" class="pill" data-filter="done">Done</button>
+                    <button type="button" class="pill" data-filter="normal">Normal</button>
                     <button type="button" class="pill pill-urgent" data-filter="urgent">Urgent</button>
                 </div>
             </div>
