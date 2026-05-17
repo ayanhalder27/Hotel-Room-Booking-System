@@ -1,0 +1,16 @@
+.filter-select{
+    max-width:260px;
+}
+
+.history-filter{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+#historyTable td:nth-child(3),
+#historyTable td:nth-child(4){
+    font-weight:700;
+    text-transform:capitalize;
+}

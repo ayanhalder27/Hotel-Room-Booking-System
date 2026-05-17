@@ -1,0 +1,18 @@
+#maintenanceTable td:nth-child(3){
+    text-transform:capitalize;
+    font-weight:700;
+}
+
+#maintenanceTable td:nth-child(4){
+    font-weight:700;
+}
+
+#maintenanceTable td:nth-child(3):contains("high"){
+    color:var(--danger);
+}
+
+.maintenance-note{
+    color:var(--text-muted);
+    font-size:14px;
+    margin-top:8px;
+}

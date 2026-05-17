@@ -1,6 +1,7 @@
 <?php
 
-    header("Location: Controler/checkLogin.php");
+    header("Location: Controller/checkLogin.php");
+    exit();
 
 ?>
 
