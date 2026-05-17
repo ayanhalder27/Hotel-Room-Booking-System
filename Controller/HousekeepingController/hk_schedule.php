@@ -28,26 +28,6 @@ if($action == "schedule"){
          ORDER BY b.checkout_date ASC"
     );
 
-    $today_checkouts = db::FetchAll(
-        "SELECT b.checkout_date, r.room_number, r.status AS room_status, u.name AS guest_name
-         FROM bookings b
-         JOIN rooms r ON r.id = b.room_id
-         JOIN users u ON u.id = b.guest_id
-         WHERE b.status = 'checked_in'
-         AND DATE(b.checkout_date) = CURDATE()
-         ORDER BY b.checkout_date ASC"
-    );
-
-    $tomorrow_checkouts = db::FetchAll(
-        "SELECT b.checkout_date, r.room_number, r.status AS room_status, u.name AS guest_name
-         FROM bookings b
-         JOIN rooms r ON r.id = b.room_id
-         JOIN users u ON u.id = b.guest_id
-         WHERE b.status = 'checked_in'
-         AND DATE(b.checkout_date) = DATE_ADD(CURDATE(), INTERVAL 1 DAY)
-         ORDER BY b.checkout_date ASC"
-    );
-
     $upcoming_checkins = db::FetchAll(
         "SELECT b.checkin_date, r.room_number, r.status AS room_status, u.name AS guest_name
          FROM bookings b
@@ -61,8 +41,6 @@ if($action == "schedule"){
     echo json_encode([
         "success" => true,
         "cleaning_priority" => $cleaning_priority ?: [],
-        "today_checkouts" => $today_checkouts ?: [],
-        "tomorrow_checkouts" => $tomorrow_checkouts ?: [],
         "upcoming_checkins" => $upcoming_checkins ?: []
     ]);
     exit();

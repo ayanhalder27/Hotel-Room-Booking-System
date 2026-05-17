@@ -187,7 +187,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 
                 <div class="report-stat">
                     <div class="rs-value green" id="rReadyRooms">0</div>
-                    <div class="rs-label">Rooms Ready</div>
+                    <div class="rs-label">Rooms Ready for Check-in</div>
                 </div>
             </div>
 

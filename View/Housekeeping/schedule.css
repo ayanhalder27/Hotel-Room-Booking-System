@@ -1,13 +1,18 @@
-#scheduleCheckoutTable td:nth-child(4),
-#scheduleTomorrowTable td:nth-child(4),
-#cleaningPriorityTable td:nth-child(6),
-#scheduleCheckinTable td:nth-child(4),
-#scheduleCheckinTable td:nth-child(5){
-    font-weight:700;
+.schedule-board-grid{
+    display:grid;
+    grid-template-columns:minmax(0,1.35fr) minmax(360px,0.9fr);
+    gap:22px;
+    align-items:start;
 }
 
-#scheduleCheckinTable td:nth-child(5){
-    color:var(--success);
+.priority-card,
+.checkins-card{
+    min-width:0;
+}
+
+#cleaningPriorityTable td:nth-child(6),
+#scheduleCheckinTable td:nth-child(4){
+    font-weight:700;
 }
 
 .schedule-note{
@@ -47,4 +52,10 @@
     background:var(--accent);
     color:var(--bg-dark);
     font-weight:800;
+}
+
+@media(max-width:1200px){
+    .schedule-board-grid{
+        grid-template-columns:1fr;
+    }
 }

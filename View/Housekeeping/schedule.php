@@ -153,41 +153,41 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
             <p>Plan cleaning priority based on departures and arrivals</p>
         </div>
 
-        <div class="card">
-            <div class="card-header">
-                <h3>Cleaning Priority Queue</h3>
-            </div>
-
-            <div class="schedule-search">
-                <input type="search" id="prioritySearch" placeholder="Search by room, guest, or day">
-            </div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Priority</th>
-                            <th>Room</th>
-                            <th>Guest</th>
-                            <th>Check-out</th>
-                            <th>Day</th>
-                            <th>Clean Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="cleaningPriorityTable">
-                        <tr>
-                            <td colspan="6" class="empty-row">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="two-col">
-            <div class="card">
+        <div class="schedule-board-grid">
+            <div class="card priority-card">
                 <div class="card-header">
-                    <h3>Today's Check-outs</h3>
+                    <h3>Cleaning Priority Queue</h3>
+                </div>
+
+                <div class="schedule-search">
+                    <input type="search" id="prioritySearch" placeholder="Search by room, guest, or day">
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Priority</th>
+                                <th>Room</th>
+                                <th>Guest</th>
+                                <th>Check-out</th>
+                                <th>Day</th>
+                                <th>Clean Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="cleaningPriorityTable">
+                            <tr>
+                                <td colspan="6" class="empty-row">Loading...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card checkins-card">
+                <div class="card-header">
+                    <h3>Upcoming Check-ins</h3>
                 </div>
 
                 <div class="table-wrap">
@@ -196,69 +196,18 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                             <tr>
                                 <th>Room</th>
                                 <th>Guest</th>
-                                <th>Time</th>
-                                <th>Clean Status</th>
+                                <th>Check-in Date</th>
+                                <th>Room Status</th>
                             </tr>
                         </thead>
 
-                        <tbody id="scheduleCheckoutTable">
+                        <tbody id="scheduleCheckinTable">
                             <tr>
                                 <td colspan="4" class="empty-row">Loading...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <h3>Tomorrow's Check-outs</h3>
-                </div>
-
-                <div class="table-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Room</th>
-                                <th>Guest</th>
-                                <th>Time</th>
-                                <th>Clean Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="scheduleTomorrowTable">
-                            <tr>
-                                <td colspan="4" class="empty-row">Loading...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-header">
-                <h3>Upcoming Check-ins (Next 2 Days)</h3>
-            </div>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Room</th>
-                            <th>Guest</th>
-                            <th>Check-in Date</th>
-                            <th>Room Status</th>
-                            <th>Ready?</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="scheduleCheckinTable">
-                        <tr>
-                            <td colspan="5" class="empty-row">Loading...</td>
-                        </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
