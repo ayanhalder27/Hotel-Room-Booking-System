@@ -18,7 +18,7 @@ async function loadDashboard() {
             document.getElementById('todayRevenueVal').innerText = formattedRevenue;
             
             // Rooms
-            document.getElementById('roomStatusVal').innerHTML = \`\${data.occupied_rooms} <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400; font-family: var(--font-body);">/ \${data.total_rooms}</span>\`;
+            document.getElementById('roomStatusVal').innerHTML = `${data.occupied_rooms} <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400; font-family: var(--font-body);">/ ${data.total_rooms}</span>`;
             document.getElementById('occupiedRoomsVal').innerText = data.occupied_rooms;
             document.getElementById('availableRoomsVal').innerText = data.available_rooms;
             
@@ -43,16 +43,16 @@ async function loadDashboard() {
                     else if(b.status === 'checked-in') badgeClass = 'checked-in';
                     else if(b.status === 'checked-out') badgeClass = 'expired';
                     
-                    tr.innerHTML = \`
+                    tr.innerHTML = `
                         <td>
-                            <div style="font-weight: 500;">\${b.guest_name}</div>
-                            <div style="font-size: 0.85rem; color: var(--text-secondary);">ID: #BKG-\${b.id}</div>
+                            <div style="font-weight: 500;">${b.guest_name}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">ID: #BKG-${b.id}</div>
                         </td>
-                        <td>\${b.room_type || 'Unassigned'}</td>
-                        <td>\${b.check_in_date} - \${b.check_out_date}</td>
-                        <td style="font-family: var(--font-heading); font-weight: 600;">$\${parseFloat(b.total_price).toFixed(2)}</td>
-                        <td><span class="badge \${badgeClass}">\${b.status.charAt(0).toUpperCase() + b.status.slice(1)}</span></td>
-                    \`;
+                        <td>${b.room_type || 'Unassigned'}</td>
+                        <td>${b.check_in_date} - ${b.check_out_date}</td>
+                        <td style="font-family: var(--font-heading); font-weight: 600;">$${parseFloat(b.total_price).toFixed(2)}</td>
+                        <td><span class="badge ${badgeClass}">${b.status.charAt(0).toUpperCase() + b.status.slice(1)}</span></td>
+                    `;
                     tbody.appendChild(tr);
                 });
             }
