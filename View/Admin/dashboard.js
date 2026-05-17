@@ -40,8 +40,8 @@ async function loadDashboard() {
                     
                     let badgeClass = 'pending';
                     if(b.status === 'confirmed') badgeClass = 'confirmed';
-                    else if(b.status === 'checked-in') badgeClass = 'checked-in';
-                    else if(b.status === 'checked-out') badgeClass = 'expired';
+                    else if(b.status === 'checked_in') badgeClass = 'checked-in';
+                    else if(b.status === 'checked_out') badgeClass = 'expired';
                     
                     tr.innerHTML = `
                         <td>
@@ -51,7 +51,7 @@ async function loadDashboard() {
                         <td>${b.room_type || 'Unassigned'}</td>
                         <td>${b.check_in_date} - ${b.check_out_date}</td>
                         <td style="font-family: var(--font-heading); font-weight: 600;">$${parseFloat(b.total_price).toFixed(2)}</td>
-                        <td><span class="badge ${badgeClass}">${b.status.charAt(0).toUpperCase() + b.status.slice(1)}</span></td>
+                        <td><span class="badge ${badgeClass}">${b.status.charAt(0).toUpperCase() + b.status.slice(1).replace('_', '-')}</span></td>
                     `;
                     tbody.appendChild(tr);
                 });
