@@ -6,7 +6,7 @@ window.onload = function(){
 };
 
 function loadDashboardStats(){
-    getData("../../Controller/HousekeepingController/hk_dashboard.php?action=dashboard_stats", function(data){
+    getData("../../Controler/HousekeepingController/hk_dashboard.php?action=dashboard_stats", function(data){
         if(data.success){
             document.getElementById("statDirty").innerHTML = data.dirty;
             document.getElementById("statInspection").innerHTML = data.inspection;
@@ -20,7 +20,7 @@ function loadDashboardStats(){
 }
 
 function loadTodayCheckouts(){
-    getData("../../Controller/HousekeepingController/hk_dashboard.php?action=today_checkouts", function(data){
+    getData("../../Controler/HousekeepingController/hk_dashboard.php?action=today_checkouts", function(data){
         let output = "";
 
         if(data.success && data.rows.length > 0){
@@ -48,7 +48,7 @@ function loadTodayCheckouts(){
 }
 
 function loadUpcomingCheckins(){
-    getData("../../Controller/HousekeepingController/hk_dashboard.php?action=upcoming_checkins", function(data){
+    getData("../../Controler/HousekeepingController/hk_dashboard.php?action=upcoming_checkins", function(data){
         let output = "";
 
         if(data.success && data.rows.length > 0){
@@ -76,7 +76,7 @@ function loadUpcomingCheckins(){
 }
 
 function loadUrgentTasks(){
-    getData("../../Controller/HousekeepingController/hk_dashboard.php?action=urgent_tasks", function(data){
+    getData("../../Controler/HousekeepingController/hk_dashboard.php?action=urgent_tasks", function(data){
         let output = "";
 
         if(data.success && data.rows.length > 0){

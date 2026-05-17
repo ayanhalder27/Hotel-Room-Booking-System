@@ -13,7 +13,7 @@ function showReportDate(){
 }
 
 function loadDailyReport(){
-    getData("../../Controller/HousekeepingController/hk_report.php?action=daily_report", function(data){
+    getData("../../Controler/HousekeepingController/hk_report.php?action=daily_report", function(data){
         if(data.success){
             document.getElementById("rTotalTasks").innerHTML = data.total;
             document.getElementById("rCompleted").innerHTML = data.done;

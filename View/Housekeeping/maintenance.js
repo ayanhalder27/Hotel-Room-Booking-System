@@ -21,7 +21,7 @@ window.onload = function(){
 };
 
 function loadRoomSelect(){
-    getData("../../Controller/HousekeepingController/hk_rooms.php?action=room_board", function(data){
+    getData("../../Controler/HousekeepingController/hk_rooms.php?action=room_board", function(data){
         let select = document.getElementById("maintRoomSelect");
 
         if(!select){
@@ -46,7 +46,7 @@ function logMaintenance(form){
     let formData = new FormData(form);
     formData.append("action", "log_maintenance");
 
-    postData("../../Controller/HousekeepingController/hk_maintenance.php", formData, function(data){
+    postData("../../Controler/HousekeepingController/hk_maintenance.php", formData, function(data){
         if(data.success){
             showMessage("Maintenance issue reported");
             form.reset();
@@ -60,7 +60,7 @@ function logMaintenance(form){
 }
 
 function loadMaintenanceReports(){
-    getData("../../Controller/HousekeepingController/hk_maintenance.php?action=maintenance_reports", function(data){
+    getData("../../Controler/HousekeepingController/hk_maintenance.php?action=maintenance_reports", function(data){
         let output = "";
 
         if(data.success && data.rows.length > 0){
@@ -102,7 +102,7 @@ function updateMaintenance(form){
     let formData = new FormData(form);
     formData.append("action", "update_maintenance");
 
-    postData("../../Controller/HousekeepingController/hk_maintenance.php", formData, function(data){
+    postData("../../Controler/HousekeepingController/hk_maintenance.php", formData, function(data){
         if(data.success){
             showMessage("Maintenance status updated");
             closeModal("maintModal");

@@ -13,7 +13,7 @@ window.onload = function(){
 };
 
 function loadSchedule(){
-    getData("../../Controller/HousekeepingController/hk_schedule.php?action=schedule", function(data){
+    getData("../../Controler/HousekeepingController/hk_schedule.php?action=schedule", function(data){
         if(data.success){
             cleaningPriorityRows = data.cleaning_priority;
             showCleaningPriority(cleaningPriorityRows);

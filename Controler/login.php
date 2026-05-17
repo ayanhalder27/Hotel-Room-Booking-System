@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"] ?? "";
 
     // Added 'name' to the query so the dashboard can welcome the user by name
-    $data = db::Fetch("SELECT id, name, email, password_hash, role FROM users WHERE email=? OR phone=? OR username=?", $username, $username, $username);
+    $data = db::Fetch("SELECT id, name, email, password_hash, role FROM users WHERE is_active=1 and (email=? OR phone=? OR username=?)", $username, $username, $username);
 
     if ($data != null) {
         if ($password == $data["password_hash"]) {

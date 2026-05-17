@@ -127,7 +127,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
             </div>
         </div>
 
-        <a href="../../Controller/logout.php" class="logout-btn" title="Logout">
+        <a href="../../Controler/logout.php" class="logout-btn" title="Logout">
             Logout
         </a>
     </div>

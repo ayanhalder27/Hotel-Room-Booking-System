@@ -12,7 +12,7 @@ window.onload = function(){
 };
 
 function loadRoomFilter(){
-    getData("../../Controller/HousekeepingController/hk_rooms.php?action=room_board", function(data){
+    getData("../../Controler/HousekeepingController/hk_rooms.php?action=room_board", function(data){
         let roomFilter = document.getElementById("historyRoomFilter");
 
         if(!roomFilter){
@@ -41,7 +41,7 @@ function loadHistory(){
         roomId = roomFilter.value;
     }
 
-    let url = "../../Controller/HousekeepingController/hk_history.php?action=task_history";
+    let url = "../../Controler/HousekeepingController/hk_history.php?action=task_history";
 
     if(roomId != ""){
         url += "&room_id=" + roomId;

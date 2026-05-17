@@ -29,7 +29,7 @@ function setupRoomFilters(){
 }
 
 function loadRoomStatus(){
-    getData("../../Controller/HousekeepingController/hk_rooms.php?action=room_board", function(data){
+    getData("../../Controler/HousekeepingController/hk_rooms.php?action=room_board", function(data){
         if(data.success){
             allRooms = data.rooms;
             showRooms();

@@ -20,7 +20,7 @@ window.onload = function(){
 };
 
 function loadProfile(){
-    getData("../../Controller/HousekeepingController/hk_profile.php?action=get_profile", function(data){
+    getData("../../Controler/HousekeepingController/hk_profile.php?action=get_profile", function(data){
         if(data.success && data.user){
             let nameInput = document.getElementById("profileName");
             let emailInput = document.getElementById("profileEmail");
@@ -86,7 +86,7 @@ function updateProfile(form){
     let formData = new FormData(form);
     formData.append("action", "update_profile");
 
-    postData("../../Controller/HousekeepingController/hk_profile.php", formData, function(data){
+    postData("../../Controler/HousekeepingController/hk_profile.php", formData, function(data){
         if(data.success){
             showMessage("Profile updated successfully");
             loadProfile();

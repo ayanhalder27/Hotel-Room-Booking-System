@@ -35,7 +35,7 @@ function setTodayDate(){
 }
 
 function loadRoomSelect(){
-    getData("../../Controller/HousekeepingController/hk_rooms.php?action=room_board", function(data){
+    getData("../../Controler/HousekeepingController/hk_rooms.php?action=room_board", function(data){
         let select = document.getElementById("taskRoomSelect");
 
         if(!select){
@@ -77,7 +77,7 @@ function createTask(form){
     let formData = new FormData(form);
     formData.append("action", "create_task");
 
-    postData("../../Controller/HousekeepingController/hk_tasks.php", formData, function(data){
+    postData("../../Controler/HousekeepingController/hk_tasks.php", formData, function(data){
         if(data.success){
             showMessage("Task created successfully");
             form.reset();
@@ -92,7 +92,7 @@ function createTask(form){
 }
 
 function loadTodayTasks(){
-    getData("../../Controller/HousekeepingController/hk_tasks.php?action=tasks_today", function(data){
+    getData("../../Controler/HousekeepingController/hk_tasks.php?action=tasks_today", function(data){
         if(data.success){
             allTasks = data.rows;
             showTasks();
@@ -157,7 +157,7 @@ function updateTaskFromForm(form){
     let formData = new FormData(form);
     formData.append("action", "update_task");
 
-    postData("../../Controller/HousekeepingController/hk_tasks.php", formData, function(data){
+    postData("../../Controler/HousekeepingController/hk_tasks.php", formData, function(data){
         if(data.success){
             showMessage("Task updated successfully");
             closeModal("taskModal");
