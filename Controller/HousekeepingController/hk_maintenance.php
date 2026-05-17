@@ -55,6 +55,7 @@ if($action == "maintenance_reports"){
         "SELECT mr.id, mr.description, mr.severity, mr.status, mr.reported_at, r.room_number
          FROM maintenance_reports mr
          JOIN rooms r ON r.id = mr.room_id
+         WHERE mr.status != 'resolved'
          ORDER BY FIELD(mr.severity,'high','medium','low'), mr.reported_at DESC"
     );
 
