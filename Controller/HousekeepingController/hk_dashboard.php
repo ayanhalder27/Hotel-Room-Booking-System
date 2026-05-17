@@ -14,6 +14,7 @@ $action = $_GET["action"] ?? "";
 $supervisor_id = $_SESSION["user_id"];
 
 if($action == "dashboard_stats"){
+    
 
     $dirty = db::FetchValue("SELECT COUNT(*) FROM rooms WHERE status='dirty'");
     $inspection = db::FetchValue("SELECT COUNT(*) FROM housekeeping_tasks WHERE status='pending' AND task_type='inspection'");
