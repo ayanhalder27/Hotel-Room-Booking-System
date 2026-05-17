@@ -17,10 +17,15 @@ async function fetchReviews() {
     }
 }
 
-function renderReviews(reviews) {
+function renderReviews(reviews, searchTerm = '') {
     const tbody = document.getElementById('reviewsTableBody');
     tbody.innerHTML = '';
-    
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
+
     reviews.forEach(r => {
         const tr = document.createElement('tr');
         
@@ -36,14 +41,14 @@ function renderReviews(reviews) {
 
         tr.innerHTML = `
             <td>
-                <div class="guest-info">${r.guest_name}</div>
-                <div class="text-muted-sm">Room: ${r.room_number || 'N/A'}</div>
+                <div class="guest-info">${highlight(r.guest_name)}</div>
+                <div class="text-muted-sm">Room: ${highlight(r.room_number || 'N/A')}</div>
             </td>
             <td>
                 <div class="star-rating">${starsHTML}</div>
             </td>
             <td>
-                <div class="review-snippet">"${r.comment}"</div>
+                <div class="review-snippet">"${highlight(r.comment)}"</div>
             </td>
             <td>
                 <div>${r.created_at}</div>
@@ -113,7 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value;
         
         const filtered = allReviews.filter(r => {
-            const matchSearch = r.guest_name.toLowerCase().includes(term) || r.comment.toLowerCase().includes(term);
+            const searchableText = `${r.guest_name} ${r.comment} ${r.room_number || ''}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             let matchRating = true;
             if(rating === '5') matchRating = parseInt(r.rating) === 5;
             else if(rating === '4') matchRating = parseInt(r.rating) >= 4;
@@ -126,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             return matchSearch && matchRating && matchStatus;
         });
-        renderReviews(filtered);
+        renderReviews(filtered, term);
     }
 
     searchInput.addEventListener('input', filterReviews);

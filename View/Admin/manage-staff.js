@@ -13,9 +13,15 @@ async function fetchStaff() {
     }
 }
 
-function renderStaff(staff) {
+function renderStaff(staff, searchTerm = '') {
     const tbody = document.getElementById('staffTableBody');
     tbody.innerHTML = '';
+    
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
     
     staff.forEach(s => {
         const isActive = parseInt(s.is_active) === 1;
@@ -25,15 +31,15 @@ function renderStaff(staff) {
                 <div class="staff-info">
                     <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(s.name)}&background=random" alt="${s.name}" class="staff-avatar">
                     <div class="staff-details">
-                        <span class="staff-name" style="${!isActive ? 'text-decoration: line-through; color: var(--text-secondary);' : ''}">${s.name}</span>
-                        <span class="staff-email">${s.email}</span>
+                        <span class="staff-name" style="${!isActive ? 'text-decoration: line-through; color: var(--text-secondary);' : ''}">${highlight(s.name)}</span>
+                        <span class="staff-email">${highlight(s.email)}</span>
                     </div>
                 </div>
             </td>
-            <td><span class="role-text" style="${!isActive ? 'color: var(--text-secondary);' : ''}">${s.role}</span></td>
+            <td><span class="role-text" style="${!isActive ? 'color: var(--text-secondary);' : ''}">${highlight(s.role)}</span></td>
             <td>
-                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : ''}">${s.phone}</div>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">@${s.username}</div>
+                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : ''}">${highlight(s.phone)}</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">@${highlight(s.username)}</div>
             </td>
             <td><span class="badge ${isActive ? 'active' : 'inactive'}">${isActive ? 'Active' : 'Inactive'}</span></td>
             <td>
@@ -85,12 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value;
         
         const filtered = allStaff.filter(s => {
-            const matchSearch = s.name.toLowerCase().includes(term) || s.email.toLowerCase().includes(term);
+            const searchableText = `${s.name} ${s.email} ${s.role} ${s.phone || ''} ${s.username || ''}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             const matchRole = role === 'all' || s.role === role;
             const matchStatus = status === 'all' || String(s.is_active) === status;
             return matchSearch && matchRole && matchStatus;
         });
-        renderStaff(filtered);
+        renderStaff(filtered, term);
     }
 
     searchInput.addEventListener('input', filterStaff);

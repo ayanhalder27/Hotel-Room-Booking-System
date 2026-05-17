@@ -24,23 +24,28 @@
                 }
             };
 
-            const renderTable = (data) => {
+            const renderTable = (data, searchTerm = '') => {
                 tableBody.innerHTML = '';
+                const highlight = (text) => {
+                    if (!searchTerm || !text) return text || '';
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+                };
                 data.forEach(rt => {
                     const amenities = rt.amenities ? JSON.parse(rt.amenities) : [];
-                    let amTags = amenities.map(a => `<span class="amenity-tag">${a}</span>`).join(' ');
+                    let amTags = amenities.map(a => `<span class="amenity-tag">${highlight(a)}</span>`).join(' ');
                     const thumbnail = rt.thumbnail_path ? `../../${rt.thumbnail_path}` : 'https://placehold.co/150x100?text=No+Image';
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td><img src="${thumbnail}" alt="${rt.name}" class="type-thumbnail"></td>
-                        <td class="type-name">${rt.name}</td>
+                        <td class="type-name">${highlight(rt.name)}</td>
                         <td>$${parseFloat(rt.price_per_night).toFixed(2)}</td>
                         <td>${rt.max_capacity} Guests</td>
                         <td>
                             <div class="amenities-list">${amTags}</div>
                         </td>
-                        <td class="description-cell">${rt.description || ''}</td>
+                        <td class="description-cell">${highlight(rt.description || '')}</td>
                         <td><span class="room-count-badge">${rt.total_rooms} Rooms</span></td>
                         <td>
                             <div class="action-btns">
@@ -105,8 +110,12 @@
             // Search
             document.querySelector('.search-box input').addEventListener('input', (e) => {
                 const term = e.target.value.toLowerCase();
-                const filtered = allRoomTypes.filter(rt => rt.name.toLowerCase().includes(term));
-                renderTable(filtered);
+                const filtered = allRoomTypes.filter(rt => {
+                    const amText = rt.amenities ? JSON.parse(rt.amenities).join(' ') : '';
+                    const searchableText = `${rt.name} ${rt.description || ''} ${amText}`.toLowerCase();
+                    return searchableText.includes(term);
+                });
+                renderTable(filtered, term);
             });
 
             // Handle file input display

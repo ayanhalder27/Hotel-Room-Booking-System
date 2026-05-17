@@ -13,9 +13,15 @@ async function fetchGuests() {
     }
 }
 
-function renderGuests(guests) {
+function renderGuests(guests, searchTerm = '') {
     const tbody = document.getElementById('guestsTableBody');
     tbody.innerHTML = '';
+    
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
     
     guests.forEach(g => {
         const isActive = parseInt(g.is_active) === 1;
@@ -25,18 +31,18 @@ function renderGuests(guests) {
                 <div class="guest-info">
                     <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(g.name)}&background=random" alt="${g.name}" class="guest-avatar">
                     <div class="guest-details">
-                        <span class="guest-name" style="${!isActive ? 'text-decoration: line-through; color: var(--text-secondary);' : ''}">${g.name}</span>
-                        <span class="guest-email">${g.email}</span>
+                        <span class="guest-name" style="${!isActive ? 'text-decoration: line-through; color: var(--text-secondary);' : ''}">${highlight(g.name)}</span>
+                        <span class="guest-email">${highlight(g.email)}</span>
                     </div>
                 </div>
             </td>
             <td>
-                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : ''}">${g.phone}</div>
-                <div style="font-size: 0.8rem; color: var(--text-secondary);">@${g.username}</div>
+                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : ''}">${highlight(g.phone)}</div>
+                <div style="font-size: 0.8rem; color: var(--text-secondary);">@${highlight(g.username)}</div>
             </td>
             <td>
-                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : 'color: var(--text-primary);'}">${g.nationality}</div>
-                <span class="id-text">ID: ${g.national_id}</span>
+                <div style="font-size: 0.9rem; ${!isActive ? 'color: var(--text-secondary);' : 'color: var(--text-primary);'}">${highlight(g.nationality)}</div>
+                <span class="id-text">ID: ${highlight(g.national_id)}</span>
             </td>
             <td><span class="badge ${isActive ? 'active' : 'inactive'}">${isActive ? 'Active' : 'Deactivated'}</span></td>
             <td>
@@ -86,11 +92,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value;
         
         const filtered = allGuests.filter(g => {
-            const matchSearch = g.name.toLowerCase().includes(term) || g.email.toLowerCase().includes(term) || g.national_id.toLowerCase().includes(term);
+            const searchableText = `${g.name} ${g.email} ${g.national_id} ${g.phone || ''} ${g.username || ''} ${g.nationality || ''}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             const matchStatus = status === 'all' || String(g.is_active) === status;
             return matchSearch && matchStatus;
         });
-        renderGuests(filtered);
+        renderGuests(filtered, term);
     }
 
     searchInput.addEventListener('input', filterGuests);

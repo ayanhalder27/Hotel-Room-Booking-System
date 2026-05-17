@@ -26,25 +26,31 @@ async function fetchRequests() {
     }
 }
 
-function renderRequests(requests) {
+function renderRequests(requests, searchTerm = '') {
     const tbody = document.getElementById('requestsTableBody');
     tbody.innerHTML = '';
     
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
+
     requests.forEach(req => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>
-                <div class="request-id" ${req.service_type === 'maintenance' ? 'style="color: var(--danger);"' : ''}>#SR-${req.id}</div>
+                <div class="request-id" ${req.service_type === 'maintenance' ? 'style="color: var(--danger);"' : ''}>#SR-${highlight(req.id)}</div>
             </td>
             <td>
-                <div class="room-number">Room ${req.room_number || 'N/A'}</div>
-                <div class="text-muted-sm">${req.guest_name || 'System/Staff'}</div>
+                <div class="room-number">Room ${highlight(req.room_number || 'N/A')}</div>
+                <div class="text-muted-sm">${highlight(req.guest_name || 'System/Staff')}</div>
             </td>
             <td>
                 <div class="type-tag ${req.service_type === 'maintenance' ? 'maintenance' : (req.service_type === 'room_service' ? 'room-service' : 'housekeeping')}">
                     ${req.service_type.replace('_', ' ')}
                 </div>
-                <div style="font-size: 0.9rem; margin-top: 6px;">${req.description}</div>
+                <div style="font-size: 0.9rem; margin-top: 6px;">${highlight(req.description)}</div>
             </td>
             <td>
                 <div>${req.requested_at}</div>
@@ -126,12 +132,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value;
         
         const filtered = allRequests.filter(r => {
-            const matchSearch = r.id.toString().includes(term) || (r.room_number && r.room_number.toString().includes(term));
+            const searchableText = `${r.id} ${r.room_number || ''} ${r.guest_name || ''} ${r.description || ''}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             const matchType = type === 'all' || r.service_type === type || (type === 'housekeeping' && ['laundry', 'toiletries', 'extra_bed'].includes(r.service_type));
             const matchStatus = status === 'all' || r.status === status;
             return matchSearch && matchType && matchStatus;
         });
-        renderRequests(filtered);
+        renderRequests(filtered, term);
     }
 
     searchInput.addEventListener('input', filterData);

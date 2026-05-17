@@ -17,10 +17,16 @@ async function fetchAnnouncements() {
     }
 }
 
-function renderAnnouncements(announcements) {
+function renderAnnouncements(announcements, searchTerm = '') {
     const tbody = document.getElementById('announcementsTableBody');
     tbody.innerHTML = '';
     
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
+
     announcements.forEach(a => {
         const tr = document.createElement('tr');
         
@@ -30,8 +36,8 @@ function renderAnnouncements(announcements) {
 
         tr.innerHTML = `
             <td>
-                <div class="announcement-title">${a.title}</div>
-                <div class="announcement-snippet">${a.content.substring(0, 100)}${a.content.length > 100 ? '...' : ''}</div>
+                <div class="announcement-title">${highlight(a.title)}</div>
+                <div class="announcement-snippet">${highlight(a.content.substring(0, 100))}${a.content.length > 100 ? '...' : ''}</div>
             </td>
             <td>
                 <div class="date-info">
@@ -129,11 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const status = statusFilter.value;
         
         const filtered = allAnnouncements.filter(a => {
-            const matchSearch = a.title.toLowerCase().includes(term) || a.content.toLowerCase().includes(term);
+            const searchableText = `${a.title} ${a.content}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
             const matchStatus = status === 'all' || a.status === status;
             return matchSearch && matchStatus;
         });
-        renderAnnouncements(filtered);
+        renderAnnouncements(filtered, term);
     }
 
     searchInput.addEventListener('input', filterAnnouncements);

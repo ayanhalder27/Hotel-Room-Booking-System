@@ -13,10 +13,16 @@ async function fetchBookings() {
     }
 }
 
-function renderBookings(bookings) {
+function renderBookings(bookings, searchTerm = '') {
     const tbody = document.getElementById('bookingsTableBody');
     tbody.innerHTML = '';
     
+    const highlight = (text) => {
+        if (!searchTerm || !text) return text || '';
+        const regex = new RegExp(`(${searchTerm})`, 'gi');
+        return String(text).replace(regex, '<mark style="background-color: var(--gold, #FFD700); color: #000; border-radius: 2px; padding: 0 2px;">$1</mark>');
+    };
+
     bookings.forEach(bkg => {
         const date1 = new Date(bkg.checkin_date);
         const date2 = new Date(bkg.checkout_date);
@@ -25,16 +31,16 @@ function renderBookings(bookings) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>
-                <div class="booking-id">#BKG-${bkg.id}</div>
+                <div class="booking-id">#BKG-${highlight(bkg.id)}</div>
                 <div class="text-muted-sm">${bkg.created_at.substring(0, 10)}</div>
             </td>
             <td>
-                <div class="guest-name">${bkg.guest_name}</div>
-                <div class="text-muted-sm">${bkg.guest_phone || ''}</div>
+                <div class="guest-name">${highlight(bkg.guest_name)}</div>
+                <div class="text-muted-sm">${highlight(bkg.guest_phone || '')}</div>
             </td>
             <td>
-                <div style="font-weight: 500; color: var(--text-primary);">${bkg.room_type}</div>
-                <div class="text-muted-sm">${bkg.room_number ? 'Room ' + bkg.room_number : 'Unassigned'}</div>
+                <div style="font-weight: 500; color: var(--text-primary);">${highlight(bkg.room_type)}</div>
+                <div class="text-muted-sm">${highlight(bkg.room_number ? 'Room ' + bkg.room_number : 'Unassigned')}</div>
             </td>
             <td>
                 <div>${bkg.checkin_date}</div>
@@ -95,6 +101,29 @@ function renderBookings(bookings) {
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchBookings();
+
+    const searchInput = document.querySelector('.search-box input');
+    const statusFilter = document.querySelector('select[name="status_filter"]');
+    const dateFilter = document.querySelector('input[name="date_filter"]');
+
+    function filterBookings() {
+        const term = searchInput.value.toLowerCase();
+        const status = statusFilter.value;
+        const date = dateFilter.value;
+        
+        const filtered = allBookings.filter(b => {
+            const searchableText = `${b.id} ${b.guest_name} ${b.guest_phone || ''} ${b.room_type} ${b.room_number || 'Unassigned'}`.toLowerCase();
+            const matchSearch = searchableText.includes(term);
+            const matchStatus = status === 'all' || b.status === status;
+            const matchDate = !date || b.checkin_date === date;
+            return matchSearch && matchStatus && matchDate;
+        });
+        renderBookings(filtered, term);
+    }
+
+    if(searchInput) searchInput.addEventListener('input', filterBookings);
+    if(statusFilter) statusFilter.addEventListener('change', filterBookings);
+    if(dateFilter) dateFilter.addEventListener('change', filterBookings);
 
     const modal = document.getElementById('bookingModal');
     const openBtn = document.getElementById('openModalBtn');
