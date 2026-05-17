@@ -8,6 +8,7 @@ if(!isset($_SESSION["user_id"]) || $_SESSION["role"] != "housekeeping"){
     exit();
 }
 
+
 header("Content-Type: application/json");
 
 $action = $_POST["action"] ?? $_GET["action"] ?? "";
