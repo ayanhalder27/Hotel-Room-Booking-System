@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(json.success) {
             document.getElementById('avgOccupancyVal').innerText = json.data.avg_occupancy + '%';
             document.getElementById('totalNightsVal').innerText = json.data.total_nights.toLocaleString();
-            document.getElementById('avgStayVal').innerHTML = \`\${json.data.avg_stay} <span style="font-size: 1rem; color: var(--text-secondary); font-family: var(--font-body); font-weight: 400;">Nights</span>\`;
+            document.getElementById('avgStayVal').innerHTML = `${json.data.avg_stay} <span style="font-size: 1rem; color: var(--text-secondary); font-family: var(--font-body); font-weight: 400;">Nights</span>`;
             document.getElementById('popularRoomVal').innerText = json.data.popular_room;
         }
     } catch(err) {
