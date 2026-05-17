@@ -1,3 +1,14 @@
+<?php
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if (isset($_POST["logout"])) {
+            setcookie("user_id", $_COOKIE["user_id"], time() - 3600, "/");
+            setcookie("role", $_COOKIE["role"], time() - 3600, "/");
+            header("Location: ../login.html");
+            exit();
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,373 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --bg-dark: #121212;
-            --panel-bg: rgba(25, 25, 25, 0.7);
-            --gold: #D4AF37;
-            --gold-hover: #F3E5AB;
-            --text-primary: #ffffff;
-            --text-secondary: #aaaaaa;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --danger: #ef4444;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --info: #3b82f6;
-            --font-body: 'Montserrat', sans-serif;
-            --font-heading: 'Playfair Display', serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* --- Sidebar Navigation --- */
-        .sidebar {
-            width: 280px;
-            background: var(--panel-bg);
-            backdrop-filter: blur(15px);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            height: 100vh;
-            z-index: 100;
-        }
-
-        .brand {
-            padding: 2rem 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .brand-icon {
-            color: var(--gold);
-        }
-
-        .brand-text {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: 1px;
-        }
-
-        .nav-menu {
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        .nav-menu::-webkit-scrollbar {
-            width: 5px;
-        }
-        .nav-menu::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 5px;
-        }
-
-        .nav-category {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            letter-spacing: 1px;
-            margin: 1rem 0 0.5rem 0.8rem;
-            font-weight: 600;
-        }
-
-        .nav-item {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0.8rem 1rem;
-            background: transparent;
-            border: none;
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-family: var(--font-body);
-            font-size: 0.95rem;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-item svg {
-            width: 18px;
-            height: 18px;
-        }
-
-        .nav-item:hover {
-            background-color: rgba(255, 255, 255, 0.03);
-            color: var(--text-primary);
-        }
-
-        .nav-item.active {
-            background-color: rgba(212, 175, 55, 0.1);
-            color: var(--gold);
-            font-weight: 500;
-            border-right: 3px solid var(--gold);
-            border-radius: 8px 0 0 8px;
-        }
-
-        /* --- Main Content --- */
-        .main-content {
-            margin-left: 280px;
-            flex-grow: 1;
-            padding: 2rem 3rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            width: calc(100% - 280px);
-        }
-
-        /* --- Topbar --- */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .page-title {
-            font-family: var(--font-heading);
-            font-size: 2rem;
-            font-weight: 500;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--panel-bg);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: border-color 0.2s;
-            backdrop-filter: blur(10px);
-        }
-
-        .user-profile:hover {
-            border-color: var(--text-secondary);
-        }
-
-        .avatar {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .greeting {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .greeting-text {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-        }
-
-        .user-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* --- Metrics Grid --- */
-        .metrics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .metric-card {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .metric-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border-color: rgba(212, 175, 55, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-title {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gold);
-        }
-
-        .card-value {
-            font-family: var(--font-heading);
-            font-size: 2.2rem;
-            font-weight: 600;
-        }
-
-        .trend {
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .text-success { color: var(--success); }
-        .text-danger { color: var(--danger); }
-        .text-warning { color: var(--warning); }
-
-        .progress-container {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            margin-top: auto;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: var(--gold);
-            width: 0%;
-            transition: width 1s cubic-bezier(0.1, 0.5, 0.1, 1);
-        }
-
-        /* Room Status Split Bar */
-        .room-stats {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            margin-bottom: 0.5rem;
-        }
-        .stat-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-secondary);
-        }
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-        }
-
-        /* --- Quick Actions / Tables --- */
-        .section-header {
-            font-family: var(--font-heading);
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .btn-view-all {
-            background: transparent;
-            color: var(--gold);
-            border: none;
-            font-family: var(--font-body);
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .btn-view-all:hover {
-            color: var(--gold-hover);
-            text-decoration: underline;
-        }
-
-        .table-container {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            backdrop-filter: blur(10px);
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        th, td {
-            padding: 1.2rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            letter-spacing: 0.5px;
-            font-weight: 500;
-        }
-
-        td {
-            font-size: 0.95rem;
-        }
-
-        tbody tr:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .badge {
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .badge.confirmed { background: rgba(34, 197, 94, 0.1); color: var(--success); border: 1px solid rgba(34, 197, 94, 0.2); }
-        .badge.pending { background: rgba(245, 158, 11, 0.1); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.2); }
-        .badge.checked-in { background: rgba(59, 130, 246, 0.1); color: var(--info); border: 1px solid rgba(59, 130, 246, 0.2); }
-    </style>
+    <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
@@ -438,18 +83,18 @@
             </button>
 
             <div class="nav-category">Analytics</div>
-            <button class="nav-item" onclick="window.location.href='reports.php'">
+            <button class="nav-item" onclick="window.location.href='report-finance.php'">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
                 Reports
             </button>
         </nav>
 
-        <div style="padding: 1.5rem 1rem; border-top: 1px solid var(--border-color);">
-            <button class="nav-item" onclick="window.location.href='logout.php'" style="color: var(--danger);">
+        <form style="padding: 1.5rem 1rem; border-top: 1px solid var(--border-color);" method="post">
+            <button name="logout" class="nav-item" style="color: var(--danger);">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                 Logout
             </button>
-        </div>
+        </form>
     </aside>
 
     <!-- Main Dashboard Content -->
@@ -508,7 +153,7 @@
                         </svg>
                     </div>
                 </div>
-                <div class="card-value">$8,450</div>
+                <div class="card-value" id="todayRevenueVal">$0.00</div>
                 <div class="trend text-success">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                     +12% vs yesterday
@@ -525,20 +170,20 @@
                         </svg>
                     </div>
                 </div>
-                <div class="card-value">123 <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400; font-family: var(--font-body);">/ 150</span></div>
+                <div class="card-value" id="roomStatusVal">0 <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400; font-family: var(--font-body);">/ 0</span></div>
                 
                 <div style="margin-top: auto;">
                     <div class="room-stats">
                         <div class="stat-label">
-                            <div class="dot" style="background: var(--gold);"></div> Occupied (123)
+                            <div class="dot" style="background: var(--gold);"></div> Occupied (<span id="occupiedRoomsVal">0</span>)
                         </div>
                         <div class="stat-label">
-                            <div class="dot" style="background: var(--success);"></div> Available (27)
+                            <div class="dot" style="background: var(--success);"></div> Available (<span id="availableRoomsVal">0</span>)
                         </div>
                     </div>
                     <div class="progress-container" style="height: 8px; display: flex; background: transparent; gap: 2px;">
-                        <div style="flex-basis: 82%; background: var(--gold); border-radius: 4px;"></div>
-                        <div style="flex-basis: 18%; background: var(--success); border-radius: 4px;"></div>
+                        <div id="occupiedBar" style="flex-basis: 0%; background: var(--gold); border-radius: 4px;"></div>
+                        <div id="availableBar" style="flex-basis: 100%; background: var(--success); border-radius: 4px;"></div>
                     </div>
                 </div>
             </div>
@@ -556,7 +201,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="card-value" style="font-size: 1.8rem;">4</div>
+                    <div class="card-value" id="activeMaintenanceVal" style="font-size: 1.8rem;">0</div>
                     <div class="trend text-danger" style="margin-top: auto; font-size: 0.8rem;">Active Issues</div>
                 </div>
 
@@ -570,7 +215,7 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="card-value" style="font-size: 1.8rem;">9</div>
+                    <div class="card-value" id="pendingReviewsVal" style="font-size: 1.8rem;">0</div>
                     <div class="trend text-warning" style="margin-top: auto; font-size: 0.8rem;">Awaiting Reply</div>
                 </div>
             </div>
@@ -595,37 +240,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 500;">Alexander Pierce</div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">ID: #BKG-4012</div>
-                            </td>
-                            <td>Executive Suite</td>
-                            <td>Oct 24, 2026 - Oct 28, 2026</td>
-                            <td style="font-family: var(--font-heading); font-weight: 600;">$1,800.00</td>
-                            <td><span class="badge confirmed">Confirmed</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 500;">Sarah Jenkins</div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">ID: #BKG-4013</div>
-                            </td>
-                            <td>Deluxe King</td>
-                            <td>Oct 25, 2026 - Oct 27, 2026</td>
-                            <td style="font-family: var(--font-heading); font-weight: 600;">$500.00</td>
-                            <td><span class="badge pending">Pending</span></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="font-weight: 500;">Michael Chen</div>
-                                <div style="font-size: 0.85rem; color: var(--text-secondary);">ID: #BKG-4014</div>
-                            </td>
-                            <td>Standard Twin</td>
-                            <td>Oct 22, 2026 - Oct 25, 2026</td>
-                            <td style="font-family: var(--font-heading); font-weight: 600;">$450.00</td>
-                            <td><span class="badge checked-in">Checked In</span></td>
-                        </tr>
+                    <tbody id="recentBookingsBody">
                     </tbody>
                 </table>
             </div>
@@ -633,16 +248,6 @@
 
     </main>
 
-    <script>
-        // Simple script to animate the progress bars on load
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                const bar = document.getElementById('occupancyBar');
-                if(bar) {
-                    bar.style.width = bar.getAttribute('data-width');
-                }
-            }, 300); // Slight delay for visual effect
-        });
-    </script>
+    <script src="dashboard.js"></script>
 </body>
 </html>

@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // 3. ROLE-BASED ROUTING
             if ($role == "admin") {
-                header("Location: ../View/admin/dashboard.php");
+                header("Location: ../View/Admin/dashboard.php");
             }
             else if ($role == "guest") {
                 header("Location: ../View/guest/dashboard.php");
