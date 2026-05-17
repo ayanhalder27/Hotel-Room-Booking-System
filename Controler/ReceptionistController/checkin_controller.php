@@ -6,45 +6,70 @@ try {
 
     // Search confirmed bookings
     if ($action === 'search') {
-        $q = post('q');
-        $sql = "
-            SELECT 
-                b.id,
-                b.room_type_id,
-                u.name AS guest_name,
-                u.national_id,
-                rt.name AS room_type,
-                b.checkin_date,
-                b.checkout_date
-            FROM bookings b
-            JOIN users u ON u.id = b.guest_id
-            JOIN room_types rt ON rt.id = b.room_type_id
-            WHERE b.status = 'confirmed'
+
+    $q = $_POST['q'] ?? '';
+
+    $sql = "
+        SELECT 
+            b.id,
+            b.room_type_id,
+            u.name AS guest_name,
+            u.national_id,
+            rt.name AS room_type,
+            b.checkin_date,
+            b.checkout_date,
+            b.status
+        FROM bookings b
+        JOIN users u ON u.id = b.guest_id
+        JOIN room_types rt ON rt.id = b.room_type_id
+
+        WHERE b.status NOT IN ('checked_in', 'checked_out', 'cancelled')
+    ";
+
+    $params = [];
+
+    // Search only when receptionist types something
+    if ($q !== '') {
+
+        $sql .= "
+            AND (
+                CAST(b.id AS CHAR) LIKE ?
+                OR u.name LIKE ?
+            )
         ";
-        $params = [];
 
-        if ($q !== '') {
-            $sql .= " AND (CAST(b.id AS CHAR) LIKE ? OR u.name LIKE ?)";
-            $params = [likeQ($q), likeQ($q)];
-        }
+        $search = "%$q%";
 
-        $sql .= " ORDER BY b.checkin_date, b.created_at";
-
-        $rows = db::FetchAll($sql, $params);
-
-        // Attach available rooms for each booking
-        foreach ($rows as &$row) {
-            $row['available_rooms'] = db::FetchAll(
-                "SELECT id, room_number, floor 
-                 FROM rooms 
-                 WHERE room_type_id=? AND status='available' 
-                 ORDER BY room_number",
-                (int) $row['room_type_id']
-            );
-        }
-
-        db::JsonResponse(true, 'Loaded', $rows);
+        $params[] = $search;
+        $params[] = $search;
     }
+
+    $sql .= "
+        ORDER BY b.checkin_date ASC
+    ";
+
+    $rows = db::FetchAll($sql, ...$params);
+
+    // Attach available rooms
+    foreach ($rows as &$row) {
+
+        $row['available_rooms'] = db::FetchAll(
+            "
+            SELECT 
+                id,
+                room_number,
+                floor
+            FROM rooms
+            WHERE room_type_id = ?
+            AND status = 'available'
+            ORDER BY room_number
+            ",
+            (int)$row['room_type_id']
+        );
+    }
+
+    db::JsonResponse(true, "Bookings loaded successfully.", $rows);
+}
 
     // Perform check-in
     if ($action === 'checkin') {

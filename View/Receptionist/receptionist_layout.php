@@ -33,7 +33,7 @@ function activeMenu($file, $currentPage){ return $file === $currentPage ? 'activ
             <a class="nav-link <?= activeMenu('booking_modify.php',$currentPage) ?>" href="booking_modify.php">Modify Booking</a>
             <a class="nav-link <?= activeMenu('room_status.php',$currentPage) ?>" href="room_status.php">Room Status Board</a>
             <a class="nav-link <?= activeMenu('daily_report.php',$currentPage) ?>" href="daily_report.php">Daily Report</a>
-            <a class="nav-link logout" href="../logout.php" data-normal-link="true">Logout</a>
+            <a class="nav-link logout" href="../../Controler/logout.php" data-normal-link="true">Logout</a>
         </nav>
     </aside>
     <header class="rec-header">
@@ -45,7 +45,10 @@ function activeMenu($file, $currentPage){ return $file === $currentPage ? 'activ
     </main>
     <footer class="rec-footer">Hotel Room Booking System © Receptionist Panel</footer>
 </div>
-<script src="common.js?v=2"></script>
-<?php if (isset($pageScript)): ?><script src="<?= htmlspecialchars($pageScript) ?>?v=2"></script><?php endif; ?>
+<script src="common.js"></script>
+
+<?php if (isset($pageScript)): ?>
+    <script src="<?= $pageScript ?>"></script>
+<?php endif; ?>
 </body>
 </html>

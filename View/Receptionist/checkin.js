@@ -3,13 +3,10 @@ async function loadBookings() {
   try {
     const searchQuery = qs("#searchInput").value;
 
-    const response = await api(
-      "checkin_controller.php",
-      {
-        action: "search",
-        q: searchQuery,
-      },
-    );
+    const response = await api("checkin_controller.php", {
+      action: "search",
+      q: searchQuery,
+    });
 
     if (!response.success) {
       return showAlert(response.message, false);
@@ -73,14 +70,11 @@ async function checkIn(bookingId) {
   }
 
   try {
-    const response = await api(
-      "checkin_controller.php",
-      {
-        action: "checkin",
-        booking_id: bookingId,
-        room_id: roomId,
-      },
-    );
+    const response = await api("checkin_controller.php", {
+      action: "checkin",
+      booking_id: bookingId,
+      room_id: roomId,
+    });
 
     showAlert(response.message, response.success);
 

@@ -1,0 +1,1 @@
+<section data-page-title="Booking Details" data-page-script="booking_details.js"><div id="alertBox" class="alert"></div><input type="hidden" id="bookingId" value="<?= htmlspecialchars($_GET['booking_id'] ?? '') ?>"><div id="detailsBox"><div class="card loading">Loading booking details...</div></div></section>

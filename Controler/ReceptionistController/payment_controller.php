@@ -22,7 +22,7 @@ try {
             JOIN users u ON u.id = bl.guest_id
             LEFT JOIN bookings b ON b.id = bl.booking_id
             LEFT JOIN rooms r ON r.id = b.room_id
-            WHERE 1=1
+            WHERE 1=1 and payment_status='pending'
         ";
         $params = [];
 

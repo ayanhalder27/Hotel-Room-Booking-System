@@ -2,11 +2,11 @@
 require_once __DIR__ . "/../../Model/dbRec.php";
 
 try {
-    $action = post('action', 'list');
+    $action = $_POST['action'] ?? 'list';
 
-    // List confirmed or checked-in bookings
     if ($action === 'list') {
-        $q = post('q');
+        $q = $_POST['q'] ?? '';
+
         $sql = "
             SELECT 
                 b.id,
@@ -20,82 +20,79 @@ try {
             FROM bookings b
             JOIN users u ON u.id = b.guest_id
             JOIN room_types rt ON rt.id = b.room_type_id
-            WHERE b.status IN ('confirmed','checked_in')
+            WHERE 1=1
         ";
+
         $params = [];
 
         if ($q !== '') {
             $sql .= " AND (CAST(b.id AS CHAR) LIKE ? OR u.name LIKE ?)";
-            $params = [likeQ($q), likeQ($q)];
+            $params[] = "%$q%";
+            $params[] = "%$q%";
         }
 
-        $sql .= " ORDER BY b.checkin_date DESC LIMIT 100";
+        $sql .= " ORDER BY b.id DESC LIMIT 100";
 
-        db::JsonResponse(true, 'Loaded', db::FetchAll($sql, $params));
+        $bookings = db::FetchAll($sql, ...$params);
+
+        db::JsonResponse(true, "Bookings loaded successfully.", $bookings);
     }
 
-    // Update booking dates
     if ($action === 'update_dates') {
-        requiredFields(['booking_id','checkin_date','checkout_date']);
-        validDateRange(post('checkin_date'), post('checkout_date'));
+        $booking_id = $_POST['booking_id'] ?? '';
+        $checkin_date = $_POST['checkin_date'] ?? '';
+        $checkout_date = $_POST['checkout_date'] ?? '';
 
-        $bid = (int) post('booking_id');
+        if ($booking_id === '' || $checkin_date === '' || $checkout_date === '') {
+            throw new Exception("All fields are required.");
+        }
+
+        if ($checkout_date <= $checkin_date) {
+            throw new Exception("Checkout date must be after check-in date.");
+        }
 
         db::BeginTransaction();
 
-        $booking = db::Fetch("SELECT * FROM bookings WHERE id=? FOR UPDATE", $bid);
+        $booking = db::Fetch("SELECT * FROM bookings WHERE id=?", (int)$booking_id);
+
         if (!$booking) {
-            throw new Exception('Booking not found.');
+            throw new Exception("Booking not found.");
         }
 
-        // Check for conflicts if room is assigned
-        if ($booking['room_id']) {
-            $conflict = db::FetchValue(
-                "SELECT COUNT(*) 
-                 FROM bookings 
-                 WHERE id<>? 
-                   AND room_id=? 
-                   AND status IN('confirmed','checked_in') 
-                   AND ? < checkout_date 
-                   AND ? > checkin_date",
-                $bid,
-                (int) $booking['room_id'],
-                post('checkin_date'),
-                post('checkout_date')
-            );
+        $price = db::FetchValue(
+            "SELECT price_per_night FROM room_types WHERE id=?",
+            (int)$booking['room_type_id']
+        );
 
-            if ($conflict > 0) {
-                throw new Exception('Selected date conflicts with another booking for this room.');
-            }
-        }
-
-        // Calculate nights and total price
-        $nights = (strtotime(post('checkout_date')) - strtotime(post('checkin_date'))) / 86400;
-        $price = (float) db::FetchValue("SELECT price_per_night FROM room_types WHERE id=?", (int) $booking['room_type_id']);
+        $nights = (strtotime($checkout_date) - strtotime($checkin_date)) / 86400;
         $total = $price * $nights;
 
-        // Update booking and billing
         db::Execute(
             "UPDATE bookings SET checkin_date=?, checkout_date=?, total_price=? WHERE id=?",
-            post('checkin_date'),
-            post('checkout_date'),
+            $checkin_date,
+            $checkout_date,
             $total,
-            $bid
+            (int)$booking_id
         );
-        db::Execute("UPDATE billing SET base_amount=? WHERE booking_id=?", $total, $bid);
+
+        db::Execute(
+            "UPDATE billing SET base_amount=?, total_amount=(? + extras_amount - discount_amount) WHERE booking_id=?",
+            $total,
+            $total,
+            (int)$booking_id
+        );
 
         db::Commit();
-        db::JsonResponse(true, 'Booking dates updated.');
+
+        db::JsonResponse(true, "Booking updated successfully.");
     }
 
-    // Invalid action fallback
-    db::JsonResponse(false, 'Invalid action');
+    db::JsonResponse(false, "Invalid action.");
 
 } catch (Exception $e) {
     try {
         db::Rollback();
-    } catch (Exception $x) {
-        // ignore rollback errors
-    }
+    } catch (Exception $ignore) {}
+
     db::JsonResponse(false, $e->getMessage());
 }
