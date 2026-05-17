@@ -21,7 +21,7 @@ try {
     
     // 2. Today's Revenue (Bookings created today)
     $revenueQuery = "SELECT SUM(total_price) as total FROM bookings WHERE DATE(created_at) = ?";
-    $revenueResult = db::FetchAll($revenueQuery, [$today]);
+    $revenueResult = db::FetchAll($revenueQuery, $today);
     $todayRevenue = $revenueResult[0]['total'] ?? 0;
     
     // 3. Active Maintenance
