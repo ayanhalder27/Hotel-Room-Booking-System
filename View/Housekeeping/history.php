@@ -149,7 +149,7 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                 </select>
             </div>
             <div class="table-wrap"><table>
-                <thead><tr><th>Room</th><th>Type</th><th>Priority</th><th>Status</th><th>Notes</th><th>Assigned</th><th>Completed</th></tr></thead>
+                <thead><tr><th>Room</th><th>Type</th><th>Priority</th><th>Status</th><th>Notes</th><th>Supervised By</th><th>Completed</th></tr></thead>
                 <tbody id="historyTable"><tr><td colspan="7" class="empty-row">Loading...</td></tr></tbody>
             </table></div>
         </div>

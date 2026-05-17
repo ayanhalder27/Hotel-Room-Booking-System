@@ -58,7 +58,7 @@ function loadHistory(){
                 output += "<td>" + data.rows[i].priority + "</td>";
                 output += "<td>" + statusText(data.rows[i].status) + "</td>";
                 output += "<td>" + data.rows[i].notes + "</td>";
-                output += "<td>" + data.rows[i].scheduled_date + "</td>";
+                output += "<td>" + (data.rows[i].supervisor_name ?? "Supervisor") + "</td>";
                 output += "<td>" + (data.rows[i].completed_at ?? "") + "</td>";
                 output += "</tr>";
             }
