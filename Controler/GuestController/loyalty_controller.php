@@ -12,11 +12,9 @@ wrapController(function () {
         case 'summary':
             // Current balance
             $balance = (int)db::FetchValue(
-                "SELECT COALESCE(balance,0) 
+                "SELECT COALESCE(SUM(points_earned - points_used),0) 
                  FROM loyalty_points 
-                 WHERE guest_id = ? 
-                 ORDER BY id DESC 
-                 LIMIT 1",
+                 WHERE guest_id = ?",
                 $guestId
             );
 
@@ -24,6 +22,7 @@ wrapController(function () {
             $history = db::FetchAll(
                 "SELECT 
                     lp.*,
+                    (lp.points_earned - lp.points_used) AS point_change,
                     b.checkin_date,
                     b.checkout_date,
                     rt.name AS room_type
@@ -49,11 +48,9 @@ wrapController(function () {
             $points = (int)post('points');
 
             $balance = (int)db::FetchValue(
-                "SELECT COALESCE(balance,0) 
+                "SELECT COALESCE(SUM(points_earned - points_used),0) 
                  FROM loyalty_points 
-                 WHERE guest_id = ? 
-                 ORDER BY id DESC 
-                 LIMIT 1",
+                 WHERE guest_id = ?",
                 $guestId
             );
 

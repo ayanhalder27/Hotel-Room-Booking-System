@@ -42,10 +42,9 @@ wrapController(function () {
                     $guestId
                 ),
                 'loyalty_balance' => (int)db::FetchValue(
-                    "SELECT COALESCE(balance,0) 
-                     FROM loyalty_points 
-                     WHERE guest_id = ? 
-                     ORDER BY id DESC LIMIT 1",
+                    "SELECT COALESCE(SUM(points_earned - points_used), 0)
+                     FROM loyalty_points
+                     WHERE guest_id = ?",
                     $guestId
                 ),
                 'unpaid_bills' => (int)db::FetchValue(

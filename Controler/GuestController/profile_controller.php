@@ -31,12 +31,11 @@ wrapController(function () {
                 throw new Exception('Profile not found.');
             }
 
+            // Corrected loyalty balance calculation
             $user['loyalty_balance'] = (int)db::FetchValue(
-                "SELECT COALESCE(balance,0) 
+                "SELECT COALESCE(SUM(points_earned - points_used),0) 
                  FROM loyalty_points 
-                 WHERE guest_id = ? 
-                 ORDER BY id DESC 
-                 LIMIT 1",
+                 WHERE guest_id = ?",
                 $guestId
             );
 

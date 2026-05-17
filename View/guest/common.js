@@ -1,4 +1,4 @@
-const API_BASE = "../../Controler/GuestControler/";
+const API_BASE = "../../Controler/GuestController/";
 function qs(selector, root = document) {
   return root.querySelector(selector);
 }
