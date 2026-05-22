@@ -83,6 +83,10 @@ function loadUrgentTasks(){
             document.getElementById("urgentCount").innerHTML = data.rows.length;
 
             for(let i = 0; i < data.rows.length; i++){
+                if(data.rows[i].priority && data.rows[i].priority.toLowerCase().trim() !== 'urgent'){
+                    continue;
+                }
+
                 output += "<tr>";
                 output += "<td>" + data.rows[i].room_number + "</td>";
                 output += "<td>" + data.rows[i].task_type + "</td>";
@@ -92,7 +96,7 @@ function loadUrgentTasks(){
 
                 // 6th column: Action
                 output += "<td>";
-                output += "<a href='tasks.php' class='table-action'>Update</a>";
+                output += "<button type='button' class='table-action' onclick=\"openUrgentTaskModal('" + data.rows[i].id + "', '" + data.rows[i].status + "', `" + safeText(data.rows[i].notes) + "`)\">Update</button>";
                 output += "</td>";
 
                 output += "</tr>";
@@ -107,5 +111,49 @@ function loadUrgentTasks(){
         }
 
         document.getElementById("urgentTasksTable").innerHTML = output;
+    });
+}
+
+function openUrgentTaskModal(taskId, status, notes){
+    document.getElementById("urgentModalTaskId").value = taskId;
+    document.getElementById("urgentModalTaskStatus").value = status;
+    document.getElementById("urgentModalTaskNotes").value = notes || "";
+    document.getElementById("urgentModalRoomStatus").value = "";
+    document.getElementById("urgentTaskModal").classList.add("show");
+}
+
+function safeText(text){
+    if(text == null){
+        return "";
+    }
+
+    return String(text).replace(/`/g, "");
+}
+
+let urgentTaskUpdateForm = document.getElementById("urgentTaskUpdateForm");
+
+if(urgentTaskUpdateForm){
+    urgentTaskUpdateForm.addEventListener("submit", function(e){
+        e.preventDefault();
+        updateUrgentTask(this);
+    });
+}
+
+function updateUrgentTask(form){
+    let formData = new FormData(form);
+    formData.append("action", "update_task");
+
+    postData("../../Controler/HousekeepingController/hk_tasks.php", formData, function(data){
+        if(data.success){
+            showMessage("Task updated successfully");
+            closeModal("urgentTaskModal");
+            loadUrgentTasks();
+            loadDashboardStats();
+            loadTodayCheckouts();
+            loadUpcomingCheckins();
+        }
+        else{
+            showMessage(data.message);
+        }
     });
 }

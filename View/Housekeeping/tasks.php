@@ -205,16 +205,22 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
 
         <!-- Today Tasks -->
         <div class="card">
-            <div class="card-header">
-                <h3>Today's Tasks</h3>
+            <div class="card-header task-card-header">
+                <div class="header-left">
+                    <button type="button" class="pill" data-filter="assigned">All Assigned Tasks</button>
+                </div>
 
-                <div class="filter-pills">
-                    <button type="button" class="pill active" data-filter="all">All</button>
-                    <button type="button" class="pill" data-filter="pending">Pending</button>
-                    <button type="button" class="pill" data-filter="in_progress">In Progress</button>
-                    <button type="button" class="pill" data-filter="done">Done</button>
-                    <button type="button" class="pill" data-filter="normal">Normal</button>
-                    <button type="button" class="pill pill-urgent" data-filter="urgent">Urgent</button>
+                <h3 class="task-title">Today's Tasks</h3>
+
+                <div class="header-right">
+                    <div class="filter-pills">
+                        <button type="button" class="pill active" data-filter="all">All</button>
+                        <button type="button" class="pill" data-filter="pending">Pending</button>
+                        <button type="button" class="pill" data-filter="in_progress">In Progress</button>
+                        <button type="button" class="pill" data-filter="done">Done</button>
+                        <button type="button" class="pill" data-filter="normal">Normal</button>
+                        <button type="button" class="pill pill-urgent" data-filter="urgent">Urgent</button>
+                    </div>
                 </div>
             </div>
 

@@ -19,7 +19,7 @@ if($action == "task_history"){
 
     if($room_id){
         $rows = db::FetchAll(
-            "SELECT ht.task_type, ht.priority, ht.status, ht.notes, ht.completed_at, r.room_number,
+            "SELECT ht.task_type, ht.scheduled_date, ht.priority, ht.status, ht.notes, ht.completed_at, r.room_number,
                     COALESCE(u.name, 'Supervisor') AS supervisor_name
              FROM housekeeping_tasks ht
              JOIN rooms r ON r.id = ht.room_id
@@ -33,7 +33,7 @@ if($action == "task_history"){
     }
     else{
         $rows = db::FetchAll(
-            "SELECT ht.task_type, ht.priority, ht.status, ht.notes, ht.completed_at, r.room_number,
+            "SELECT ht.task_type, ht.scheduled_date, ht.priority, ht.status, ht.notes, ht.completed_at, r.room_number,
                     COALESCE(u.name, 'Supervisor') AS supervisor_name
              FROM housekeeping_tasks ht
              JOIN rooms r ON r.id = ht.room_id

@@ -159,10 +159,6 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
                     <h3>Cleaning Priority Queue</h3>
                 </div>
 
-                <div class="schedule-search">
-                    <input type="search" id="prioritySearch" placeholder="Search by room, guest, or day">
-                </div>
-
                 <div class="table-wrap">
                     <table>
                         <thead>

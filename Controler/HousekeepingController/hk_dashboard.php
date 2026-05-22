@@ -69,7 +69,7 @@ if($action == "urgent_tasks"){
         "SELECT ht.id, ht.task_type, ht.priority, ht.status, ht.notes, ht.scheduled_date, ht.room_id, r.room_number
          FROM housekeeping_tasks ht
          JOIN rooms r ON r.id = ht.room_id
-         WHERE ht.priority = 'urgent'
+         WHERE LOWER(TRIM(ht.priority)) = 'urgent'
          AND ht.status != 'done'
          ORDER BY ht.scheduled_date ASC"
     );

@@ -3,13 +3,6 @@ let cleaningPriorityRows = [];
 window.onload = function(){
     loadSchedule();
 
-    let prioritySearch = document.getElementById("prioritySearch");
-
-    if(prioritySearch){
-        prioritySearch.addEventListener("input", function(){
-            showCleaningPriority(cleaningPriorityRows);
-        });
-    }
 };
 
 function loadSchedule(){
@@ -30,18 +23,12 @@ function showCleaningPriority(rows){
     let search = "";
     let rank = 1;
 
-    let prioritySearch = document.getElementById("prioritySearch");
-
-    if(prioritySearch){
-        search = prioritySearch.value.trim().toLowerCase();
-    }
-
     if(rows.length > 0){
         for(let i = 0; i < rows.length; i++){
             let roomNumber = rows[i].room_number ?? "";
             let guestName = rows[i].guest_name ?? "";
             let checkoutDay = rows[i].checkout_day ?? "";
-            let searchable = (roomNumber + " " + guestName + " " + checkoutDay).toLowerCase();
+            let searchable = (roomNumber + " " + guestName + " " + checkoutDay + " " + rows[i].checkout_date).toLowerCase();
 
             if(search != "" && searchable.indexOf(search) == -1){
                 continue;

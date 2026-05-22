@@ -302,6 +302,48 @@ $sidebarInitial = strtoupper(substr($sidebarName, 0, 1));
     </section>
 </main>
 
+<!-- Urgent Task Update Modal -->
+<div class="modal-overlay" id="urgentTaskModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Update Task</h3>
+            <button type="button" class="modal-close" onclick="closeModal('urgentTaskModal')">×</button>
+        </div>
+
+        <form id="urgentTaskUpdateForm">
+            <input type="hidden" name="task_id" id="urgentModalTaskId">
+
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status" id="urgentModalTaskStatus">
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Completion Notes</label>
+                <textarea name="notes" id="urgentModalTaskNotes" rows="3" placeholder="Add notes..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Mark Room As</label>
+                <select name="room_status" id="urgentModalRoomStatus">
+                    <option value="">No change</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="available">Clean / Available</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;margin-top:0.5rem">
+                Update Task
+            </button>
+        </form>
+    </div>
+</div>
+
 <div class="toast-container" id="toastBox"></div>
 
 <script src="hk-shared.js"></script>
